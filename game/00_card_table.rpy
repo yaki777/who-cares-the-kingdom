@@ -8,6 +8,8 @@ style common_card_text: # optionally ... is button_text:
     color "#FFF"
     outlines [ (0.5, "#333", 0, 0) ] # <--- oooh
     yfill True
+transform card_rotation(index):
+    rotate 10*index
 default card_table_chosen_card = None
 default card_table_hovered_card = None
 screen card_table(table_bg,placed_card,player_hands,place_card_callback):
@@ -95,3 +97,26 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
                                         yminimum=57, xminimum=57, yfill=True))
                     action [NullAction()]
                 textbutton "放置" xalign 0.5 action [Function(place_card_callback, card_table_chosen_card), SetVariable("card_table_chosen_card", None)]
+
+
+screen dm_say(what,next_callback=None):
+    button:
+        xfill True
+        yfill True
+        xpos 0
+        ypos 0
+        if not isinstance(next_callback,str):
+            action [Function(next_callback)]
+        elif next_callback == "Return()":
+            action [Return()]
+    frame:
+        style_prefix "say"
+        xfill True
+        yfill True
+        background Solid("#000c",xfill=True,yfill=True)
+        window:
+            id "window"
+            vbox:
+                text "DM" id "who"
+                text what id "what"
+                transclude

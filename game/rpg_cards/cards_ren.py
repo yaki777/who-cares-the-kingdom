@@ -1,13 +1,8 @@
-from rpg_cards.card_actions_ren import CA_MASTURBATE
+from rpg_battle.battle_actions_ren import CA_MASTURBATE
 
 """renpy
 init -100 python:
 """
-
-DRAW_TYPE_NORMAL = 0
-DRAW_TYPE_FIRST_TURN = 1
-DRAW_TYPE_EVERY_TURN = 2
-
 
 class Card:
     def __init__(self, number, suit, name, title, description, addition, black=False):
@@ -17,14 +12,9 @@ class Card:
         self.title = title
         self.description = description
         self.black = black
-        self.image = f'images/card_bg/{"black" if black else "white"}/{suit}_{number}_{name}.png'
         self.background = f'images/card_bg/{"black" if black else "white"}/{suit}_{number}_{"black" if black else "white"}.png'
         self.inner = f'images/inner/{name}.png'
         self.addition = addition
-        self.draw_type = DRAW_TYPE_NORMAL
-
-    def copy(self):
-        return Card(self.name, self.title, self.description)
 
 
 class CardSlot:
@@ -34,6 +24,7 @@ class CardSlot:
         self.background = 'images/cards/card_slot.png'
         self.suit = 'Slot'
         self.number = 0
+        self.addition = None
 
 
 CARD_SLOT = CardSlot()

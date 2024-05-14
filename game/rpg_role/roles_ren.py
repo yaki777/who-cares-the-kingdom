@@ -4,7 +4,8 @@ init -90 python:
 
 
 class Role:
-    def __init__(self, name, description, level_range, area_weights_day, area_weights_night):
+    def __init__(self, code, name, description, level_range, area_weights_day, area_weights_night):
+        self.code = code
         self.name = name
         self.description = description
         self.level_range = level_range
@@ -14,8 +15,8 @@ class Role:
         self.area_weights_night = {k: v / weights_night_sum for k, v in area_weights_night.items()}
 
 
-ROLE_KING = Role('国王', '国家的统治者', (13, 13), {"uk": 1}, {"uk": 1})
-ROLE_QUEEN = Role('王后', '国王的妻子', (12, 12),
+ROLE_KING = Role('king', '国王', '国家的统治者', (13, 13), {"uk": 1}, {"uk": 1})
+ROLE_QUEEN = Role('queen', '王后', '国王的妻子', (12, 12),
                   {
                       "pg1": 0.1,
                       "pc1": 0.1,
@@ -34,7 +35,7 @@ ROLE_QUEEN = Role('王后', '国王的妻子', (12, 12),
                       "psr1": 0.5,
                       "kbr1": 4
                   })
-ROLE_PRINCE = Role('王子', '国王的儿子', (6, 10),
+ROLE_PRINCE = Role('prince', '王子', '国王的儿子', (6, 10),
                    {
                        "pg1": 0.1,
                        "pc1": 0.1,
@@ -56,7 +57,7 @@ ROLE_PRINCE = Role('王子', '国王的儿子', (6, 10),
                        "pb1": 1,
                        "pbr1_0": 4
                    })
-ROLE_PRINCESS = Role('公主', '国王的女儿', (6, 10),
+ROLE_PRINCESS = Role('princess', '公主', '国王的女儿', (6, 10),
                      {
                          "pg1": 0.1,
                          "pc1": 0.1,
@@ -76,7 +77,7 @@ ROLE_PRINCESS = Role('公主', '国王的女儿', (6, 10),
                          "pb1": 1,
                          "pbr1_1": 4
                      })
-ROLE_MINISTER = Role('大臣', '国王的重要顾问', (9, 11),
+ROLE_MINISTER = Role('minister', '大臣', '国王的重要顾问', (9, 11),
                      {
                          "pg1": 0.1,
                          "pc1": 0.1,
@@ -93,7 +94,7 @@ ROLE_MINISTER = Role('大臣', '国王的重要顾问', (9, 11),
                          "pb1": 1,
                          "ura1": 4
                      })
-ROLE_ENVOY = Role('使者', '外交使节', (9, 11),
+ROLE_ENVOY = Role('envoy', '使者', '外交使节', (9, 11),
                   {
                       "pg1": 0.1,
                       "pc1": 0.1,
@@ -109,7 +110,7 @@ ROLE_ENVOY = Role('使者', '外交使节', (9, 11),
                       "pb1": 1,
                       "ura1": 4
                   })
-ROLE_KNIGHT = Role('骑士', '骑士团成员', (11, 11),
+ROLE_KNIGHT = Role('knight', '骑士', '骑士团成员', (11, 11),
                    {
                        "pg1": 0.1,
                        "pc1": 0.1,
@@ -126,7 +127,7 @@ ROLE_KNIGHT = Role('骑士', '骑士团成员', (11, 11),
                        "pg1": 0.1,
                        "pbh1": 0.1
                    })
-ROLE_SOLDIER = Role('士兵', '军队成员', (5, 10),
+ROLE_SOLDIER = Role('soldier', '士兵', '军队成员', (5, 10),
                     {
                         "g1": 0.5,
                         "t1": 0.5,
@@ -145,7 +146,7 @@ ROLE_SOLDIER = Role('士兵', '军队成员', (5, 10),
                         "mc1": 0.5,
                         "pg1": 0.5,
                     })
-ROLE_MAGE = Role('法师', '使用魔法的人', (7, 11),
+ROLE_MAGE = Role('mage', '法师', '使用魔法的人', (7, 11),
                  {
                      "g1": 0.5,
                      "t1": 0.5,
@@ -158,7 +159,7 @@ ROLE_MAGE = Role('法师', '使用魔法的人', (7, 11),
                      "mg1": 4,
                      "ra1": 4
                  })
-ROLE_SCHOLAR = Role('学者', '研究者', (7, 9),
+ROLE_SCHOLAR = Role('scholar', '学者', '研究者', (7, 9),
                     {
                         "g1": 0.5,
                         "t1": 0.5,
@@ -171,7 +172,7 @@ ROLE_SCHOLAR = Role('学者', '研究者', (7, 9),
                         "l1": 4,
                         "ra1": 4
                     })
-ROLE_ALCHEMIST = Role('炼金术师', '研究炼金术的人', (6, 8),
+ROLE_ALCHEMIST = Role('alchemist', '炼金术师', '研究炼金术的人', (6, 8),
                       {
                           "g1": 0.5,
                           "t1": 0.5,
@@ -184,7 +185,7 @@ ROLE_ALCHEMIST = Role('炼金术师', '研究炼金术的人', (6, 8),
                           "mg1": 4,
                           "ra1": 4
                       })
-ROLE_DIVINER = Role('占卜师', '预言者', (6, 8),
+ROLE_DIVINER = Role('diviner', '占卜师', '预言者', (6, 8),
                     {
                         "g1": 0.5,
                         "t1": 2,
@@ -196,7 +197,7 @@ ROLE_DIVINER = Role('占卜师', '预言者', (6, 8),
                         "t1": 4,
                         "ra1": 4
                     })
-ROLE_MERCHANT = Role('商人', '贸易商', (2, 5),
+ROLE_MERCHANT = Role('merchant', '商人', '贸易商', (2, 5),
                      {
                          "m1": 4,
                      },
@@ -204,7 +205,7 @@ ROLE_MERCHANT = Role('商人', '贸易商', (2, 5),
                          "m1": 4,
                          "ura1": 4
                      })
-ROLE_CRAFTSMAN = Role('工匠', '手工艺人', (2, 3),
+ROLE_CRAFTSMAN = Role('craftsman', '工匠', '手工艺人', (2, 3),
                       {
                           "m1": 4,
                       },
@@ -212,7 +213,7 @@ ROLE_CRAFTSMAN = Role('工匠', '手工艺人', (2, 3),
                           "m1": 4,
                           "ra1": 4
                       })
-ROLE_FARMER = Role('农民', '种田的人', (2, 3),
+ROLE_FARMER = Role('farmer', '农民', '种田的人', (2, 3),
                    {
                        "m1": 1,
                        "g1": 1,
@@ -222,7 +223,7 @@ ROLE_FARMER = Role('农民', '种田的人', (2, 3),
                    {
                        "ra1": 4
                    })
-ROLE_ARTIST = Role('艺术家', '创作艺术的人', (2, 4),
+ROLE_ARTIST = Role('artist', '艺术家', '创作艺术的人', (2, 4),
                    {
                        "m1": 1,
                        "g1": 1,
@@ -232,7 +233,7 @@ ROLE_ARTIST = Role('艺术家', '创作艺术的人', (2, 4),
                    {
                        "ra1": 4
                    })
-ROLE_BARD = Role('吟游诗人', '演唱诗歌的人', (2, 4),
+ROLE_BARD = Role('bard', '吟游诗人', '演唱诗歌的人', (2, 4),
                  {
                      "m1": 1,
                      "g1": 1,
@@ -242,7 +243,7 @@ ROLE_BARD = Role('吟游诗人', '演唱诗歌的人', (2, 4),
                  {
                      "ra1": 4
                  })
-ROLE_ADVENTURER = Role('冒险家', '冒险的人', (2, 11),
+ROLE_ADVENTURER = Role('adventurer', '冒险家', '冒险的人', (2, 11),
                        {
                            "g1": 2,
                            "t1": 0.5,
@@ -255,7 +256,7 @@ ROLE_ADVENTURER = Role('冒险家', '冒险的人', (2, 11),
                            "m1": 0.5,
                            "ag1": 2,
                        })
-ROLE_HUNTER = Role('猎人', '狩猎的人', (2, 4),
+ROLE_HUNTER = Role('hunter', '猎人', '狩猎的人', (2, 4),
                    {
                        "m1": 1,
                        "t1": 1,
@@ -267,7 +268,7 @@ ROLE_HUNTER = Role('猎人', '狩猎的人', (2, 4),
                        "t1": 4,
                        "ra1": 4
                    })
-ROLE_THIEF = Role('盗贼', '偷盗的人', (2, 4),
+ROLE_THIEF = Role('thief', '盗贼', '偷盗的人', (2, 4),
                   {
                       "m1": 1,
                       "t1": 1,
@@ -279,7 +280,7 @@ ROLE_THIEF = Role('盗贼', '偷盗的人', (2, 4),
                       "t1": 4,
                       "ra1": 4
                   })
-ROLE_PRIEST = Role('牧师', '宗教人士', (6, 10),
+ROLE_PRIEST = Role('priest', '牧师', '宗教人士', (6, 10),
                    {
                        "m1": 1,
                        "ra1": 1,
@@ -289,7 +290,7 @@ ROLE_PRIEST = Role('牧师', '宗教人士', (6, 10),
                    {
                        "c1": 4
                    })
-ROLE_MONK = Role('修道士', '修行的人', (6, 10),
+ROLE_MONK = Role('monk', '修道士', '修行的人', (6, 10),
                  {
                      "m1": 1,
                      "ra1": 1,
@@ -299,7 +300,7 @@ ROLE_MONK = Role('修道士', '修行的人', (6, 10),
                  {
                      "c1": 4
                  })
-ROLE_NUN = Role('修女', '修行的女性', (6, 10),
+ROLE_NUN = Role('nun', '修女', '修行的女性', (6, 10),
                 {
                     "m1": 1,
                     "ra1": 1,
@@ -309,7 +310,7 @@ ROLE_NUN = Role('修女', '修行的女性', (6, 10),
                 {
                     "c1": 4
                 })
-ROLE_CLERGY = Role('主教', '教会的高级官员', (14, 14),
+ROLE_CLERGY = Role('clergy', '主教', '教会的高级官员', (14, 14),
                    {
                        "m1": 1,
                        "ra1": 1,
@@ -319,7 +320,7 @@ ROLE_CLERGY = Role('主教', '教会的高级官员', (14, 14),
                    {
                        "c1": 4
                    })
-ROLE_SLAVE = Role('奴隶', '被奴役的人', (2, 3),
+ROLE_SLAVE = Role('slave', '奴隶', '被奴役的人', (2, 3),
                   {
                       "m1": 1,
                       "ra1": 1,
@@ -329,7 +330,7 @@ ROLE_SLAVE = Role('奴隶', '被奴役的人', (2, 3),
                   {
                       "ura1": 4
                   })
-ROLE_PROSTITUTE = Role('娼妓', '卖淫的女性', (2, 3),
+ROLE_PROSTITUTE = Role('prostitute', '娼妓', '卖淫的女性', (2, 3),
                        {
                            "m1": 1,
                            "ra1": 1,

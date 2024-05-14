@@ -1,10 +1,10 @@
 import random
 
-from rpg_cards.card_actions_ren import TAGS
+from rpg_battle.battle_actions_ren import TAGS
 from rpg_cards.cards_ren import CARD_LIBRARY
 from rpg_npc.npc_ren import NPC, NPC_MALE_NAMES
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import cards_controller, area_controller, world_controller
+from rpg_system.renpy_constant import cards_controller, world_controller
 
 """renpy
 init -50 python:
@@ -82,6 +82,5 @@ class NPCController:
     def get_area_npc_list(self, area_code):
         return self.area_npc_map.get(area_code, [])
 
-
-    def talk_to_npc(self,npc_id):
+    def talk_to_npc(self, npc_id):
         pass

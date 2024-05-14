@@ -46,7 +46,7 @@ class DungeonController:
         for i in range(enemy_count):
             enemy_role = random.choice(role_list)
             enemy_level = random.randint(enemy_role.level_range[0], enemy_role.level_range[1])
-            enemy_list.append(NPC('enemy_test', "敌人", enemy_role, enemy_level, []))
+            enemy_list.append(NPC('enemy_test', "敌人", enemy_role, enemy_level, [], True))
         return enemy_list
 
     def start(self, dungeon_level):
@@ -79,8 +79,7 @@ class DungeonController:
                 Card(self.current_floor + 1, "Clovers", area.name, area.title, "前往" + area.title, area))
         enemy_list = self.create_enemy_list()
         for enemy in enemy_list:
-            self.player_hands.append(
-                Card(enemy.level, "Tiles", "enemy_thief", enemy.name, "与" + enemy.name + "战斗", enemy, True))
+            self.player_hands.append(enemy.card())
 
     def settle_battle_result(self, battle_result):
         enemy = battle_result[0]

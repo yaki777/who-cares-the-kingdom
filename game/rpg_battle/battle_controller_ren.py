@@ -1,3 +1,4 @@
+from rpg_battle.battle_actions_ren import BattleAction
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import Card, CardSlot, CARD_SLOT
 from rpg_system.renpy_constant import cards_controller
@@ -23,7 +24,6 @@ class BattleController:
         self.battle_info = ''
         self.halftime = None
         self.battle_calculator = BattleCalculator()
-        self.card_controller = cards_controller
 
     def clear_battle(self):
         self.player_hand = []
@@ -40,19 +40,19 @@ class BattleController:
         self.battle_calculator = BattleCalculator()
 
     def player_table_len(self):
-        return len([card for card in self.player_table if isinstance(card, Card)])
+        return len([card for card in self.player_table if card.addition is not None])
 
     def player_play_card(self, card):
         self.player_hand.remove(card)
         for i, slot in enumerate(self.player_table):
-            if isinstance(slot, CardSlot):
+            if slot.addition is None:
                 self.player_table[i] = card
                 break
         player_table_rank, player_table_score = self.battle_calculator.get_max_table(self.player_table)
         self.player_table_desc = f'{player_table_rank[1]}: {player_table_score}'
 
     def player_return_card(self, card):
-        if isinstance(card, CardSlot):
+        if card.addition is None:
             return
         for i, slot in enumerate(self.player_table):
             if slot == card:
@@ -67,10 +67,10 @@ class BattleController:
         numbers = [1, 2, 3, 4, 5]
         weights = [5, 4, 3, 2, 1]
         card_number = random.choices(numbers, weights, k=1)[0]
-        cards = self.card_controller.enemy_draw_cards(self.enemy.id, card_number)
+        cards = cards_controller.enemy_draw_cards(self.enemy.id, card_number)
         for card in cards:
             for i, slot in enumerate(self.enemy_table):
-                if isinstance(slot, CardSlot):
+                if slot.addition is None:
                     self.enemy_table[i] = card
                     break
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
@@ -79,11 +79,10 @@ class BattleController:
     def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
-        self.card_controller.player_shuffle_deck()
-        self.card_controller.enemy_shuffle_deck(self.enemy.id)
-        self.player_hand = self.card_controller.player_draw_cards(5)
+        cards_controller.player_shuffle_deck()
+        cards_controller.enemy_shuffle_deck(self.enemy.id)
+        self.player_hand = cards_controller.player_draw_cards(5)
         self.enemy_play_card()
-
         self.battle_info = f'回合 {self.round}'
 
     def result_display(self):
@@ -116,7 +115,7 @@ class BattleController:
         if self.player_chips == 0:
             self.battle_info = '战斗结束!'
             return
-        cards = [card for card in table if isinstance(card, Card)]
+        cards = [card for card in table if card.addition is not None]
         for card in cards:
             rank = card.addition.level
             is_weakness = any(i in self.enemy.weakness for i in card.addition.tags)
@@ -126,17 +125,14 @@ class BattleController:
         if self.player_rank >= self.enemy.hp:
             self.battle_info = '战斗胜利!'
             return
-        self.halftime = BattleHalftime(self, player_win,
-                                       [card for card in self.player_table if
-                                        isinstance(card, Card)] if player_win else [
-                                           card for card in self.enemy_table if isinstance(card, Card)])
+        self.halftime = BattleHalftime(self, player_win,cards)
 
         self.round += 1
         self.battle_info = f'回合 {self.round}'
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
-        for card in self.card_controller.player_draw_cards(5 - len(self.player_hand)):
+        for card in cards_controller.player_draw_cards(5 - len(self.player_hand)):
             self.player_hand.append(card)
 
 

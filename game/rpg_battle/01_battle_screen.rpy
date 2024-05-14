@@ -131,34 +131,22 @@ screen battle_screen:
                     at card_rotation(pos_i)
     if battle_controller.halftime is not None:
         if battle_controller.halftime.current_card is None:
-            frame:
-                style_prefix "say"
-                xfill True
-                yfill True
-                background Solid("#000c",xfill=True,yfill=True)
-                window:
-                    id "window"
-                    vbox:
-                        text "DM" id "who"
-                        text "中场休息！"
-                        if battle_controller.halftime.player_win:
-                            text "你赢得了本轮，所以接下来将会使用你的卡牌!"
-                        else:
-                            text "你输掉了本轮，所以接下来将会使用敌人的卡牌!"
-                        text f"本轮的卡牌是{len(battle_controller.halftime.cards)}张，开始使用吧！"
-            frame:
-                style_prefix "choice"
-                xfill True
-                yfill True
-                background None
-                vbox:
-                    yalign 0.4
-                    textbutton "继续" action [Function(battle_controller.halftime.step)]
+
+            use dm_say("中场休息！",battle_controller.halftime.step):
+                if battle_controller.halftime.player_win:
+                    text "你赢得了本轮，所以接下来将会使用你的卡牌!"
+                else:
+                    text "你输掉了本轮，所以接下来将会使用敌人的卡牌!"
+                text f"本轮的卡牌是{len(battle_controller.halftime.cards)}张，开始使用吧！"
         else:
             frame:
                 xfill True
                 yfill True
                 background Solid("#000c",xfill=True,yfill=True)
+                button:
+                    xfill True
+                    yfill True
+                    action [NullAction()]
             frame:
                 xfill True
                 yalign 0.4
@@ -185,22 +173,6 @@ screen battle_screen:
                         text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}"
 
     if battle_controller.is_end():
-        frame:
-            style_prefix "say"
-            xfill True
-            yfill True
-            background Solid("#000c",xfill=True,yfill=True)
-            window:
-                id "window"
-                vbox:
-                    text "DM" id "who"
-                    for line in battle_controller.result_display():
-                        text line
-        frame:
-            style_prefix "choice"
-            xfill True
-            yfill True
-            background None
-            vbox:
-                yalign 0.4
-                textbutton "离开" action [Return()]
+        use dm_say("","Return()"):
+            for line in battle_controller.result_display():
+                text line

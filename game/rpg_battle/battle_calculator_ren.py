@@ -1,4 +1,5 @@
-from rpg_cards.cards_ren import Card
+from rpg_battle.battle_actions_ren import BattleAction
+from rpg_cards.cards_ren import Card, CARD_SLOT
 
 """renpy
 init -100 python:
@@ -54,9 +55,7 @@ class BattleCalculator:
         return 2 in counts.values()
 
     def get_max_table(self, cards):
-        table_rank = None
-        table_score = 0
-        cards = [card for card in cards if card is not None and isinstance(card, Card)]
+        cards = [card for card in cards if card.addition is not None]
         if self.is_straight(cards) and self.is_flush(cards):
             table_rank = STRAIGHT_FLUSH
             table_score = sum(card.number for card in cards)

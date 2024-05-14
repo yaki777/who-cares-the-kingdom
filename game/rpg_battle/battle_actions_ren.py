@@ -10,7 +10,7 @@ TAG_PLAY = '玩弄'
 TAGS = [TAG_SEX, TAG_HENTAI, TAG_SERVANT, TAG_SADISM, TAG_PLAY]
 
 
-class CardAction:
+class BattleAction:
     def __init__(self, name, tags, title, fantasy, reality):
         self.name = name
         self.tags = tags
@@ -24,4 +24,4 @@ class CardAction:
         return f"{{color=#FFC300}}lv {self.level}{{/color}}\n{self.title}"
 
 
-CA_MASTURBATE = CardAction("masturbate", [TAG_SEX], "自慰", "自慰", "自慰")
+CA_MASTURBATE = BattleAction("masturbate", [TAG_SEX], "自慰", "自慰", "自慰")

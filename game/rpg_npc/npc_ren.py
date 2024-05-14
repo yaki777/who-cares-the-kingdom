@@ -3,9 +3,11 @@ init -50 python:
 """
 import random
 
+from rpg_cards.cards_ren import Card
+
 
 class NPC:
-    def __init__(self, npc_id, name, role, level, weakness):
+    def __init__(self, npc_id, name, role, level, weakness,is_enemy=False):
         self.id = npc_id
         self.name = name
         self.role = role
@@ -13,9 +15,12 @@ class NPC:
         self.weakness = weakness
         self.hp = 5 * level
         self.location = None
-        self.image = f"images/npc/npc_test_card.png"
-        self.full_image = f"images/npc/npc_test_body.png"
         self.display_name = f"{{color=#f00}}{role.name}{{/color}}\n{name}"
+        self.is_enemy = is_enemy
+
+    def card(self):
+        return Card(self.level, "Tiles", "npc_" + self.id, self.name, self.display_name, self, self.is_enemy)
+
 
 npc_names = [
     ('Alden', '奥尔登', 'male'),

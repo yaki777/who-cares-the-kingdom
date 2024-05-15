@@ -1,6 +1,8 @@
 """renpy
 init -100 python:
 """
+from rpg_cards.cards_ren import Card
+
 TAG_SEX = '淫欲'
 TAG_HENTAI = '变态'
 TAG_SERVANT = '侍奉'
@@ -11,17 +13,52 @@ TAGS = [TAG_SEX, TAG_HENTAI, TAG_SERVANT, TAG_SADISM, TAG_PLAY]
 
 
 class BattleAction:
-    def __init__(self, name, tags, title, fantasy, reality):
+    def __init__(self, name, tags, title, fantasy, reality, level=2, suit='Pikes'):
         self.name = name
         self.tags = tags
         self.title = title
         self.fantasy = fantasy
         self.reality = reality
+        self.level = level
+        self.suit = suit
         self.exp = 0
-        self.level = 1
 
     def display_text(self):
-        return f"{{color=#FFC300}}lv {self.level}{{/color}}\n{self.title}"
+        return f"{{color=#FFC300}}Exp {self.exp}{{/color}}\n{self.title}"
+
+    def card(self):
+        return Card(self.level, self.suit, self.name, self.display_text(), self.display_text(), self)
 
 
-CA_MASTURBATE = BattleAction("masturbate", [TAG_SEX], "自慰", "自慰", "自慰")
+ACTION_LIBRARY = [
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+    ("masturbate", [TAG_SEX], "自慰", "自慰", "自慰"),
+]

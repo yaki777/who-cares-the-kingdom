@@ -1,10 +1,10 @@
-from rpg_battle.battle_actions_ren import BattleAction
+from rpg_battle.battle_action_controller_ren import BattleActionController
 from rpg_battle.battle_calculator_ren import BattleCalculator
-from rpg_cards.cards_ren import Card, CardSlot, CARD_SLOT
-from rpg_system.renpy_constant import cards_controller
+from rpg_cards.cards_ren import CARD_SLOT
+from rpg_system.renpy_constant import battle_action_controller
 
 """renpy
-init -100 python:
+init -80 python:
 """
 import random
 
@@ -67,7 +67,7 @@ class BattleController:
         numbers = [1, 2, 3, 4, 5]
         weights = [5, 4, 3, 2, 1]
         card_number = random.choices(numbers, weights, k=1)[0]
-        cards = cards_controller.enemy_draw_cards(self.enemy.id, card_number)
+        cards = battle_action_controller.enemy_draw_cards(self.enemy.id, card_number)
         for card in cards:
             for i, slot in enumerate(self.enemy_table):
                 if slot.addition is None:
@@ -79,9 +79,9 @@ class BattleController:
     def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
-        cards_controller.player_shuffle_deck()
-        cards_controller.enemy_shuffle_deck(self.enemy.id)
-        self.player_hand = cards_controller.player_draw_cards(5)
+        battle_action_controller.player_shuffle_deck()
+        battle_action_controller.enemy_shuffle_deck(self.enemy.id)
+        self.player_hand = battle_action_controller.player_draw_cards(5)
         self.enemy_play_card()
         self.battle_info = f'回合 {self.round}'
 
@@ -132,7 +132,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
-        for card in cards_controller.player_draw_cards(5 - len(self.player_hand)):
+        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand)):
             self.player_hand.append(card)
 
 

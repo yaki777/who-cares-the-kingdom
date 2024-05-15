@@ -9,7 +9,7 @@ style common_card_text: # optionally ... is button_text:
     outlines [ (0.5, "#333", 0, 0) ] # <--- oooh
     yfill True
 transform card_rotation(index):
-    rotate 10*index
+    rotate int(10*index)
 default card_table_chosen_card = None
 default card_table_hovered_card = None
 screen card_table(table_bg,placed_card,player_hands,place_card_callback):
@@ -55,12 +55,12 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
         hbox:
             yalign 0.5
             xalign 0.5
-            spacing -240
-            box_wrap True
-            xmaximum 1080
+            spacing -260
+            $ hands_len = len(player_hands)-1
             for i,card in enumerate(player_hands):
-                $ pos_i = i-int(len(player_hands)/2)
-                $ ypos_value = abs(pow(pos_i,2)*10)-100 - (20 if card_table_hovered_card == card else 0)
+
+                $ pos_i = i-hands_len/2
+                $ ypos_value = int(abs(pow(pos_i,2)*8))-100 - (20 if card_table_hovered_card == card else 0)
                 textbutton card.title:
                     style style.common_card
                     text_size 24

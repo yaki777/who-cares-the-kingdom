@@ -17,7 +17,7 @@ class WorldController:
         self.placed_card = card
         self.player_hands.remove(card)
 
-    def step(self, card):
+    def step(self, card=None):
         if card is not None:
             # if isinstance(card.addition,NPC):
 
@@ -27,7 +27,7 @@ class WorldController:
         self.player_hands.clear()
         for area_code in self.current_area.links:
             area = AREA_MAP[area_code]
-            self.player_hands.append(area.card)
+            self.player_hands.append(area.card())
         npc_list = npc_controller.get_area_npc_list(self.world.player_location)
         for npc in npc_list:
             self.player_hands.append(npc.card())

@@ -1,10 +1,10 @@
 import random
 
-from rpg_battle.battle_actions_ren import TAGS
-from rpg_cards.cards_ren import CARD_LIBRARY
+from rpg_battle.battle_actions_ren import TAGS, ACTION_LIBRARY, BattleAction
+from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC, NPC_MALE_NAMES
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import cards_controller, world_controller
+from rpg_system.renpy_constant import world_controller, battle_action_controller
 
 """renpy
 init -50 python:
@@ -25,8 +25,11 @@ class NPCController:
         npc = NPC(npc_id, name, role,
                   random.randint(role.level_range[0], role.level_range[1]), weakness)
         # todo? different card pool for different role
-        deck = random.sample(CARD_LIBRARY, 20)
-        cards_controller.enemy_register_cards(npc_id, deck)
+        deck = []
+        actions = random.sample(ACTION_LIBRARY, 20)
+        for action in actions:
+            deck.append(BattleAction(*action, level=random.randint(2, 14),suit=random.choice(CARD_SUITS)))
+        battle_action_controller.enemy_register_actions(npc_id, deck)
         self.npc_list[npc_id] = npc
 
     def gen_world_npc(self):

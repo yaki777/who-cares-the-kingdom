@@ -4,7 +4,8 @@ from rpg_battle.battle_actions_ren import TAGS, ACTION_LIBRARY, BattleAction
 from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC, NPC_MALE_NAMES
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import world_controller, battle_action_controller
+from rpg_system.renpy_constant import world_controller, battle_action_controller, renpy
+from rpg_world.player_ren import player
 
 """renpy
 init -50 python:
@@ -34,11 +35,11 @@ class NPCController:
 
     def gen_world_npc(self):
         npc_mapping = [
-            (ROLE_KING, 2),
-            (ROLE_QUEEN, 2),
-            (ROLE_PRINCE, 4),
-            (ROLE_PRINCESS, 4),
-            (ROLE_MINISTER, 8),
+            (ROLE_KING, 1),
+            (ROLE_QUEEN, 1),
+            (ROLE_PRINCE, 2),
+            (ROLE_PRINCESS, 2),
+            (ROLE_MINISTER, 4),
             (ROLE_ENVOY, 2),
             (ROLE_KNIGHT, 4),
             (ROLE_SOLDIER, 8),
@@ -51,7 +52,7 @@ class NPCController:
             (ROLE_FARMER, 4),
             (ROLE_ARTIST, 4),
             (ROLE_BARD, 4),
-            (ROLE_ADVENTURER, 6),
+            (ROLE_ADVENTURER, 4),
             (ROLE_HUNTER, 4),
             (ROLE_THIEF, 4),
             (ROLE_PRIEST, 4),
@@ -62,6 +63,8 @@ class NPCController:
             (ROLE_PROSTITUTE, 4)
         ]
         for (role, count) in npc_mapping:
+            if player.role == role:
+                count -= 1
             for i in range(count):
                 self.gen_npc(role)
 
@@ -88,4 +91,15 @@ class NPCController:
         return self.area_npc_map.get(area_code, [])
 
     def talk_to_npc(self, npc_id):
-        pass
+        npc = self.npc_list[npc_id]
+        area_code = world_controller.current_area.code
+        npc_role_code = npc.role.code
+        player_role_code = player.role.code
+        next_label = f"{npc_role_code}_{player_role_code}_{area_code}"
+        if not renpy.has_label(next_label):
+            next_label = f"{npc_role_code}_{player_role_code}"
+        if not renpy.has_label(next_label):
+            next_label = f"{npc_role_code}"
+        if not renpy.has_label(next_label):
+            next_label = "fallback"
+        renpy.call("npc_talk", world_controller.current_area.background, npc, next_label)

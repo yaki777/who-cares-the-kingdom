@@ -1,5 +1,7 @@
+from rpg_role.roles_ren import ROLE_QUEEN
+
 """renpy
-init -100 python:
+init 0 python:
 """
 
 
@@ -9,6 +11,4 @@ class Player:
         self.role = role
 
 
-
-
-player = Player()
+player = Player('Evelin', ROLE_QUEEN)

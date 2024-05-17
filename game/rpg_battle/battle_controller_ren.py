@@ -1,7 +1,7 @@
 from rpg_battle.battle_action_controller_ren import BattleActionController
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
-from rpg_system.renpy_constant import battle_action_controller
+from rpg_system.renpy_constant import battle_action_controller, renpy
 
 """renpy
 init -80 python:
@@ -76,7 +76,7 @@ class BattleController:
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
         self.enemy_table_desc = f'{enemy_table_rank[1]}: {enemy_table_score}'
 
-    def start(self, enemy):
+    def start(self, enemy,callback):
         self.clear_battle()
         self.enemy = enemy
         battle_action_controller.player_shuffle_deck()
@@ -84,6 +84,7 @@ class BattleController:
         self.player_hand = battle_action_controller.player_draw_cards(5)
         self.enemy_play_card()
         self.battle_info = f'回合 {self.round}'
+        renpy.call("start_battle", callback)
 
     def result_display(self):
         text = []

@@ -1,6 +1,7 @@
 default card_description = ""
 default battle_hovered_card = None
 label start_battle(callback):
+    "战斗开始！"
     python:
         card_description = ""
         battle_hovered_card = None

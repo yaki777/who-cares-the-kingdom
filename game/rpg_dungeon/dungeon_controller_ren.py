@@ -48,12 +48,12 @@ class DungeonController:
             enemy_role = random.choice(role_list)
             enemy_level = random.randint(enemy_role.level_range[0], enemy_role.level_range[1])
             # 也许应该用不同的npc_id
-            enemy_list.append(NPC('enemy_test', "敌人", enemy_role, enemy_level, [], True))
+            enemy_list.append(NPC('dungeon_test', "敌人", enemy_role, enemy_level, [], True))
             deck = []
             actions = random.sample(ACTION_LIBRARY, 20)
             for action in actions:
                 deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
-            battle_action_controller.enemy_register_actions('enemy_test', deck)
+            battle_action_controller.enemy_register_actions('dungeon_test', deck)
         return enemy_list
 
     def start(self, dungeon_level):
@@ -88,9 +88,10 @@ class DungeonController:
             self.player_hands.append(enemy.card())
 
     def settle_battle_result(self, battle_result):
-        enemy = battle_result[0]
-        player_rank = battle_result[1]
-        if player_rank >= enemy.hp:
+        result = battle_result[0]
+        enemy = battle_result[1]
+        player_rank = battle_result[2]
+        if result == 'win':
             return battle_action_controller.enemy_draw_cards(enemy.id, 3)
 
     def player_choose_reward(self, card):

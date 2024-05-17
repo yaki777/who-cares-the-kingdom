@@ -90,16 +90,19 @@ class NPCController:
     def get_area_npc_list(self, area_code):
         return self.area_npc_map.get(area_code, [])
 
-    def talk_to_npc(self, npc_id):
+    def talk_to_npc(self, npc_id, battle_result=None):
         npc = self.npc_list[npc_id]
         area_code = world_controller.current_area.code
         npc_role_code = npc.role.code
         player_role_code = player.role.code
-        next_label = f"{npc_role_code}_{player_role_code}_{area_code}"
+        base_label = npc_role_code
+        if battle_result is not None:
+            base_label += '_' + battle_result[0]
+        next_label = f"{base_label}_{player_role_code}_{area_code}"
         if not renpy.has_label(next_label):
-            next_label = f"{npc_role_code}_{player_role_code}"
+            next_label = f"{base_label}_{player_role_code}"
         if not renpy.has_label(next_label):
-            next_label = f"{npc_role_code}"
+            next_label = f"{base_label}"
         if not renpy.has_label(next_label):
             next_label = "fallback"
-        renpy.call("npc_talk", world_controller.current_area.background, npc, next_label)
+        renpy.call("npc_talk", world_controller.current_area.background, npc, next_label, battle_result)

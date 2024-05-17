@@ -14,3 +14,10 @@ label soldier_queen_g1(npc):
             npc.c "哦，当然，女王陛下。"
             $ battle_controller.start(npc,"start_world")
     return
+
+label soldier_win(npc):
+    npc.c "很好，市民！但是请不要告诉别人。"
+    return
+label soldier_lose(npc):
+    npc.c "还不够，市民。"
+    return

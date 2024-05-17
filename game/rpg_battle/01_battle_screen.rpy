@@ -6,7 +6,9 @@ label start_battle(callback):
         card_description = ""
         battle_hovered_card = None
     call screen battle_screen
-    $ renpy.call(callback,battle_controller.result())
+    $ result = battle_controller.result()
+    $ npc_controller.talk_to_npc(result[1].id,result)
+
 screen battle_screen:
     add "images/table_bg.png"
 

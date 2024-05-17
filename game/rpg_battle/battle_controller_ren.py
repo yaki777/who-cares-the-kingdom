@@ -76,7 +76,7 @@ class BattleController:
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
         self.enemy_table_desc = f'{enemy_table_rank[1]}: {enemy_table_score}'
 
-    def start(self, enemy,callback):
+    def start(self, enemy, callback):
         self.clear_battle()
         self.enemy = enemy
         battle_action_controller.player_shuffle_deck()
@@ -95,7 +95,7 @@ class BattleController:
         return text
 
     def result(self):
-        return [self.enemy, self.player_rank]
+        return ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
 
     def is_end(self):
         return self.player_chips == 0 or self.player_rank >= self.enemy.hp
@@ -126,7 +126,7 @@ class BattleController:
         if self.player_rank >= self.enemy.hp:
             self.battle_info = '战斗胜利!'
             return
-        self.halftime = BattleHalftime(self, player_win,cards)
+        self.halftime = BattleHalftime(self, player_win, cards)
 
         self.round += 1
         self.battle_info = f'回合 {self.round}'

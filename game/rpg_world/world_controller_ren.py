@@ -1,5 +1,5 @@
 from rpg_npc.npc_ren import NPC
-from rpg_system.renpy_constant import world, npc_controller, renpy
+from rpg_system.renpy_constant import world, npc_controller, renpy, battle_action_controller
 from rpg_world.area_ren import AREA_MAP, Area
 
 """renpy
@@ -20,6 +20,7 @@ class WorldController:
         npc_controller.gen_world_npc()
         npc_controller.update_npc_location()
         self.step()
+
     def player_place_card(self, card):
         self.placed_card = card
         self.player_hands.remove(card)
@@ -46,6 +47,16 @@ class WorldController:
         npc_list = npc_controller.get_area_npc_list(self.current_area.code)
         for npc in npc_list:
             self.player_hands.append(npc.card())
+
+    def settle_battle_result(self, battle_result):
+        result = battle_result[0]
+        enemy = battle_result[1]
+        player_rank = battle_result[2]
+        if result == 'win':
+            return battle_action_controller.enemy_draw_cards(enemy.id, 3)
+
+    def player_choose_reward(self, card):
+        battle_action_controller.player_get_action(card.addition)
 
     def get_time(self):
         return self.world.current_hour

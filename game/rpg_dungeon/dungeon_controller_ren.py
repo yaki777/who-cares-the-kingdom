@@ -5,7 +5,7 @@ from rpg_cards.cards_ren import Card, CARD_SUITS
 from rpg_dungeon.dungeon_area_ren import DungeonArea, DUNGEON_AREAS
 from rpg_npc.npc_ren import NPC
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import renpy, battle_controller, cards_controller, battle_action_controller
+from rpg_system.renpy_constant import renpy, battle_controller, battle_action_controller
 
 """renpy
 init -50 python:

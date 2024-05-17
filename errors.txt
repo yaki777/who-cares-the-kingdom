@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/rpg_battle/01_battle_screen.rpy", line 11: end of line expected.
+    call expression next_label pass arguments
+                                    ^
+
+Ren'Py Version: Ren'Py 8.2.1.24030407
+Fri May 17 13:53:48 2024

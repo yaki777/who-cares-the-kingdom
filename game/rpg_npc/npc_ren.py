@@ -1,3 +1,5 @@
+from rpg_system.renpy_constant import Character
+
 """renpy
 init -50 python:
 """
@@ -7,7 +9,7 @@ from rpg_cards.cards_ren import Card
 
 
 class NPC:
-    def __init__(self, npc_id, name, role, level, weakness,is_enemy=False):
+    def __init__(self, npc_id, name, role, level, weakness, is_enemy=False):
         self.id = npc_id
         self.name = name
         self.role = role
@@ -17,9 +19,12 @@ class NPC:
         self.location = None
         self.display_name = f"{{color=#f00}}{role.name}{{/color}}\n{name}"
         self.is_enemy = is_enemy
+        self.side_image = f"images/npc/npc_{npc_id}.png"
+        self.c = Character(self.name)
+        self.label = f"merchant_start"
 
     def card(self):
-        return Card(self.level, "Tiles", "npc_" + self.id, self.name, self.display_name, self, self.is_enemy)
+        return Card(self.level, "Tiles", "npc_" + self.id, self.display_name, self.display_name, self, self.is_enemy)
 
 
 npc_names = [

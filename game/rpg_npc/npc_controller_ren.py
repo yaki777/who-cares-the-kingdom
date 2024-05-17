@@ -28,7 +28,7 @@ class NPCController:
         deck = []
         actions = random.sample(ACTION_LIBRARY, 20)
         for action in actions:
-            deck.append(BattleAction(*action, level=random.randint(2, 14),suit=random.choice(CARD_SUITS)))
+            deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
         battle_action_controller.enemy_register_actions(npc_id, deck)
         self.npc_list[npc_id] = npc
 
@@ -41,14 +41,14 @@ class NPCController:
             (ROLE_MINISTER, 8),
             (ROLE_ENVOY, 2),
             (ROLE_KNIGHT, 4),
-            (ROLE_SOLDIER, 16),
+            (ROLE_SOLDIER, 8),
             (ROLE_MAGE, 4),
             (ROLE_SCHOLAR, 4),
             (ROLE_ALCHEMIST, 4),
             (ROLE_DIVINER, 2),
             (ROLE_MERCHANT, 4),
             (ROLE_CRAFTSMAN, 4),
-            (ROLE_FARMER, 16),
+            (ROLE_FARMER, 4),
             (ROLE_ARTIST, 4),
             (ROLE_BARD, 4),
             (ROLE_ADVENTURER, 6),
@@ -80,7 +80,9 @@ class NPCController:
             npc.location = random.choices(list(area_weights.keys()), weights=list(area_weights.values()))[0]
             if npc.location not in self.area_npc_map:
                 self.area_npc_map[npc.location] = []
-            self.area_npc_map[npc.location].append(npc)
+            # 限制每个地区的最大npc数量
+            if len(self.area_npc_map[npc.location]) < 5:
+                self.area_npc_map[npc.location].append(npc)
 
     def get_area_npc_list(self, area_code):
         return self.area_npc_map.get(area_code, [])

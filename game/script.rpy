@@ -8,13 +8,14 @@ label start:
     # 显示战斗
 #     $ battle_controller.start()
 #     call screen battle_screen
-#     $ npc_controller.gen_world_npc()
-#     $ npc_controller.update_npc_location()
-#     $ world_controller.step()
-#     call screen world_walk
-    $ dungeon_controller.step()
-    call screen dungeon_walk
+    $ npc_controller.gen_world_npc()
+    $ npc_controller.update_npc_location()
+    $ world_controller.step()
+    call screen world_walk
+#     $ dungeon_controller.step()
+#     call screen dungeon_walk
 #     call screen player_deck
+#     call merchant_start
     jump next_scene
 
 label next_scene:

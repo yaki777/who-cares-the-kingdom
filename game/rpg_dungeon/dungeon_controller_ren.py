@@ -70,7 +70,7 @@ class DungeonController:
             if isinstance(self.placed_card.addition, NPC):
                 card = self.placed_card
                 self.placed_card = None
-                battle_controller.start(card.addition, "start_dungeon")
+                battle_controller.start(card.addition)
                 return
             elif isinstance(self.placed_card.addition, DungeonArea):
                 self.current_area = self.placed_card.addition

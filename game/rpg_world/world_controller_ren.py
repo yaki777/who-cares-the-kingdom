@@ -47,16 +47,6 @@ class WorldController:
         for npc in npc_list:
             self.player_hands.append(npc.card())
 
-    def settle_battle_result(self, battle_result):
-        result = battle_result[0]
-        enemy = battle_result[1]
-        player_rank = battle_result[2]
-        if result == 'win':
-            return battle_action_controller.enemy_draw_cards(enemy.id, 3)
-
-    def player_choose_reward(self, card):
-        battle_action_controller.player_get_action(card.addition)
-
     def get_hour(self):
         return self.date.hour
 

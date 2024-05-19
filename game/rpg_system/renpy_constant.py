@@ -13,6 +13,7 @@ battle_action_controller = BattleActionController()
 battle_controller = BattleController()
 story_controller = StoryController()
 
+
 class Renpy:
     def say(self, who, what, *args, **kwargs):
         pass
@@ -33,6 +34,9 @@ class Renpy:
         pass
 
     def has_label(self, name):
+        pass
+
+    def return_statement(self, value=None):
         pass
 
 

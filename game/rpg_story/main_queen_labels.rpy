@@ -47,3 +47,22 @@ label M_HQ_stage_1(story,npc):
     return
 
 label M_HQ_stage_2(story,npc):
+    if npc.role == ROLE_MINISTER:
+        npc.c "陛下！有什么可以为您效劳的吗？"
+        DM "你告诉了他与使者的谈话。"
+        npc.c "我明白了……陛下，这是一个非常重要的发展。我们需要加快准备速度。"
+        npc.c "我会立即召集我的团队。"
+        npc.c "我可以问一下您的女儿对这个消息的反应吗？"
+        if story.princess_agree is None:
+            DM "你告诉[npc.name],公主还不知道"
+        elif story.princess_agree:
+            DM "你告诉[npc.name],公主已经同意了婚事"
+        else:
+            DM "你告诉[npc.name],公主不同意婚事。但你没有办法，只能先做准备。"
+        npc.c "不管如何，我会立即着手准备。"
+        return
+    if npc.role == ROLE_PRINCESS:
+        npc.c "妈妈，进来吧。"
+        npc.c "妈妈，你来这里有什么事吗？有什么问题吗？"
+        DM "你告诉了她使者的要求。"
+        npc.c "妈妈... 你怎么能这样？我... 我要被嫁给一个陌生人？为了拯救王国？"

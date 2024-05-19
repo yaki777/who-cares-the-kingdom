@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_battle/01_battle_screen.rpy", line 11: end of line expected.
-    call expression next_label pass arguments
-                                    ^
+File "game/rpg_battle/01_battle_screen.rpy", line 23: invalid syntax
+        call screen battle_reward
+              ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Fri May 17 13:53:48 2024
+Sun May 19 13:55:17 2024

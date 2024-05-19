@@ -16,6 +16,7 @@ class Story:
 class StoryController:
     def __init__(self):
         self.stage_map = {}
+        self.current_stage_list = []
 
     def start(self):
         for clazz in Story.__subclasses__():

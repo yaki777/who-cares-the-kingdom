@@ -19,7 +19,7 @@ class StoryQueenSaveKingdom(Story):
         self.init_stage = "stage_1"
 
     def stage_1(self):
-        self.minister = random.choice(npc_controller.get_npc_by_role(ROLE_MINISTER))
+        self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
         npc_controller.place_npc(self.minister.id, "kbr1", 12)
         world_controller.place_player("kbr1")
         npc_controller.add_npc_to_stage(self.minister.id, "M_QSK_stage_1", "关于我们的国家...")
@@ -32,6 +32,7 @@ class StoryQueenSaveKingdom(Story):
 class StoryHumbleQueen(Story):
     def __init__(self):
         super().__init__()
+        self.minister = None
         self.envoy = None
         self.name = "M_HQ"
         self.current_stage = "stage_1"
@@ -44,3 +45,5 @@ class StoryHumbleQueen(Story):
     def stage_2(self):
         npc_controller.remove_npc_from_stage(self.envoy.id, "M_HQ_stage_1")
         npc_controller.add_npc_to_stage(self.envoy.id, f"M_HQ_stage_2", "关于公主的婚事...")
+        self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
+        npc_controller.add_npc_to_stage(self.minister.id, f"M_HQ_stage_2", "关于公主的婚事...")

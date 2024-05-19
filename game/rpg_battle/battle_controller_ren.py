@@ -76,7 +76,7 @@ class BattleController:
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
         self.enemy_table_desc = f'{enemy_table_rank[1]}: {enemy_table_score}'
 
-    def start(self, enemy, callback):
+    def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
         battle_action_controller.player_shuffle_deck()
@@ -84,7 +84,7 @@ class BattleController:
         self.player_hand = battle_action_controller.player_draw_cards(5)
         self.enemy_play_card()
         self.battle_info = f'回合 {self.round}'
-        renpy.call("start_battle", callback)
+        renpy.call("start_battle")
 
     def result_display(self):
         text = []
@@ -95,7 +95,17 @@ class BattleController:
         return text
 
     def result(self):
-        return ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
+        result = ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
+        return result
+
+    def settle_battle_result(self):
+        battle_result = ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
+        result = self.result()[0]
+        enemy = battle_result[1]
+        player_rank = battle_result[2]
+        if result == 'win':
+            return battle_action_controller.enemy_draw_cards(enemy.id, 3)
+        return None
 
     def is_end(self):
         return self.player_chips == 0 or self.player_rank >= self.enemy.hp

@@ -12,12 +12,6 @@ label soldier_queen_g1(npc):
             return
         "调情：不安全？你会保护我吗？":
             npc.c "哦，当然，女王陛下。"
-            $ battle_controller.start(npc,"start_world")
-    return
-
-label soldier_win(npc):
-    npc.c "很好，市民！但是请不要告诉别人。"
-    return
-label soldier_lose(npc):
-    npc.c "还不够，市民。"
+            $ battle_controller.start(npc)
+            npc.c "(脸红)好了，我们还是回去吧，陛下。"
     return

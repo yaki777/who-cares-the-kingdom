@@ -1,14 +1,23 @@
 default card_description = ""
 default battle_hovered_card = None
-label start_battle(callback):
-    "战斗开始！"
+default battle_reward_cards = None
+label start_battle():
+    DM "战斗开始！"
     python:
         card_description = ""
         battle_hovered_card = None
+    call start_battle_screen
+    call after_battle_screen
+    return
+label start_battle_screen:
     call screen battle_screen
-    $ result = battle_controller.result()
-    $ npc_controller.talk_to_npc(result[1].id,result)
+    return
 
+label after_battle_screen:
+    $ battle_reward_cards = battle_controller.settle_battle_result()
+    if battle_reward_cards is not None:
+        call screen battle_reward
+    return
 screen battle_screen:
     add "images/table_bg.png"
 
@@ -179,3 +188,34 @@ screen battle_screen:
         use dm_say("","Return()"):
             for line in battle_controller.result_display():
                 text line
+
+screen battle_reward:
+    frame:
+        style_prefix "say"
+        xfill True
+        yfill True
+        background Solid("#000c",xfill=True,yfill=True)
+        window:
+            id "window"
+            vbox:
+                text "DM" id "who"
+                text "你刚刚赢得了一次战斗,选择一个奖励！" id "what"
+    frame:
+        background None
+        xfill True
+        yalign 0.4
+        hbox:
+            spacing 40
+            xalign 0.5
+            for card in battle_reward_cards:
+                textbutton card.title:
+                    style style.common_card
+                    text_size 24
+                    xsize 200
+                    ysize 284
+                    background Composite((200,284),
+                        (0,0),Frame(card.background,
+                                        yminimum=57, xminimum=57, yfill=True),
+                        (0,0),Frame(card.inner,
+                                        yminimum=57, xminimum=57, yfill=True))
+                    action [Function(battle_action_controller.player_get_action,card.addition),SetVariable("battle_reward_cards",None),Return()]

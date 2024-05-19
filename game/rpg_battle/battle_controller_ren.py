@@ -94,15 +94,12 @@ class BattleController:
             text.append("战斗胜利！")
         return text
 
-    def result(self):
-        result = ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
-        return result
-
+    def is_win(self):
+        return self.enemy.hp <= self.player_rank
     def settle_battle_result(self):
         battle_result = ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
-        result = self.result()[0]
+        result = battle_result[0]
         enemy = battle_result[1]
-        player_rank = battle_result[2]
         if result == 'win':
             return battle_action_controller.enemy_draw_cards(enemy.id, 3)
         return None

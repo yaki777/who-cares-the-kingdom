@@ -34,6 +34,16 @@ label M_HQ_stage_1(story,npc):
         "拒绝":
             $ story.agree_marry = False
             DM "你严厉地拒绝了使者的要求。"
+        "寻找其他方式❤":
+            $ battle_controller.start(npc)
+            if battle_controller.is_win():
+                DM "Wow,了不起。"
+                npc.c "我想我们两国已经建立了...亲密的联盟，对吧？"
+                $ story_controller.start_stage("M_HQ_stage_10")
+                return
+            else:
+                npc.c "还不够好，亲爱的。"
+                return
     if not story.agree_marry:
         npc.c "恐怕你别无选择，亲爱的。你们国家的存亡岌岌可危。如果你不同意我的条件，恐怕我无法保证你的人民的安全。"
         npc.c "再考虑考虑吧，亲爱的。与你所有臣民的生命相比，你女儿的生命算得了什么呢？"
@@ -62,7 +72,35 @@ label M_HQ_stage_2(story,npc):
         npc.c "不管如何，我会立即着手准备。"
         return
     if npc.role == ROLE_PRINCESS:
-        npc.c "妈妈，进来吧。"
-        npc.c "妈妈，你来这里有什么事吗？有什么问题吗？"
+        npc.c "妈妈，你来这里有什么事吗？"
         DM "你告诉了她使者的要求。"
         npc.c "妈妈... 你怎么能这样？我... 我要被嫁给一个陌生人？为了拯救王国？"
+        $ story.princess_agree = False
+        menu:
+            "劝告她":
+                DM "你告诉[npc.name]你也没有办法，希望她能理解"
+            "反悔婚约":
+                DM "你突然改变主意，告诉[npc.name]你不会让她嫁给那个王子"
+                npc.c "真的吗，妈妈？"
+                DM "你点了点头，告诉她你会想办法。"
+                return
+            "劝告她(另一种方式❤)":
+                DM "你靠近了[npc.name],贴着她的脸，抚摸她的肩膀。"
+                $ battle_controller.start(npc)
+                if battle_controller.is_win():
+                    DM "[npc.name]喘着气，尽管还是不愿意，但她决定听从你的安排。"
+                    $ story.princess_agree = True
+                    return
+                else:
+                    npc.c "不要这样，妈妈。我不会同意的。"
+                    $ story.princess_agree = False
+                    return
+        if not story.princess_agree:
+            DM "[npc.name]没有如你所愿，哭着离开了房间。"
+
+        return
+
+label M_HQ_stage_10(story,npc):
+    if npc.role == ROLE_ENVOY:
+        npc.c "做得很好，女王陛下。我们的军队马上就会到达。"
+    return

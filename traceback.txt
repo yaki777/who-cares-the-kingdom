@@ -9,25 +9,21 @@ While running game code:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 13, in script call
-    call expression next_label pass(npc)
-  File "game/rpg_role/role_soldier.rpy", line 15, in script call
-    $ battle_controller.start(npc)
-  File "game/rpg_battle/01_battle_screen.rpy", line 10, in script call
-    call after_battle_screen
-  File "game/rpg_battle/01_battle_screen.rpy", line 17, in script
-    call screen battle_reward
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/rpg_battle/01_battle_screen.rpy", line 190, in execute
-    screen battle_reward:
-  File "game/rpg_battle/01_battle_screen.rpy", line 190, in execute
-    screen battle_reward:
-  File "game/rpg_battle/01_battle_screen.rpy", line 201, in execute
-    frame:
-  File "game/rpg_battle/01_battle_screen.rpy", line 205, in execute
-    hbox:
-TypeError: 'NoneType' object is not iterable
+  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
+    if story.princess_agree is None:
+  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
+    if story.princess_agree is None:
+AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
 
 -- Full Traceback ------------------------------------------------------------
 
@@ -40,58 +36,29 @@ Full traceback:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 13, in script call
-    call expression next_label pass(npc)
-  File "game/rpg_role/role_soldier.rpy", line 15, in script call
-    $ battle_controller.start(npc)
-  File "game/rpg_battle/01_battle_screen.rpy", line 10, in script call
-    call after_battle_screen
-  File "game/rpg_battle/01_battle_screen.rpy", line 17, in script
-    call screen battle_reward
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1968, in execute
-    self.call("execute")
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1950, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/statements.py", line 349, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/exports.py", line 3413, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2165, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2687, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  [Previous line repeated 2 more times]
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 480, in visit_all
-    callback(self)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2687, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 491, in per_interact
-    self.update()
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 697, in update
-    self.screen.function(**self.scope)
-  File "game/rpg_battle/01_battle_screen.rpy", line 190, in execute
-    screen battle_reward:
-  File "game/rpg_battle/01_battle_screen.rpy", line 190, in execute
-    screen battle_reward:
-  File "game/rpg_battle/01_battle_screen.rpy", line 201, in execute
-    frame:
-  File "game/rpg_battle/01_battle_screen.rpy", line 205, in execute
-    hbox:
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/sl2/slast.py", line 1746, in execute
-    for index, v in enumerate(value): # type: ignore
-TypeError: 'NoneType' object is not iterable
+  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
+    if story.princess_agree is None:
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1842, in execute
+    if renpy.python.py_eval(condition):
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1209, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1202, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
+    if story.princess_agree is None:
+AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
 
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.1.24030407
 Android GUI 1.31
-Sun May 19 13:53:45 2024
+Sun May 19 14:43:49 2024

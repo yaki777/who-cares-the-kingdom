@@ -28,8 +28,8 @@ class NPCController:
     def add_npc_to_stage(self, npc_id, stage_name, intro_text):
         self.npc_list[npc_id].stages.append((intro_text, stage_name))
 
-    def remove_npc_from_stage(self, npc_id, stage_name):
-        self.npc_list[npc_id].stages = list(filter(lambda x: x[1] != stage_name, self.npc_list[npc_id].stages))
+    def remove_npc_stages(self, npc_id, stage_name):
+        self.npc_list[npc_id].stages = list(filter(lambda x: stage_name not in x[1], self.npc_list[npc_id].stages))
 
     def gen_npc(self, role):
         weakness = random.sample(TAGS, random.randint(1, 3))

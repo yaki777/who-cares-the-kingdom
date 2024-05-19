@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_battle/01_battle_screen.rpy", line 23: invalid syntax
-        call screen battle_reward
-              ^
+File "game/rpg_story/main_queen_labels.rpy", line 87: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
+    "劝告她(另一种方式❤)"
+                 ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun May 19 13:55:17 2024
+Sun May 19 14:40:30 2024

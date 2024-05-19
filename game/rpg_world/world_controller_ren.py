@@ -31,7 +31,6 @@ class WorldController:
                 card = self.placed_card
                 self.player_hands.append(self.placed_card)
                 self.placed_card = None
-                # renpy.call("npc_talk", self.current_area.background,card.addition,card.addition.label)
                 npc_controller.talk_to_npc(card.addition.id)
                 return
             if isinstance(self.placed_card.addition, Area):
@@ -58,5 +57,17 @@ class WorldController:
     def player_choose_reward(self, card):
         battle_action_controller.player_get_action(card.addition)
 
-    def get_time(self):
-        return self.world.current_hour
+    def get_hour(self):
+        return self.date.hour
+
+    def time_display(self):
+        return (self.date.strftime('%mMonth%dDay %p %IHour')
+                .replace('Month', '月')
+                .replace('Day', '日')
+                .replace('Hour', '点')
+                .replace('PM', '下午')
+                .replace('AM', '上午'))
+
+    def place_player(self, area_code):
+        self.current_area = AREA_MAP[area_code]
+        self.step()

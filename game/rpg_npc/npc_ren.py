@@ -22,6 +22,7 @@ class NPC:
         self.side_image = f"images/npc/npc_{npc_id}.png"
         self.c = Character(self.name)
         self.label = f"merchant_start"
+        self.stages = []
 
     def card(self):
         return Card(self.level, "Tiles", "npc_" + self.id, self.display_name, self.display_name, self, self.is_enemy)

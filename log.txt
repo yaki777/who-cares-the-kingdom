@@ -1,10 +1,10 @@
-2024-05-17 06:08:47 UTC
+2024-05-19 02:31:43 UTC
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
 Loading error handling took 0.02s
-Loading script took 0.08s
+Loading script took 0.09s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
 Running init code took 0.03s
@@ -29,7 +29,7 @@ Prepare screens took 0.07s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.03s
 Running _start took 0.00s
-Interface start took 0.47s
+Interface start took 0.09s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -37,7 +37,7 @@ swap interval: 1 frames
 Windowed mode.
 Vendor: "b'NVIDIA Corporation'"
 Renderer: b'NVIDIA GeForce RTX 3060/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 535.171.04'
+Version: b'4.6.0 NVIDIA 470.239.06'
 Display Info: None
 Screen sizes: virtual=(1080, 1920) physical=(549, 976) drawable=(549, 976)
 Maximum texture size: 4096x4096

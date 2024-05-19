@@ -95,8 +95,9 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
                                         yminimum=57, xminimum=57, yfill=True),
                         (0,0),Frame(card_table_chosen_card.inner,
                                         yminimum=57, xminimum=57, yfill=True))
-                    action [NullAction()]
+                    action [Function(place_card_callback, card_table_chosen_card), SetVariable("card_table_chosen_card", None)]
                 textbutton "放置" xalign 0.5 action [Function(place_card_callback, card_table_chosen_card), SetVariable("card_table_chosen_card", None)]
+    use quick_menu
 
 
 screen dm_say(what,next_callback=None):

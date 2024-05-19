@@ -17,7 +17,7 @@ screen world_walk:
         xalign 0.5
         vbox:
             xalign 0.5
-            text f"{world_controller.date.strftime('%m月%d日 %p %I点')}":
+            text f"{world_controller.time_display()}":
                 xalign 0.5
                 text_align 0.5
                 color "#FFF"

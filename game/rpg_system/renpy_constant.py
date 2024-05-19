@@ -1,6 +1,7 @@
 from rpg_battle.battle_action_controller_ren import BattleActionController
 from rpg_battle.battle_controller_ren import BattleController
 from rpg_npc.npc_controller_ren import NPCController
+from rpg_story.story_ren import StoryController
 from rpg_world.world_controller_ren import WorldController
 from rpg_world.world_ren import World
 
@@ -10,7 +11,7 @@ world_controller = WorldController()
 npc_controller = NPCController()
 battle_action_controller = BattleActionController()
 battle_controller = BattleController()
-
+story_controller = StoryController()
 
 class Renpy:
     def say(self, who, what, *args, **kwargs):

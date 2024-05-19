@@ -17,7 +17,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.player_rank = 0
-        self.player_chips = 5
+        self.player_chips = 3
         self.round = 1
         self.player_table_desc = ''
         self.enemy_table_desc = ''
@@ -31,7 +31,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.player_rank = 0
-        self.player_chips = 5
+        self.player_chips = 3
         self.round = 1
         self.player_table_desc = ''
         self.enemy_table_desc = ''
@@ -96,6 +96,7 @@ class BattleController:
 
     def is_win(self):
         return self.enemy.hp <= self.player_rank
+
     def settle_battle_result(self):
         battle_result = ['win' if self.enemy.hp <= self.player_rank else "lose", self.enemy, self.player_rank]
         result = battle_result[0]
@@ -124,17 +125,7 @@ class BattleController:
             self.battle_info = '战斗结束!'
             return
         cards = [card for card in table if card.addition is not None]
-        for card in cards:
-            rank = card.addition.level
-            is_weakness = any(i in self.enemy.weakness for i in card.addition.tags)
-            if is_weakness:
-                rank *= 2
-            self.player_rank += rank
-        if self.player_rank >= self.enemy.hp:
-            self.battle_info = '战斗胜利!'
-            return
         self.halftime = BattleHalftime(self, player_win, cards)
-
         self.round += 1
         self.battle_info = f'回合 {self.round}'
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
@@ -153,6 +144,13 @@ class BattleHalftime:
 
     def step(self):
         self.current_card = self.cards.pop(0)
+        rank = self.current_card.addition.exp
+        is_weakness = any(i in self.battle_controller.enemy.weakness for i in self.current_card.addition.tags)
+        if is_weakness:
+            rank *= 2
+        self.battle_controller.player_rank += rank
+        if self.battle_controller.player_rank >= self.battle_controller.enemy.hp:
+            self.battle_controller.battle_info = '战斗胜利!'
 
     def end(self):
         self.battle_controller.halftime = None

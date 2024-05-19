@@ -35,6 +35,7 @@ label M_HQ_stage_1(story,npc):
             $ story.agree_marry = False
             DM "你严厉地拒绝了使者的要求。"
         "寻找其他方式❤":
+            DM "你示意[npc.name]跟你到无人的房间里。"
             $ battle_controller.start(npc)
             if battle_controller.is_win():
                 DM "Wow,了不起。"

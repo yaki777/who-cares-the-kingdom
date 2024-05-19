@@ -1,9 +1,10 @@
+from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction
+from rpg_cards.cards_ren import CARD_SUITS
+
 """renpy
 init -90 python:
 """
 import random
-
-from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction
 
 
 class BattleActionController:
@@ -15,7 +16,8 @@ class BattleActionController:
         # for test
         actions = random.sample(ACTION_LIBRARY, 20)
         for action in actions:
-            self.decks['player'].append(BattleAction(*action, level=random.randint(2, 14)))
+            self.decks['player'].append(BattleAction(*action, level=random.randint(2, 14),
+                                                     suit=random.choice(CARD_SUITS)))
 
     def player_get_action(self, card):
         self.decks['player'].append(card)
@@ -32,9 +34,9 @@ class BattleActionController:
     def player_draw_cards(self, number=1):
         cards = []
         for i in range(number):
-            card = self.decks['player'].pop(0).card()
-            cards.append(card)
-            self.decks['player'].append(card)
+            action = self.decks['player'].pop(0)
+            cards.append(action.card())
+            self.decks['player'].append(action)
         return cards
 
     def enemy_shuffle_deck(self, enemy_id):
@@ -43,9 +45,9 @@ class BattleActionController:
     def enemy_draw_cards(self, enemy_id, number=1):
         cards = []
         for i in range(number):
-            card = self.decks[enemy_id].pop(0).card()
-            cards.append(card)
-            self.decks[enemy_id].append(card)
+            action = self.decks[enemy_id].pop(0)
+            cards.append(action.card())
+            self.decks[enemy_id].append(action)
         return cards
 
     def enemy_register_actions(self, enemy_id, card_list):

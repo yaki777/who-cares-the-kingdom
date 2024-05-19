@@ -21,7 +21,7 @@ class BattleAction:
         self.reality = reality
         self.level = level
         self.suit = suit
-        self.exp = 0
+        self.exp = 1
 
     def display_text(self):
         return f"{{color=#FFC300}}Exp {self.exp}{{/color}}\n{self.title}"

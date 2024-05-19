@@ -1,17 +1,18 @@
-2024-05-19 06:41:20 UTC
+2024-05-19 06:52:17 UTC
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
 Loading error handling took 0.02s
-Loading script took 0.07s
+Loading script took 0.25s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.03s
+Running init code took 0.04s
 Loading analysis data took 0.02s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.01s
 Index archives took 0.00s
+Backing up script files to '/home/wooyme/.renpy/backups/who_cares_the_kingdom':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -21,12 +22,12 @@ Creating interface object took 0.00s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
-Load screen analysis took 0.03s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
 Prepare screens took 0.07s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
+Save bytecode. took 0.03s
 Running _start took 0.00s
 Interface start took 0.10s
 
@@ -50,27 +51,61 @@ Full traceback:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
   File "game/rpg_npc/npc_talk.rpy", line 11, in script call
     call expression story_label pass (story_controller.get_story(story_label),npc)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
-    if story.princess_agree is None:
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1842, in execute
-    if renpy.python.py_eval(condition):
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
-    if story.princess_agree is None:
-AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
+  File "game/rpg_story/main_queen_labels.rpy", line 39, in script call
+    $ battle_controller.start(npc)
+  File "game/rpg_battle/01_battle_screen.rpy", line 9, in script call
+    call start_battle_screen
+  File "game/rpg_battle/01_battle_screen.rpy", line 13, in script
+    call screen battle_screen
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1968, in execute
+    self.call("execute")
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1950, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/statements.py", line 349, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/exports.py", line 3413, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 3201, in interact_core
+    rv = root_widget.event(ev, x, y, 0)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 793, in event
+    rv = self.child.event(ev, x, y, st)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1426, in event
+    rv = super(Window, self).event(ev, x, y, st)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 288, in event
+    rv = d.event(ev, x - xo, y - yo, st)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 1174, in event
+    return handle_click(self.clicked)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 1095, in handle_click
+    rv = run(action)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 388, in run
+    new_rv = run(i, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 395, in run
+    return action(*args, **kwargs)
+  File "renpy/common/00action_other.rpy", line 586, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
+  File "game/rpg_battle/battle_controller_ren.py", line 134, in end_turn
+    for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand)):
+  File "game/rpg_battle/battle_action_controller_ren.py", line 35, in player_draw_cards
+    card = self.decks['player'].pop(0).card()
+AttributeError: 'Card' object has no attribute 'card'
 
 While running game code:
   File "game/script.rpy", line 15, in script call
@@ -81,114 +116,16 @@ While running game code:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
   File "game/rpg_npc/npc_talk.rpy", line 11, in script call
     call expression story_label pass (story_controller.get_story(story_label),npc)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
-    if story.princess_agree is None:
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
-    if story.princess_agree is None:
-AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
-Resetting cache.
-Early init took 149.26s
-Loading error handling took 0.02s
-Loading script took 0.08s
-Loading save slot metadata took 0.01s
-Loading persistent took 0.00s
-Running init code took 0.02s
-Loading analysis data took 0.02s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.01s
-Index archives took 0.00s
-Backing up script files to '/home/wooyme/.renpy/backups/who_cares_the_kingdom':
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.04s
-DPI scale factor: 1.000000
-Creating interface object took 0.00s
-Cleaning stores took 0.00s
-Init translation took 0.03s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.07s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.03s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 470.239.06'
-Display Info: None
-Screen sizes: virtual=(1080, 1920) physical=(549, 976) drawable=(549, 976)
-Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/script.rpy", line 15, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
-    call expression story_label pass (story_controller.get_story(story_label),npc)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
-    if story.princess_agree is None:
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1842, in execute
-    if renpy.python.py_eval(condition):
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
-    if story.princess_agree is None:
-AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
-
-While running game code:
-  File "game/script.rpy", line 15, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
-    call expression story_label pass (story_controller.get_story(story_label),npc)
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in script
-    if story.princess_agree is None:
-  File "game/rpg_story/main_queen_labels.rpy", line 66, in <module>
-    if story.princess_agree is None:
-AttributeError: 'StoryHumbleQueen' object has no attribute 'princess_agree'
+  File "game/rpg_story/main_queen_labels.rpy", line 39, in script call
+    $ battle_controller.start(npc)
+  File "game/rpg_battle/01_battle_screen.rpy", line 9, in script call
+    call start_battle_screen
+  File "game/rpg_battle/01_battle_screen.rpy", line 13, in script
+    call screen battle_screen
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "renpy/common/00action_other.rpy", line 586, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
+AttributeError: 'Card' object has no attribute 'card'

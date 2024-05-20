@@ -12,7 +12,10 @@ screen dungeon_walk:
         use dm_say(f"{dungeon_controller.placed_card.addition.name}发现你了！",dungeon_controller.step)
     # 选择路线
     if dungeon_controller.placed_card is not None and isinstance(dungeon_controller.placed_card.addition,DungeonArea):
-        use dm_say(f"你继续深入，走到了一片{dungeon_controller.placed_card.addition.title}",dungeon_controller.step)
+        if dungeon_controller.has_enemy():
+            use dm_say(f"你必须清除敌人才能进入下一个区域",dungeon_controller.player_return_card)
+        else:
+            use dm_say(f"你继续深入，走到了一片{dungeon_controller.placed_card.addition.title}",dungeon_controller.step)
     # 离开副本
     if dungeon_controller.placed_card is not None and dungeon_controller.placed_card.addition is None:
         use dm_say("是时候回家了",dungeon_controller.end)

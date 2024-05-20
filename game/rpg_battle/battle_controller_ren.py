@@ -121,9 +121,6 @@ class BattleController:
         if not player_win:
             table = self.enemy_table
             self.player_chips -= 1
-        if self.player_chips == 0:
-            self.battle_info = '战斗结束!'
-            return
         cards = [card for card in table if card.addition is not None]
         self.halftime = BattleHalftime(self, player_win, cards)
         self.round += 1
@@ -133,7 +130,8 @@ class BattleController:
         self.enemy_play_card()
         for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand)):
             self.player_hand.append(card)
-
+        if self.player_chips == 0:
+            self.battle_info = '战斗结束!'
 
 class BattleHalftime:
     def __init__(self, battle_controller, player_win, cards):

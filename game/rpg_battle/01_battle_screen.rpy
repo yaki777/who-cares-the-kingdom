@@ -141,6 +141,10 @@ screen battle_screen:
                     unhovered [SetVariable("battle_hovered_card",None)]
                     action [Function(battle_controller.player_play_card, card)]
                     at card_rotation(pos_i)
+    if battle_controller.is_end():
+        use dm_say("","Return()"):
+            for line in battle_controller.result_display():
+                text line
     if battle_controller.halftime is not None:
         if battle_controller.halftime.current_card is None:
 
@@ -184,10 +188,7 @@ screen battle_screen:
                         text f"{battle_controller.halftime.current_card.addition.fantasy}"
                         text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}"
 
-    if battle_controller.is_end():
-        use dm_say("","Return()"):
-            for line in battle_controller.result_display():
-                text line
+
 
 screen battle_reward:
     frame:

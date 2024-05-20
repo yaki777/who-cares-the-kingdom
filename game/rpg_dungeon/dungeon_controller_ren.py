@@ -35,7 +35,6 @@ class DungeonController:
         self.current_area = self.available_area[0]
         self.dungeon_level = 1
         self.current_floor = 2
-        self.current_enemy_list = []
         self.player_hands = []
         self.placed_card = None
         self.failed = False
@@ -43,6 +42,9 @@ class DungeonController:
     def get_enemy_list(self):
         # todo max_level = self.dungeon_level + self.current_floor
         return npc_controller.get_area_npc_list(f'dungeon_{self.current_floor}')
+
+    def has_enemy(self):
+        return any(isinstance(card.addition, NPC) and card.addition.is_enemy for card in self.player_hands)
 
     def start(self, dungeon_level):
         self.player_hands = []
@@ -58,6 +60,10 @@ class DungeonController:
     def player_place_card(self, card):
         self.placed_card = card
         self.player_hands.remove(card)
+
+    def player_return_card(self):
+        self.player_hands.append(self.placed_card)
+        self.placed_card = None
 
     def step(self):
         if self.placed_card is not None:

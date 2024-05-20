@@ -3,6 +3,7 @@ default hovered_card = -1
 default chosen_npc = None
 label start_world():
     call screen world_walk
+    jump start_world
     return
 screen world_walk:
     use card_table(world_controller.current_area.background,world_controller.placed_card,world_controller.player_hands,world_controller.player_place_card)

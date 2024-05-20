@@ -11,9 +11,9 @@ label start:
 #     $ battle_controller.start()
 #     call screen battle_screen
     $ world_controller.start_game()
-    $ story_controller.start()
-    call start_world
-#     $ dungeon_controller.step()
+#     $ story_controller.start()
+#     call start_world
+    $ dungeon_controller.start(2)
 #     call screen dungeon_walk
 #     call screen player_deck
     jump next_scene

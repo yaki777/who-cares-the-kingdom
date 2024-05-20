@@ -11,8 +11,5 @@ label npc_talk(bg,npc,next_label=None):
         call expression story_label pass (story_controller.get_story(story_label),npc)
     else:
         call expression next_label pass(npc)
-    if 'dungeon' in npc.location:
-        call start_dungeon
-    else:
-        call start_world
+    return
 

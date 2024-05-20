@@ -18,6 +18,7 @@ class WorldController:
 
     def start_game(self):
         npc_controller.gen_world_npc()
+        npc_controller.gen_dungeon_npc()
         npc_controller.update_npc_location()
         self.step()
 

@@ -34,23 +34,26 @@ class DungeonController:
         self.available_area = DUNGEON_AREAS
         self.current_area = self.available_area[0]
         self.dungeon_level = 1
-        self.current_floor = 1
+        self.current_floor = 2
         self.current_enemy_list = []
         self.player_hands = []
         self.placed_card = None
+        self.failed = False
 
-    def create_enemy_list(self):
-        enemy_count = random.choice([0, 1, 2])
+    def get_enemy_list(self):
         # todo max_level = self.dungeon_level + self.current_floor
-        enemy_list = npc_controller.gen_dungeon_npc(enemy_count)
-        return enemy_list
+        return npc_controller.get_area_npc_list(f'dungeon_{self.current_floor}')
 
     def start(self, dungeon_level):
         self.player_hands = []
         self.dungeon_level = dungeon_level
-        self.current_floor = 1
+        self.current_floor = 2
+        self.failed = False
         self.step()
         renpy.call("start_dungeon")
+
+    def end(self):
+        renpy.return_statement()
 
     def player_place_card(self, card):
         self.placed_card = card
@@ -61,7 +64,7 @@ class DungeonController:
             if isinstance(self.placed_card.addition, NPC):
                 card = self.placed_card
                 self.placed_card = None
-                battle_controller.start(card.addition)
+                npc_controller.talk_to_npc(card.addition.id)
                 return
             elif isinstance(self.placed_card.addition, DungeonArea):
                 self.current_area = self.placed_card.addition
@@ -73,17 +76,9 @@ class DungeonController:
         for i in range(area_card_size):
             area = random.choice(self.available_area)
             self.player_hands.append(
-                Card(self.current_floor + 1, "Clovers", area.name, area.title, "前往" + area.title, area))
-        enemy_list = self.create_enemy_list()
+                Card(self.current_floor + (random.choice([0, 0, 0, 1]) if self.current_floor < 14 else 0), "Clovers",
+                     area.name, area.title,
+                     "前往" + area.title, area))
+        enemy_list = self.get_enemy_list()
         for enemy in enemy_list:
             self.player_hands.append(enemy.card())
-
-    def settle_battle_result(self, battle_result):
-        result = battle_result[0]
-        enemy = battle_result[1]
-        player_rank = battle_result[2]
-        if result == 'win':
-            return battle_action_controller.enemy_draw_cards(enemy.id, 3)
-
-    def player_choose_reward(self, card):
-        battle_action_controller.player_get_action(card.addition)

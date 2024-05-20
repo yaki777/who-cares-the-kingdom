@@ -3,8 +3,10 @@ import random
 from rpg_battle.battle_actions_ren import TAGS, ACTION_LIBRARY, BattleAction
 from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC, NPC_MALE_NAMES, NPC_FEMALE_NAMES
+from rpg_role.dungeon_roles_ren import DUNGEON_ROLES, DUNGEON_ROLE_SLAVE, DUNGEON_ROLE_THIEF, DUNGEON_ROLE_HUNTER, \
+    DUNGEON_ROLE_ADVENTURER, DUNGEON_ROLE_SOLDIER, DUNGEON_ROLE_MAGE
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import world_controller, battle_action_controller, renpy
+from rpg_system.renpy_constant import world_controller, battle_action_controller, renpy, dungeon_controller
 from rpg_world.player_ren import player
 
 """renpy
@@ -18,6 +20,7 @@ class NPCController:
         self.npc_list = {}
         self.area_npc_map = {}
         self.frozen_placed_npc_list = []
+        self.dungeon_npc_offset = 0
 
     def get_npc(self, npc_id):
         return self.npc_list[npc_id]
@@ -86,13 +89,21 @@ class NPCController:
                 npc = self.gen_npc(role)
                 self.npc_list[npc.id] = npc
 
-    def gen_dungeon_npc(self, count):
-        npc_list = []
-        npc_mapping = [ROLE_ADVENTURER, ROLE_THIEF, ROLE_SOLDIER, ROLE_MAGE, ROLE_HUNTER, ROLE_PRIEST, ROLE_MONK,
-                       ROLE_SLAVE]
-        for i in range(count):
-            npc_list.append(self.gen_npc(random.choice(npc_mapping)))
-        return npc_list
+    def gen_dungeon_npc(self):
+        self.dungeon_npc_offset = 0
+        npc_mapping = [
+            (DUNGEON_ROLE_SLAVE, 3),
+            (DUNGEON_ROLE_THIEF, 3),
+            (DUNGEON_ROLE_HUNTER, 3),
+            (DUNGEON_ROLE_ADVENTURER, 3),
+            (DUNGEON_ROLE_SOLDIER, 3),
+            (DUNGEON_ROLE_MAGE, 3)
+        ]
+        for (role, count) in npc_mapping:
+            for i in range(count):
+                npc = self.gen_npc(role)
+                npc.is_enemy = True
+                self.npc_list[npc.id] = npc
 
     def place_npc(self, npc_id, area_code, frozen_hours=0):
         npc = self.npc_list[npc_id]
@@ -137,7 +148,11 @@ class NPCController:
         if len(npc.stages) > 0:
             renpy.call("npc_talk", world_controller.current_area.background, npc)
             return
-        area_code = world_controller.current_area.code
+        area_code = npc.location
+        if 'dungeon_' in area_code:
+            background = dungeon_controller.current_area.background
+        else:
+            background = world_controller.current_area.background
         npc_role_code = npc.role.code
         player_role_code = player.role.code
         base_label = npc_role_code
@@ -148,4 +163,4 @@ class NPCController:
             next_label = f"{base_label}"
         if not renpy.has_label(next_label):
             next_label = "fallback"
-        renpy.call("npc_talk", world_controller.current_area.background, npc, next_label)
+        renpy.call("npc_talk", background, npc, next_label)

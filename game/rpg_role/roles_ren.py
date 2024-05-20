@@ -1,5 +1,5 @@
 """renpy
-init -90 python:
+init -100 python:
 """
 
 

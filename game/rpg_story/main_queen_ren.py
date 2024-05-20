@@ -77,7 +77,7 @@ class StoryQueenFindDaughter(Story):
 
     def stage_1(self):
         self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
-        npc_controller.place_npc(self.princess.id, "uk1", 24 * 15)
+        npc_controller.place_npc(self.princess.id, "dungeon_7", 24 * 15)
         self.ministers = npc_controller.get_npc_by_role(ROLE_MINISTER)
         for minister in self.ministers:
             npc_controller.add_npc_to_stage(minister.id, "M_QFD_stage_1", "看到我的女儿了吗...")

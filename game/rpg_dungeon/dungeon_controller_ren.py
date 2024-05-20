@@ -5,7 +5,7 @@ from rpg_cards.cards_ren import Card, CARD_SUITS
 from rpg_dungeon.dungeon_area_ren import DungeonArea, DUNGEON_AREAS
 from rpg_npc.npc_ren import NPC
 from rpg_role.roles_ren import *
-from rpg_system.renpy_constant import renpy, battle_controller, battle_action_controller
+from rpg_system.renpy_constant import renpy, battle_controller, battle_action_controller, npc_controller
 
 """renpy
 init -50 python:
@@ -41,25 +41,16 @@ class DungeonController:
 
     def create_enemy_list(self):
         enemy_count = random.choice([0, 1, 2])
-        max_level = self.dungeon_level + self.current_floor
-        role_list = [role for role in self.available_roles if role.level_range[0] <= max_level]
-        enemy_list = []
-        for i in range(enemy_count):
-            enemy_role = random.choice(role_list)
-            enemy_level = random.randint(enemy_role.level_range[0], enemy_role.level_range[1])
-            # 也许应该用不同的npc_id
-            enemy_list.append(NPC('dungeon_test', "敌人", enemy_role, enemy_level, [], True))
-            deck = []
-            actions = random.sample(ACTION_LIBRARY, 20)
-            for action in actions:
-                deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
-            battle_action_controller.enemy_register_actions('dungeon_test', deck)
+        # todo max_level = self.dungeon_level + self.current_floor
+        enemy_list = npc_controller.gen_dungeon_npc(enemy_count)
         return enemy_list
 
     def start(self, dungeon_level):
         self.player_hands = []
         self.dungeon_level = dungeon_level
         self.current_floor = 1
+        self.step()
+        renpy.call("start_dungeon")
 
     def player_place_card(self, card):
         self.placed_card = card

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_story/main_queen_labels.rpy", line 87: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
-    "劝告她(另一种方式❤)"
-                 ^
+File "game/rpg_story/main_queen_labels.rpy", line 119: is not terminated with a newline. (Check strings and parenthesis.)
+(Perhaps you left out a " at the end of the first line.)
+            DM "你询问士兵有没有看到公主
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun May 19 14:40:30 2024
+Mon May 20 17:36:36 2024

@@ -48,7 +48,7 @@ class NPCController:
         for action in actions:
             deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
         battle_action_controller.enemy_register_actions(npc_id, deck)
-        self.npc_list[npc_id] = npc
+        return npc
 
     def gen_world_npc(self):
         npc_mapping = [
@@ -60,15 +60,15 @@ class NPCController:
             (ROLE_ENVOY, 1),
             (ROLE_KNIGHT, 2),
             (ROLE_SOLDIER, 4),
-            (ROLE_MAGE, 4),
-            (ROLE_SCHOLAR, 4),
-            (ROLE_ALCHEMIST, 4),
-            (ROLE_DIVINER, 2),
+            (ROLE_MAGE, 2),
+            (ROLE_SCHOLAR, 1),
+            (ROLE_ALCHEMIST, 1),
+            (ROLE_DIVINER, 1),
             (ROLE_MERCHANT, 4),
             (ROLE_CRAFTSMAN, 4),
             (ROLE_FARMER, 4),
             (ROLE_ARTIST, 4),
-            (ROLE_BARD, 4),
+            (ROLE_BARD, 1),
             (ROLE_ADVENTURER, 4),
             (ROLE_HUNTER, 4),
             (ROLE_THIEF, 4),
@@ -76,14 +76,15 @@ class NPCController:
             (ROLE_MONK, 4),
             (ROLE_NUN, 4),
             (ROLE_CLERGY, 1),
-            (ROLE_SLAVE, 4),
-            (ROLE_PROSTITUTE, 4)
+            (ROLE_SLAVE, 2),
+            (ROLE_PROSTITUTE, 2)
         ]
         for (role, count) in npc_mapping:
             if player.role == role:
                 count -= 1
             for i in range(count):
-                self.gen_npc(role)
+                npc = self.gen_npc(role)
+                self.npc_list[npc.id] = npc
 
     def gen_dungeon_npc(self, count):
         npc_list = []
@@ -105,17 +106,18 @@ class NPCController:
         if frozen_hours > 0:
             unfreeze_date = world_controller.date + timedelta(hours=frozen_hours)
             self.frozen_placed_npc_list.append((npc_id, unfreeze_date))
+        world_controller.step()
 
     def update_npc_location(self):
         freeze_npc_list = []
         unfreeze_list = []
-        for i, (npc_id, unfreeze_date) in enumerate(self.frozen_placed_npc_list):
+        for npc_id, unfreeze_date in self.frozen_placed_npc_list:
             if world_controller.date >= unfreeze_date:
-                unfreeze_list.append(i)
+                unfreeze_list.append(npc_id)
             else:
                 freeze_npc_list.append(npc_id)
-        for i in unfreeze_list:
-            self.frozen_placed_npc_list.pop(i)
+        self.frozen_placed_npc_list = [(npc_id, unfreeze_date) for npc_id, unfreeze_date in self.frozen_placed_npc_list
+                                       if npc_id not in unfreeze_list]
         self.area_npc_map.clear()
         for npc in self.npc_list.values():
             area_weights = npc.role.area_weights_day if 8 < world_controller.get_hour() < 18 else npc.role.area_weights_night

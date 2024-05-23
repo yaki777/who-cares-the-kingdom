@@ -43,13 +43,18 @@ class NPCController:
         (npc_id, name, _) = npc_names.pop(0)
         npc = NPC(npc_id, name, role,
                   random.randint(role.level_range[0], role.level_range[1]), weakness)
-        # todo? different card pool for different role
         deck = []
         actions = random.sample(ACTION_LIBRARY, 20)
         if role == ROLE_ALCHEMIST:
             actions += MACHINE_ACTION_LIBRARY
+        if npc.level > 7:
+            suits = CARD_SUITS[0:-1]
+        elif npc.level > 11:
+            suits = CARD_SUITS[0:-2]
+        else:
+            suits = CARD_SUITS
         for action in actions:
-            deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
+            deck.append(BattleAction(*action, level=random.randint(npc.level, 14), suit=random.choice(suits)))
         battle_action_controller.enemy_register_actions(npc_id, deck)
         return npc
 
@@ -142,6 +147,8 @@ class NPCController:
         next_label = f"{base_label}_{player_role_code}_{npc.location}"
         if not renpy.has_label(next_label):
             next_label = f"{base_label}_{player_role_code}"
+        if not renpy.has_label(next_label):
+            next_label = f"{base_label}_{npc.location}"
         if not renpy.has_label(next_label):
             next_label = f"{base_label}"
         if not renpy.has_label(next_label):

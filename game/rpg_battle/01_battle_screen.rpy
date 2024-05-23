@@ -2,7 +2,7 @@ default card_description = ""
 default battle_hovered_card = None
 default battle_reward_cards = None
 label start_battle():
-    DM "战斗开始！"
+    DM "战斗开始！战斗主题：[battle_controller.theme]"
     python:
         card_description = ""
         battle_hovered_card = None
@@ -169,7 +169,7 @@ screen battle_screen:
                 background None
                 vbox:
                     xfill True
-                    imagebutton idle battle_controller.halftime.current_card.inner action [NullAction()] xalign 0.5
+                    imagebutton idle battle_controller.halftime.current_card.addition.image action [NullAction()] xalign 0.5
                     if len(battle_controller.halftime.cards)>0:
                             textbutton "继续" action [Function(battle_controller.halftime.step)] xalign 0.5
                     else:

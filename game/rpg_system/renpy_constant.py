@@ -39,7 +39,8 @@ class Renpy:
 
     def return_statement(self, value=None):
         pass
-
+    def loadable(self,filename, directory=None):
+        pass
 
 renpy = Renpy()
 

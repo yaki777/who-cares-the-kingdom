@@ -69,7 +69,7 @@ MA_INNER_WALL_EXPLORATION_ANAL = ('ma_inner_wall_exploration_anal', [TAG_HENTAI]
                                   ORGAN_ANAL, [Vibrator])
 MA_OPEN_CHECK_PUSSY = ('ma_open_check_pussy', [TAG_HENTAI], THEME_MACHINE,
                        "开放检查",
-                       "你的小学需要一个全面的检查。你被固定在一个类似产床的设备上。一个窥阴器被插入了你的小穴里，你看着机器把你的小穴里的每个角落都检查了一遍。",
+                       "你的小穴需要一个全面的检查。你被固定在一个类似产床的设备上。一个窥阴器被插入了你的小穴里，你看着机器把你的小穴里的每个角落都检查了一遍。",
                        "躺在床上，把窥阴器插入小穴，然后扩张到你能承受的最大值。保持住，并拍一张照片。", ORGAN_PUSSY,
                        [Speculum])
 MA_OPEN_CHECK_ANAL = ('ma_open_check_anal', [TAG_HENTAI], THEME_MACHINE,

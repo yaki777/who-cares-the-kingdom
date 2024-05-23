@@ -10,11 +10,12 @@ label start:
     # 显示战斗
 #     $ battle_controller.start()
 #     call screen battle_screen
+    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
     $ world_controller.start_game()
     $ story_controller.start()
-    $ story_controller.start_stage("S_GS_stage_1")
-#     call start_world
-    $ dungeon_controller.start(2)
+#     $ story_controller.start_stage("S_GS_stage_1")
+    call start_world
+#     $ dungeon_controller.start(2)
 #     call screen dungeon_walk
 
 #     call screen player_deck

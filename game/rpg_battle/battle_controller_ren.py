@@ -70,7 +70,7 @@ class BattleController:
         numbers = [1, 2, 3, 4, 5]
         weights = [5, 4, 3, 2, 1]
         card_number = random.choices(numbers, weights, k=1)[0]
-        cards = battle_action_controller.enemy_draw_cards(self.enemy.id, card_number)
+        cards = battle_action_controller.enemy_draw_cards(self.enemy.id, card_number, self.theme)
         for card in cards:
             for i, slot in enumerate(self.enemy_table):
                 if slot.addition is None:
@@ -82,13 +82,14 @@ class BattleController:
     def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
-        battle_action_controller.player_shuffle_deck()
-        battle_action_controller.enemy_shuffle_deck(self.enemy.id)
-        self.player_hand = battle_action_controller.player_draw_cards(5)
-        self.enemy_play_card()
-        self.battle_info = f'回合 {self.round}'
         if world_controller.current_area.code == 'al1':
             self.theme = THEME_MACHINE
+        battle_action_controller.player_shuffle_deck()
+        battle_action_controller.enemy_shuffle_deck(self.enemy.id)
+        self.player_hand = battle_action_controller.player_draw_cards(5, self.theme)
+        self.enemy_play_card()
+        self.battle_info = f'回合 {self.round}'
+
         renpy.call("start_battle")
 
     def result_display(self):
@@ -107,7 +108,7 @@ class BattleController:
         result = battle_result[0]
         enemy = battle_result[1]
         if result == 'win':
-            return battle_action_controller.enemy_draw_cards(enemy.id, 3)
+            return battle_action_controller.enemy_draw_cards(enemy.id, 3, self.theme)
         return None
 
     def is_end(self):
@@ -133,7 +134,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
-        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand)):
+        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand), self.theme):
             self.player_hand.append(card)
         if self.player_chips == 0:
             self.battle_info = '战斗结束!'

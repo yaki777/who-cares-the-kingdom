@@ -2,35 +2,31 @@
 
 While running game code:
   File "game/script.rpy", line 13, in script
-    $ world_controller.start_game()
+    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
   File "game/script.rpy", line 13, in <module>
-    $ world_controller.start_game()
-TypeError: list indices must be integers or slices, not str
+    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
+TypeError: unhashable type: 'RevertableList'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/script.rpy", line 13, in script
-    $ world_controller.start_game()
+    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
   File "game/script.rpy", line 13, in <module>
-    $ world_controller.start_game()
-  File "game/rpg_world/world_controller_ren.py", line 20, in start_game
-    npc_controller.gen_world_npc()
-  File "game/rpg_npc/npc_controller_ren.py", line 89, in gen_world_npc
-    npc = self.gen_npc(role)
-  File "game/rpg_npc/npc_controller_ren.py", line 53, in gen_npc
-    battle_action_controller.enemy_register_actions(npc_id, deck)
-  File "game/rpg_battle/battle_action_controller_ren.py", line 58, in enemy_register_actions
-    self.decks[enemy_id][action.theme] = []
+    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
+  File "game/rpg_battle/battle_action_controller_ren.py", line 40, in apply_filters
+    self._apply_filter(MACHINE_ACTION_LIBRARY, ban_toys, ban_organs)
+  File "game/rpg_battle/battle_action_controller_ren.py", line 34, in _apply_filter
+    ban_actions.add(action)
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/revertable.py", line 97, in do_mutation
     return method(self, *args, **kwargs)
-TypeError: list indices must be integers or slices, not str
+TypeError: unhashable type: 'RevertableList'
 
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.1.24030407
 Android GUI 1.31
-Thu May 23 17:06:13 2024
+Thu May 23 18:02:14 2024

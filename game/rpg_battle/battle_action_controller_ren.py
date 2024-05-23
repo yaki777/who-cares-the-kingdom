@@ -1,3 +1,4 @@
+from rpg_battle.battle_action_machine_ren import MACHINE_ACTION_LIBRARY
 from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction, THEME_LOVE
 from rpg_cards.cards_ren import CARD_SUITS
 
@@ -19,6 +20,23 @@ class BattleActionController:
         for action in actions:
             self.decks['player'][THEME_LOVE].append(BattleAction(*action, level=random.randint(2, 14),
                                                                  suit=random.choice(CARD_SUITS)))
+
+    def _apply_filter(self, action_library, ban_toys, ban_organs):
+        ban_actions = set()
+        for toy in ban_toys:
+            for action in action_library:
+                if len(action) > 7 and toy in action[7]:
+                    ban_actions.add(action[0])
+
+        for organ in ban_organs:
+            for action in action_library:
+                if len(action) > 6 and organ == action[6]:
+                    ban_actions.add(action[0])
+        action_library[:] = [action for action in action_library if action[0] not in ban_actions]
+
+    def apply_filters(self, ban_toys, ban_organs):
+        self._apply_filter(ACTION_LIBRARY, ban_toys, ban_organs)
+        self._apply_filter(MACHINE_ACTION_LIBRARY, ban_toys, ban_organs)
 
     def player_get_action(self, action):
         if action.theme not in self.decks['player']:

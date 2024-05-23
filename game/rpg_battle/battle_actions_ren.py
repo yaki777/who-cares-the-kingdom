@@ -1,4 +1,5 @@
 from rpg_cards.cards_ren import Card
+from rpg_system.renpy_constant import renpy
 from rpg_world.player_ren import player
 
 """renpy
@@ -58,45 +59,43 @@ class BattleAction:
         self.theme = theme
         self.organ_require = organ_require
         self.toys_require = toys_require
-
+        self.image = 'images/battle_actions/' + self.name
+        if player.is_femboy and renpy.loadable(self.name + '_femboy', 'images/battle_actions'):
+            self.image += '_femboy'
+        self.image += '.png'
 
     def display_text(self):
         return f"{{color=#FFC300}}Exp {self.exp}{{/color}}\n{self.title}"
 
     def card(self):
-        name = self.name
-        if player.is_femboy:
-            name += '_femboy'
-        return Card(self.level, self.suit, self.name, self.display_text(), self.display_text(), self)
+        card_name = 'battle_' + self.name
+        if '_femboy' in self.image:
+            card_name += '_femboy'
+        return Card(self.level, self.suit, card_name, self.display_text(), self.display_text(), self)
 
 
 ACTION_LIBRARY = [
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
+    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰")
 ]

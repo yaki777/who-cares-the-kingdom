@@ -58,9 +58,27 @@ label M_QDW_stage_1(story,npc):
 
 label M_QDW_stage_2(story,npc):
     if npc.role == ROLE_ENVOY:
-        npc.c "女王陛下，我已经通知了我的王子。他会在几天后到达这里。"
-        npc.c "公主殿下呢？"
-        DM "你告诉他你正在安排。"
+        if (story.wedding_date-world_controller.date).days>7:
+            npc.c "女王陛下，我已经通知了我的王子。他会在一周内到达这里。"
+            npc.c "公主殿下呢？"
+            DM "你告诉他你正在安排。"
+        elif (story.wedding_date-world_controller.date).days>=0:
+            npc.c "女王陛下，我们的王子已经到达。"
+            npc.c "婚礼什么时候举行，我们的王子不想等候太久。"
+            if player.princess_agree_marry:
+                menu:
+                    "婚礼很快就举行":
+                        DM "你告诉使者婚礼会在三天后举行。"
+                        $ story_controller.start_stage("M_QDW_stage_3")
+                    "再等等":
+                        DM "你告诉他你正在安排。"
+            else:
+                DM "你告诉他你正在安排。"
+        else:
+            DM "王子已经等了太久。"
+            npc.c "陛下，我不在乎你的借口！你有最后期限，但你未能达到。"
+            npc.c "因此，我们取消订婚并撤回对你的支持。你的无能是不可原谅的。"
+            $ story_controller.start_stage("M_QDW_stage_9")
 
     elif npc.role == ROLE_MINISTER:
         npc.c "陛下！有什么可以为您效劳的吗？"
@@ -68,9 +86,9 @@ label M_QDW_stage_2(story,npc):
         npc.c "我明白了……陛下，这是一个非常重要的发展。我们需要加快准备速度。"
         npc.c "我会立即召集我的团队。"
         npc.c "我可以问一下您的女儿对这个消息的反应吗？"
-        if story.princess_agree is None:
+        if player.princess_agree_marry is None:
             DM "你告诉[npc.name],公主还不知道"
-        elif story.princess_agree:
+        elif player.princess_agree_marry:
             DM "你告诉[npc.name],公主已经同意了婚事"
         else:
             DM "你告诉[npc.name],公主不同意婚事。但你没有办法，只能先做准备。"
@@ -80,7 +98,7 @@ label M_QDW_stage_2(story,npc):
         npc.c "妈妈，你来这里有什么事吗？"
         DM "你告诉了她使者的要求。"
         npc.c "妈妈... 你怎么能这样？我... 我要被嫁给一个陌生人？为了拯救王国？"
-        $ story.princess_agree = False
+        $ player.princess_agree_marry = False
         menu:
             "劝告她":
                 DM "你告诉[npc.name]你也没有办法，希望她能理解"
@@ -92,17 +110,18 @@ label M_QDW_stage_2(story,npc):
                 $ battle_controller.start(npc)
                 if battle_controller.is_win():
                     DM "[npc.name]喘着气，尽管还是不愿意，但她决定听从你的安排。"
-                    $ story.princess_agree = True
+                    $ player.princess_agree_marry = True
                     return
                 else:
                     npc.c "不要这样，妈妈。我不会同意的。"
-                    $ story.princess_agree = False
+                    $ player.princess_agree_marry = False
                     return
-        if not story.princess_agree:
+        if not player.princess_agree_marry:
             DM "[npc.name]没有如你所愿，哭着离开了房间。"
             DM "也许你应该再去找她。"
             $ story_controller.start_stage("M_QFD_stage_1")
     return
+label M_QDW_stage_3(story,npc):
 
 label M_QDW_stage_10(story,npc):
     if npc.role == ROLE_ENVOY:
@@ -189,4 +208,83 @@ label M_QFD_stage_3(story,npc):
     if npc.role == ROLE_ADVENTURER:
         npc.c "我们出发吧，陛下。"
         $ dungeon_controller.start(5)
+    if npc.role == ROLE_PRINCESS:
+        DM "你找到了公主，你让她和你一起回去。"
+        npc.c "嗯...是的，我知道。但我想...我想我想再呆一会儿。"
+        DM "你很不理解。"
+        npc.c "妈妈，那个地精还给了我另外一样东西……一种我从未经历过的欲望。"
+        npc.c "嗯...它让我想要你❤。我们能不能玩一会儿？"
+        DM "哦不，公主中了哥布林的媚药！"
+        if player.has_goblin_antidote:
+            menu:
+                DM "你碰巧有解药"
+                "使用":
+                    DM "你给了[npc.name]解药。"
+                    DM "[npc.name]恢复了正常，你和"
+                    return
+        menu:
+            "强行带走公主":
+                DM "你和[story.the_adventurer.name]用尽力气把[npc.name]带回了城里。"
+                DM "城里有一位神秘的炼金术士，他可能有解药。"
+                $ story_controller.start_stage("M_QFD_stage_5")
+                return
+            "接受❤":
+                DM "不知道为什么，当你看着[npc.name]时，你也感到一种莫名的欲望。"
+                $ battle_controller.start(npc)
+                if battle_controller.is_win():
+                    DM "在一阵缠绵过后，你们两人都感到了满足。"
+                    npc.c "发生了什么？我们做了什么？"
+                    npc.c "哦...（开始回忆起事件）不，不是！我被附身了或者什么的！感觉太不对劲了！"
+                    DM "公主恢复了正常，你可以带她回去了。"
+                    $ story_controller.start_stage("M_QFD_stage_6")
+                else:
+                    DM "就在这时，一群哥布林跳了出来。"
+                    $ goblin = Character("哥布林")
+                    goblin "看，我们的女王来了！我们抓到了另一个人类！"
+                    goblin "我们该怎么办她？"
+                    goblin "让她成为我们中的一员！现在她是我们的了，我们不能让她走。"
+                    DM "你被包围了。你依然在尝试带公主离开。"
+                    npc.c "妈妈，你太天真了。我们都是这里的囚徒，被自己的欲望所困。你现在才意识到这一点。"
+                    $ story_controller.start_stage("S_GS_stage_1")
+                return
+    return
+
+label M_QFD_stage_5(story,npc):
+    if npc.role == ROLE_ALCHEMIST:
+        npc.c "哦，女王陛下，你来了。"
+        npc.c "我听说你的女儿中了哥布林的媚药。"
+        npc.c "我有解药，但是我需要一些东西。"
+        menu:
+            "给他":
+                DM "你给了[npc.name]他需要的东西。"
+                DM "他很快就调制出了解药。"
+                DM "你带着解药回到了公主身边。"
+                $ player.has_goblin_antidote = True
+                $ story_controller.start_stage("M_QFD_stage_6")
+            "不给":
+                DM "你拒绝了[npc.name]的要求。"
+                DM "你决定再找别的办法。"
+                return
+    elif npc.role == ROLE_PRINCESS:
+        if player.has_goblin_antidote:
+            menu:
+                DM "你碰巧有解药"
+                "使用":
+                    DM "你给了[npc.name]解药。"
+                    DM "[npc.name]一阵恍惚，过了一会儿..."
+                    $ story_controller.start_stage("M_QFD_stage_6")
+                    return
+                "不使用":
+                    DM "你决定先不使用解药。"
+    return
+
+label M_QFD_stage_6(story,npc):
+    if npc.role == ROLE_PRINCESS:
+        npc.c "发生了什么？我们做了什么？"
+        npc.c "哦...（开始回忆起事件）不，不是！我被附身了或者什么的！感觉太不对劲了！"
+        DM "你安慰了[npc.name]"
+        npc.c "妈妈，我对导致这种局面的行为深感羞愧。但我对您的营救心怀感激。"
+        npc.c "我不会再逃避了。我愿意不惜一切拯救我的王国。即使这意味着要嫁给那个王子。"
+        DM "你成功了。去问问使者下一步的安排吧。"
+        $ story_controller.start_stage("M_QFD_stage_6")
     return

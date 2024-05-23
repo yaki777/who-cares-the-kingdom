@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_story/main_queen_labels.rpy", line 119: is not terminated with a newline. (Check strings and parenthesis.)
-(Perhaps you left out a " at the end of the first line.)
-            DM "你询问士兵有没有看到公主
+File "game/rpg_story/main_queen_labels.rpy", line 192: if statement expects a non-empty block.
+    if npc.role == ROLE_PRINCESS:
+                                 ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon May 20 17:36:36 2024
+Mon May 20 21:28:09 2024

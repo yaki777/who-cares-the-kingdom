@@ -1,10 +1,10 @@
-import random
+from datetime import timedelta
 
 from rpg_role.roles_ren import ROLE_MINISTER, ROLE_ENVOY, ROLE_PRINCESS, ROLE_KNIGHT, ROLE_SOLDIER, ROLE_ALCHEMIST, \
     ROLE_ADVENTURER
 from rpg_story.story_ren import Story
 from rpg_system.renpy_constant import npc_controller, world_controller
-from rpg_world.area_ren import AREA_MAP
+from rpg_world.player_ren import player
 
 """renpy
 init -90 python:
@@ -39,6 +39,7 @@ class StoryQueenDaughterWedding(Story):
         self.princess_agree = None
         self.name = "M_QDW"
         self.current_stage = "stage_1"
+        self.wedding_date = None
 
     def stage_1(self):
         self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
@@ -53,12 +54,14 @@ class StoryQueenDaughterWedding(Story):
         npc_controller.add_npc_to_stage(self.minister.id, "M_QDW_stage_2", "关于公主的婚事...")
         self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
         npc_controller.add_npc_to_stage(self.princess.id, "M_QDW_stage_2", "关于你的婚事...")
+        self.wedding_date = world_controller.date + timedelta(days=14)
 
     def stage_10(self):
         npc_controller.remove_npc_stages(self.envoy.id, "M_QDW_")
         npc_controller.remove_npc_stages(self.minister.id, "M_QDW_")
         npc_controller.add_npc_to_stage(self.minister.id, "M_QDW_stage_10", "关于我们的国家...")
         npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_10", "关于支援我们的国家...")
+        player.force += 100
 
 
 class StoryQueenFindDaughter(Story):
@@ -76,8 +79,12 @@ class StoryQueenFindDaughter(Story):
         self.current_stage = "stage_1"
 
     def stage_1(self):
+        # 大臣，骑士，士兵
+        player.princess_is_virgin = False
         self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
-        npc_controller.place_npc(self.princess.id, "dungeon_7", 24 * 15)
+        self.princess.level = 14
+        npc_controller.place_npc(self.princess.id, "dungeon_forest_2", 24 * 15)
+
         self.ministers = npc_controller.get_npc_by_role(ROLE_MINISTER)
         for minister in self.ministers:
             npc_controller.add_npc_to_stage(minister.id, "M_QFD_stage_1", "看到我的女儿了吗...")
@@ -89,6 +96,7 @@ class StoryQueenFindDaughter(Story):
             npc_controller.add_npc_to_stage(soldier.id, "M_QFD_stage_1", "看到我的女儿了吗...")
 
     def stage_2(self):
+        # 骑士，冒险家
         self.find_start_date = world_controller.date.timestamp()
         for knight in self.knights:
             npc_controller.remove_npc_stages(knight.id, "M_QFD_")
@@ -98,6 +106,7 @@ class StoryQueenFindDaughter(Story):
             npc_controller.add_npc_to_stage(adventurer.id, "M_QFD_stage_2", "看到我的女儿了吗...")
 
     def stage_3(self, the_adventurer):
+        # 冒险家
         for adventurer in self.adventurers:
             npc_controller.remove_npc_stages(adventurer.id, "M_QFD_")
         self.the_adventurer = the_adventurer
@@ -105,14 +114,27 @@ class StoryQueenFindDaughter(Story):
         npc_controller.place_npc(the_adventurer.id, "g1", 24 * 3)
 
     def stage_5(self):
+        # 炼金术师，公主
         for soldier in self.soldiers:
             npc_controller.remove_npc_stages(soldier.id, "M_QFD_")
         for knight in self.knights:
             npc_controller.remove_npc_stages(knight.id, "M_QFD_")
         for minister in self.ministers:
             npc_controller.remove_npc_stages(minister.id, "M_QFD_")
+        for adventurer in self.adventurers:
+            npc_controller.remove_npc_stages(adventurer.id, "M_QFD_")
+        world_controller.place_player("psr1")
         npc_controller.place_npc(self.princess.id, "psr1", 30 * 24)
         npc_controller.remove_npc_stages(self.princess.id, "M_QFD_")
-        npc_controller.add_npc_to_stage(self.princess.id, "M_QFD_stage_3", "女儿...")
+        npc_controller.add_npc_to_stage(self.princess.id, "M_QFD_stage_5", "女儿...")
         self.alchemist = npc_controller.get_npc_by_role(ROLE_ALCHEMIST)[0]
-        npc_controller.add_npc_to_stage(self.alchemist.id, "M_QFD_stage_3", "迷宫中的怪物...")
+        npc_controller.add_npc_to_stage(self.alchemist.id, "M_QFD_stage_5", "哥布林媚药...")
+
+    def stage_6(self):
+        npc_controller.remove_npc_stages(self.alchemist.id, "M_QFD_")
+        npc_controller.remove_npc_stages(self.princess.id, "M_QFD_")
+        npc_controller.add_npc_to_stage(self.princess.id, "M_QFD_stage_6", "女儿...")
+
+    def stage_7(self):
+        npc_controller.remove_npc_stages(self.princess.id, "M_QFD_")
+        player.princess_agree_marry = True

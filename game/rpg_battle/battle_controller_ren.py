@@ -1,7 +1,8 @@
 from rpg_battle.battle_action_controller_ren import BattleActionController
+from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
-from rpg_system.renpy_constant import battle_action_controller, renpy
+from rpg_system.renpy_constant import battle_action_controller, renpy, world_controller
 
 """renpy
 init -80 python:
@@ -23,6 +24,7 @@ class BattleController:
         self.enemy_table_desc = ''
         self.battle_info = ''
         self.halftime = None
+        self.theme = THEME_LOVE
         self.battle_calculator = BattleCalculator()
 
     def clear_battle(self):
@@ -37,6 +39,7 @@ class BattleController:
         self.enemy_table_desc = ''
         self.battle_info = ''
         self.halftime = None
+        self.theme = THEME_LOVE
         self.battle_calculator = BattleCalculator()
 
     def player_table_len(self):
@@ -84,6 +87,8 @@ class BattleController:
         self.player_hand = battle_action_controller.player_draw_cards(5)
         self.enemy_play_card()
         self.battle_info = f'回合 {self.round}'
+        if world_controller.current_area.code == 'al1':
+            self.theme = THEME_MACHINE
         renpy.call("start_battle")
 
     def result_display(self):
@@ -132,6 +137,7 @@ class BattleController:
             self.player_hand.append(card)
         if self.player_chips == 0:
             self.battle_info = '战斗结束!'
+
 
 class BattleHalftime:
     def __init__(self, battle_controller, player_win, cards):

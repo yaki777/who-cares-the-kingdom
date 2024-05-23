@@ -18,7 +18,6 @@ class WorldController:
 
     def start_game(self):
         npc_controller.gen_world_npc()
-        npc_controller.gen_dungeon_npc()
         npc_controller.update_npc_location()
         self.step()
 
@@ -32,7 +31,7 @@ class WorldController:
                 card = self.placed_card
                 self.player_hands.append(self.placed_card)
                 self.placed_card = None
-                npc_controller.talk_to_npc(card.addition.id)
+                npc_controller.talk_to_npc(card.addition)
                 return
             if isinstance(self.placed_card.addition, Area):
                 self.current_area = self.placed_card.addition

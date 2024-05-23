@@ -1,4 +1,4 @@
-from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction
+from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction, THEME_LOVE
 from rpg_cards.cards_ren import CARD_SUITS
 
 """renpy
@@ -10,45 +10,59 @@ import random
 class BattleActionController:
     def __init__(self):
         self.decks = {
-            'player': [],
-            'enemy_test': [],
+            'player': {
+                THEME_LOVE: []
+            },
         }
         # for test
         actions = random.sample(ACTION_LIBRARY, 20)
         for action in actions:
-            self.decks['player'].append(BattleAction(*action, level=random.randint(2, 14),
-                                                     suit=random.choice(CARD_SUITS)))
+            self.decks['player'][THEME_LOVE].append(BattleAction(*action, level=random.randint(2, 14),
+                                                                 suit=random.choice(CARD_SUITS)))
 
-    def player_get_action(self, card):
-        self.decks['player'].append(card)
+    def player_get_action(self, action):
+        if action.theme not in self.decks['player']:
+            self.decks['player'][action.theme] = []
+        self.decks['player'][action.theme].append(action)
 
-    def player_discard_action(self, card):
-        self.decks['player'].remove(card)
+    def player_discard_action(self, action):
+        self.decks['player'][action.theme].remove(action)
 
     def player_deck(self):
         return self.decks['player']
 
     def player_shuffle_deck(self):
-        random.shuffle(self.decks['player'])
+        for k, v in self.decks['player'].items():
+            random.shuffle(v)
 
-    def player_draw_cards(self, number=1):
+    def player_draw_cards(self, number=1, theme=THEME_LOVE):
         cards = []
+        if theme not in self.decks['player']:
+            theme = THEME_LOVE
         for i in range(number):
-            action = self.decks['player'].pop(0)
+            action = self.decks['player'][theme].pop(0)
             cards.append(action.card())
-            self.decks['player'].append(action)
+            self.decks['player'][theme].append(action)
         return cards
 
     def enemy_shuffle_deck(self, enemy_id):
-        random.shuffle(self.decks[enemy_id])
+        for k, v in self.decks[enemy_id].items():
+            random.shuffle(v)
 
-    def enemy_draw_cards(self, enemy_id, number=1):
+    def enemy_draw_cards(self, enemy_id, number=1, theme=THEME_LOVE):
         cards = []
+        if theme not in self.decks[enemy_id]:
+            theme = THEME_LOVE
         for i in range(number):
-            action = self.decks[enemy_id].pop(0)
+            action = self.decks[enemy_id][theme].pop(0)
             cards.append(action.card())
-            self.decks[enemy_id].append(action)
+            self.decks[enemy_id][theme].append(action)
         return cards
 
-    def enemy_register_actions(self, enemy_id, card_list):
-        self.decks[enemy_id] = card_list
+    def enemy_register_actions(self, enemy_id, action_list):
+        if enemy_id not in self.decks:
+            self.decks[enemy_id] = {}
+        for action in action_list:
+            if action.theme not in self.decks[enemy_id]:
+                self.decks[enemy_id][action.theme] = []
+            self.decks[enemy_id][action.theme].append(action)

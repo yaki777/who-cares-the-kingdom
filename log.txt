@@ -1,4 +1,4 @@
-2024-05-20 13:16:45 UTC
+2024-05-23 09:06:36 UTC
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35
 Ren'Py 8.2.1.24030407
 
@@ -25,7 +25,7 @@ Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
 Save screen analysis took 0.02s
-Prepare screens took 0.06s
+Prepare screens took 0.07s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.02s
 Running _start took 0.00s
@@ -41,10 +41,3 @@ Version: b'4.5 (Compatibility Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2'
 Display Info: None
 Screen sizes: virtual=(1080, 1920) physical=(549, 976) drawable=(549, 976)
 Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.00s
-Build styles took 0.00s
-Load screen analysis took 0.04s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.00s

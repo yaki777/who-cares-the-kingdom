@@ -20,6 +20,7 @@ THEME_PUBLIC = '公共'
 THEME_LOVE = '纯爱'
 THEME_GOBLIN = '哥布林'
 THEME_SLIME = '史莱姆'
+THEME_GIRL_LOVE = '百合'
 
 ORGAN_ANAL = "肛门"
 ORGAN_PUSSY = "阴道"
@@ -44,6 +45,10 @@ Pump = 'Pump'
 Speculum = 'Speculum'
 Special = 'Special'
 
+BATTLE_ACTION_EXP = {
+
+}
+
 
 class BattleAction:
     def __init__(self, name, tags, theme, title, fantasy, reality, organ_require=None, toys_require=None, level=2,
@@ -55,7 +60,6 @@ class BattleAction:
         self.reality = reality
         self.level = level
         self.suit = suit
-        self.exp = 1
         self.theme = theme
         self.organ_require = organ_require
         self.toys_require = toys_require
@@ -65,13 +69,28 @@ class BattleAction:
         self.image += '.png'
 
     def display_text(self):
-        return f"{{color=#FFC300}}Exp {self.exp}{{/color}}\n{self.title}"
+        exp_display = [
+            '',
+            '青涩',
+            '初学',
+            '熟练',
+            '专家',
+            '大师',
+        ]
+        return f"{{color=#FFC300}}Exp {exp_display[self.exp()]}{{/color}}\n{self.title}"
 
     def card(self):
         card_name = 'battle_' + self.name
         if '_femboy' in self.image:
             card_name += '_femboy'
         return Card(self.level, self.suit, card_name, self.display_text(), self.display_text(), self)
+
+    def exp(self, add=0):
+        if self.name not in BATTLE_ACTION_EXP:
+            BATTLE_ACTION_EXP[self.name] = 1
+        if add != 0:
+            BATTLE_ACTION_EXP[self.name] += add
+        return min(int(BATTLE_ACTION_EXP[self.name] / 10) + 1, 5)
 
 
 ACTION_LIBRARY = [

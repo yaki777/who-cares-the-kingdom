@@ -9,7 +9,7 @@ from rpg_cards.cards_ren import Card
 
 
 class NPC:
-    def __init__(self, npc_id, name, role, level, weakness, is_enemy=False):
+    def __init__(self, npc_id, name, role, level, weakness, is_enemy=False, is_female=False):
         self.id = npc_id
         self.name = name
         self.role = role
@@ -23,6 +23,7 @@ class NPC:
         self.c = Character(self.name)
         self.label = f"merchant_start"
         self.stages = []
+        self.is_female = is_female
 
     def card(self):
         return Card(self.level, "Tiles", "npc_" + self.id, self.display_name, self.display_name, self, self.is_enemy)

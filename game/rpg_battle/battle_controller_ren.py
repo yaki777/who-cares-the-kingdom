@@ -1,5 +1,4 @@
-from rpg_battle.battle_action_controller_ren import BattleActionController
-from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE
+from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GIRL_LOVE
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
 from rpg_system.renpy_constant import battle_action_controller, renpy, world_controller
@@ -24,7 +23,7 @@ class BattleController:
         self.enemy_table_desc = ''
         self.battle_info = ''
         self.halftime = None
-        self.theme = THEME_LOVE
+        self.themes = [THEME_LOVE]
         self.battle_calculator = BattleCalculator()
 
     def clear_battle(self):
@@ -39,7 +38,7 @@ class BattleController:
         self.enemy_table_desc = ''
         self.battle_info = ''
         self.halftime = None
-        self.theme = THEME_LOVE
+        self.themes = [THEME_LOVE]
         self.battle_calculator = BattleCalculator()
 
     def player_table_len(self):
@@ -70,7 +69,7 @@ class BattleController:
         numbers = [1, 2, 3, 4, 5]
         weights = [5, 4, 3, 2, 1]
         card_number = random.choices(numbers, weights, k=1)[0]
-        cards = battle_action_controller.enemy_draw_cards(self.enemy.id, card_number, self.theme)
+        cards = battle_action_controller.enemy_draw_cards(self.enemy.id, card_number, self.themes)
         for card in cards:
             for i, slot in enumerate(self.enemy_table):
                 if slot.addition is None:
@@ -79,14 +78,19 @@ class BattleController:
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
         self.enemy_table_desc = f'{enemy_table_rank[1]}: {enemy_table_score}'
 
+    def add_theme(self):
+        if self.enemy.is_female:
+            self.themes.append(THEME_GIRL_LOVE)
+        if world_controller.current_area.code == 'al1':
+            self.themes.append(THEME_MACHINE)
+
     def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
-        if world_controller.current_area.code == 'al1':
-            self.theme = THEME_MACHINE
+        self.add_theme()
         battle_action_controller.player_shuffle_deck()
         battle_action_controller.enemy_shuffle_deck(self.enemy.id)
-        self.player_hand = battle_action_controller.player_draw_cards(5, self.theme)
+        self.player_hand = battle_action_controller.player_draw_cards(5, self.themes)
         self.enemy_play_card()
         self.battle_info = f'回合 {self.round}'
 
@@ -108,7 +112,7 @@ class BattleController:
         result = battle_result[0]
         enemy = battle_result[1]
         if result == 'win':
-            return battle_action_controller.enemy_draw_cards(enemy.id, 3, self.theme)
+            return battle_action_controller.enemy_draw_cards(enemy.id, 3, self.themes)
         return None
 
     def is_end(self):
@@ -134,7 +138,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
-        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand), self.theme):
+        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand), self.themes):
             self.player_hand.append(card)
         if self.player_chips == 0:
             self.battle_info = '战斗结束!'
@@ -146,16 +150,24 @@ class BattleHalftime:
         self.player_win = player_win
         self.cards = cards
         self.current_card = None
+        self.is_end = False
 
-    def step(self):
-        self.current_card = self.cards.pop(0)
-        rank = self.current_card.addition.exp
-        is_weakness = any(i in self.battle_controller.enemy.weakness for i in self.current_card.addition.tags)
-        if is_weakness:
-            rank *= 2
-        self.battle_controller.player_rank += rank
+    def step(self, success=None):
+        if success is not None:
+            if success:
+                rank = self.current_card.addition.exp()
+                is_weakness = any(i in self.battle_controller.enemy.weakness for i in self.current_card.addition.tags)
+                if is_weakness:
+                    rank *= 2
+                self.battle_controller.player_rank += rank
+                self.current_card.addition.exp(1)
         if self.battle_controller.player_rank >= self.battle_controller.enemy.hp:
             self.battle_controller.battle_info = '战斗胜利!'
+        if len(self.cards) == 0:
+            self.is_end = True
+            self.current_card = None
+        else:
+            self.current_card = self.cards.pop(0)
 
     def end(self):
         self.battle_controller.halftime = None

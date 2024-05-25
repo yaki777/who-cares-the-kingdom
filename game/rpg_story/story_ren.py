@@ -1,3 +1,5 @@
+from rpg_system.renpy_constant import world_controller
+
 """renpy
 init -100 python:
 """
@@ -17,6 +19,7 @@ class StoryController:
     def __init__(self):
         self.stage_map = {}
         self.current_stage_list = []
+        self.schedule = []
 
     def start(self):
         for clazz in Story.__subclasses__():
@@ -32,5 +35,15 @@ class StoryController:
         story.current_stage = stage
         story.__getattribute__(stage)(*args)
 
+    def schedule_start_stage(self, date, stage_name, *args):
+        self.schedule.append((date, stage_name, args))
+        sorted(self.schedule, key=lambda x: x[0])
+
     def get_story(self, stage_name):
         return self.stage_map[stage_name][0]
+
+    def do_schedule(self):
+        for (date, stage_name, args) in self.schedule:
+            if world_controller.date >= date:
+                self.start_stage(stage_name, *args)
+        self.schedule = list(filter(lambda x: x[0] > world_controller.date, self.schedule))

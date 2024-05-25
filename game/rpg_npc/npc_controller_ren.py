@@ -34,15 +34,21 @@ class NPCController:
 
     def gen_npc(self, role):
         weakness = random.sample(TAGS, random.randint(1, 3))
+        is_female = False
         if role == ROLE_QUEEN or role == ROLE_PRINCESS or role == ROLE_PROSTITUTE:
             npc_names = NPC_FEMALE_NAMES
+            is_female = True
         elif role == ROLE_ENVOY or role == ROLE_PRINCE or role == ROLE_KING or role == ROLE_ALCHEMIST:
             npc_names = NPC_MALE_NAMES
         else:
-            npc_names = random.choice([NPC_MALE_NAMES, NPC_MALE_NAMES, NPC_FEMALE_NAMES])
+            if random.randint(0, 10) < 3:
+                is_female = True
+                npc_names = NPC_FEMALE_NAMES
+            else:
+                npc_names = NPC_MALE_NAMES
         (npc_id, name, _) = npc_names.pop(0)
         npc = NPC(npc_id, name, role,
-                  random.randint(role.level_range[0], role.level_range[1]), weakness)
+                  random.randint(role.level_range[0], role.level_range[1]), weakness, False, is_female)
         deck = []
         actions = random.sample(ACTION_LIBRARY, 20)
         if role == ROLE_ALCHEMIST:

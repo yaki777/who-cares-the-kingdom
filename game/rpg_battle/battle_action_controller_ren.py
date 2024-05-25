@@ -53,11 +53,13 @@ class BattleActionController:
         for k, v in self.decks['player'].items():
             random.shuffle(v)
 
-    def player_draw_cards(self, number=1, theme=THEME_LOVE):
+    def player_draw_cards(self, number=1, themes=None):
+        if themes is None:
+            themes = [THEME_LOVE]
         cards = []
-        if theme not in self.decks['player']:
-            theme = THEME_LOVE
+        available_themes = [theme for theme in themes if theme in self.decks['player']]
         for i in range(number):
+            theme = random.choice(available_themes)
             action = self.decks['player'][theme].pop(0)
             cards.append(action.card())
             self.decks['player'][theme].append(action)
@@ -67,11 +69,13 @@ class BattleActionController:
         for k, v in self.decks[enemy_id].items():
             random.shuffle(v)
 
-    def enemy_draw_cards(self, enemy_id, number=1, theme=THEME_LOVE):
+    def enemy_draw_cards(self, enemy_id, number=1, themes=None):
+        if themes is None:
+            themes = [THEME_LOVE]
         cards = []
-        if theme not in self.decks[enemy_id]:
-            theme = THEME_LOVE
+        available_themes = [theme for theme in themes if theme in self.decks[enemy_id]]
         for i in range(number):
+            theme = random.choice(available_themes)
             action = self.decks[enemy_id][theme].pop(0)
             cards.append(action.card())
             self.decks[enemy_id][theme].append(action)

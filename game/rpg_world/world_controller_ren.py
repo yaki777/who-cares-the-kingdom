@@ -1,5 +1,5 @@
 from rpg_npc.npc_ren import NPC
-from rpg_system.renpy_constant import world, npc_controller, renpy, battle_action_controller
+from rpg_system.renpy_constant import world, npc_controller, renpy, battle_action_controller, story_controller
 from rpg_world.area_ren import AREA_MAP, Area
 
 """renpy
@@ -36,6 +36,7 @@ class WorldController:
             if isinstance(self.placed_card.addition, Area):
                 self.current_area = self.placed_card.addition
                 self.date += timedelta(hours=1)
+        story_controller.do_schedule()
         if self.date.hour in [3, 6, 9, 12, 15, 18, 21, 0]:
             npc_controller.update_npc_location()
         self.placed_card = None
@@ -60,4 +61,8 @@ class WorldController:
 
     def place_player(self, area_code):
         self.current_area = AREA_MAP[area_code]
+        self.step()
+
+    def skip_date(self, days):
+        self.date += timedelta(days=days)
         self.step()

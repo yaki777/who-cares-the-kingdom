@@ -36,30 +36,45 @@ class StoryQueenDaughterWedding(Story):
         self.princess = None
         self.minister = None
         self.envoy = None
-        self.princess_agree = None
         self.name = "M_QDW"
         self.current_stage = "stage_1"
         self.wedding_date = None
 
     def stage_1(self):
+        # 使节
         self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
         self.envoy = npc_controller.get_npc_by_role(ROLE_ENVOY)[0]
         npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_1", "关于支援我们的国家...")
         npc_controller.place_npc(self.envoy.id, "pbh1", 12)
 
     def stage_2(self):
+        # 大臣，使节，公主
         npc_controller.remove_npc_stages(self.envoy.id, "M_QDW_")
         npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_2", "关于公主的婚事...")
         self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
         npc_controller.add_npc_to_stage(self.minister.id, "M_QDW_stage_2", "关于公主的婚事...")
         self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
         npc_controller.add_npc_to_stage(self.princess.id, "M_QDW_stage_2", "关于你的婚事...")
-        self.wedding_date = world_controller.date + timedelta(days=14)
+        self.wedding_date = (world_controller.date + timedelta(days=7)).replace(hour=8, minute=0, second=0)
 
-    def stage_10(self):
+    def stage_3(self):
+        # 使节
+        npc_controller.remove_npc_stages(self.minister.id, "M_QDW_")
+        npc_controller.remove_npc_stages(self.princess.id, "M_QDW_")
+        npc_controller.remove_npc_stages(self.envoy.id, "M_QDW_")
+        npc_controller.add_npc_to_stage(self.envoy.id, 'M_QDW_stage_3', "婚礼...")
+        npc_controller.talk_to_npc(self.envoy)
+
+    def stage_9(self):
+        npc_controller.remove_npc_stages(self.princess.id, "M_QDW_")
         npc_controller.remove_npc_stages(self.envoy.id, "M_QDW_")
         npc_controller.remove_npc_stages(self.minister.id, "M_QDW_")
-        npc_controller.add_npc_to_stage(self.minister.id, "M_QDW_stage_10", "关于我们的国家...")
+        npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_9", "关于支援我们的国家...")
+
+    def stage_10(self):
+        npc_controller.remove_npc_stages(self.princess.id, "M_QDW_")
+        npc_controller.remove_npc_stages(self.envoy.id, "M_QDW_")
+        npc_controller.remove_npc_stages(self.minister.id, "M_QDW_")
         npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_10", "关于支援我们的国家...")
         player.force += 100
 
@@ -84,7 +99,8 @@ class StoryQueenFindDaughter(Story):
         self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
         self.princess.level = 14
         npc_controller.place_npc(self.princess.id, "dungeon_forest_2", 24 * 15)
-
+        npc_controller.remove_npc_stages(self.princess.id, "M_QDW_")
+        npc_controller.add_npc_to_stage(self.princess.id, "M_QFD_stage_3", "女儿...")
         self.ministers = npc_controller.get_npc_by_role(ROLE_MINISTER)
         for minister in self.ministers:
             npc_controller.add_npc_to_stage(minister.id, "M_QFD_stage_1", "看到我的女儿了吗...")

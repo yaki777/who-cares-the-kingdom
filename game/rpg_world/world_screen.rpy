@@ -23,6 +23,9 @@ screen world_walk:
                 text_align 0.5
                 color "#FFF"
                 outlines [ (0.5, "#333", 0, 0) ]
+            textbutton "等待一天":
+                xalign 0.5
+                action [Function(world_controller.skip_date,1)]
     if world_controller.placed_card is not None and isinstance(world_controller.placed_card.addition,Area):
         use dm_say(f"你走向了{world_controller.placed_card.addition.name}",world_controller.step)
     if world_controller.placed_card is not None and isinstance(world_controller.placed_card.addition,NPC):

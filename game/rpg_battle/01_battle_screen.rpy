@@ -2,7 +2,7 @@ default card_description = ""
 default battle_hovered_card = None
 default battle_reward_cards = None
 label start_battle():
-    DM "战斗开始！战斗主题：[battle_controller.theme]"
+    DM "战斗开始！"
     python:
         card_description = ""
         battle_hovered_card = None
@@ -19,8 +19,8 @@ label after_battle_screen:
         call screen battle_reward
     return
 screen battle_screen:
-    add "images/table_bg.png"
-
+#     add "images/table_bg.png"
+    use quick_menu
     frame:
         background None
         xfill True
@@ -38,21 +38,14 @@ screen battle_screen:
         vbox:
             xalign 0.5
             spacing 20
-            label f"敌人的行动({battle_controller.enemy_table_desc}):" xalign 0.5
+            label f"敌人:{battle_controller.enemy_table_desc}" xalign 0.5
             hbox:
                 xalign 0.5
                 spacing 10
                 box_wrap True
                 xmaximum 1080
                 for card in battle_controller.enemy_table:
-                    if isinstance(card, CardSlot):
-                        textbutton "":
-                            text_size 24
-                            xsize 200
-                            ysize 284
-                            background Frame(card.background,yminimum=57, xminimum=57, yfill=True)
-                            action [NullAction()]
-                    else:
+                    if isinstance(card, Card):
                         textbutton card.title:
                             style style.common_card
                             text_size 24
@@ -64,6 +57,7 @@ screen battle_screen:
                                             (0,0),Frame(card.inner,
                                                             yminimum=57, xminimum=57))
                             action [NullAction()]
+
     frame:
         background None
         yalign 0.45
@@ -76,26 +70,20 @@ screen battle_screen:
         ysize 500
         yalign 0.72
         vbox:
+            xalign 0.5
             hbox:
                 xalign 0.5
                 spacing 20
                 for i in range(battle_controller.player_chips):
                     imagebutton idle "chip.png" action [NullAction()]
-            label f"你的行动({battle_controller.player_table_desc}):" xalign 0.5
+            label f"你: {battle_controller.player_table_desc}" xalign 0.5
             hbox:
                 spacing 10
                 xalign 0.5
                 box_wrap True
                 xmaximum 1080
                 for card in battle_controller.player_table:
-                    if isinstance(card,CardSlot):
-                        textbutton "":
-                            text_size 24
-                            xsize 200
-                            ysize 284
-                            background Frame(card.background,yminimum=57, xminimum=57, yfill=True)
-                            action [NullAction()]
-                    else:
+                    if isinstance(card,Card):
                         textbutton card.title:
                             style style.common_card
                             text_size 24
@@ -147,13 +135,15 @@ screen battle_screen:
                 text line
     if battle_controller.halftime is not None:
         if battle_controller.halftime.current_card is None:
-
-            use dm_say("中场休息！",battle_controller.halftime.step):
-                if battle_controller.halftime.player_win:
-                    text "你赢得了本轮，所以接下来将会使用你的卡牌!"
-                else:
-                    text "你输掉了本轮，所以接下来将会使用敌人的卡牌!"
-                text f"本轮的卡牌是{len(battle_controller.halftime.cards)}张，开始使用吧！"
+            if battle_controller.halftime.is_end:
+                use dm_say("休息结束！",battle_controller.halftime.end)
+            else:
+                use dm_say("中场休息！",battle_controller.halftime.step):
+                    if battle_controller.halftime.player_win:
+                        text "你赢得了本轮，所以接下来将会使用你的卡牌!"
+                    else:
+                        text "你输掉了本轮，所以接下来将会使用敌人的卡牌!"
+                    text f"本轮的卡牌是{len(battle_controller.halftime.cards)}张，开始使用吧！"
         else:
             frame:
                 xfill True
@@ -168,12 +158,14 @@ screen battle_screen:
                 yalign 0.4
                 background None
                 vbox:
+                    spacing 30
                     xfill True
                     imagebutton idle battle_controller.halftime.current_card.addition.image action [NullAction()] xalign 0.5
-                    if len(battle_controller.halftime.cards)>0:
-                            textbutton "继续" action [Function(battle_controller.halftime.step)] xalign 0.5
-                    else:
-                            textbutton "结束" action [Function(battle_controller.halftime.end)] xalign 0.5
+                    vbox:
+                        xalign 0.5
+                        spacing 50
+                        textbutton "完成" action [Function(battle_controller.halftime.step,True)] text_size 50
+                        textbutton "失败" action [Function(battle_controller.halftime.step,False)] text_size 50
 
 
             frame:

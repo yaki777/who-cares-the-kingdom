@@ -30,6 +30,7 @@ label M_QDW_stage_1(story,npc):
         "同意":
             $ story.agree_marry = True
             DM "你同意了使者的要求。并于他商定订婚的事宜"
+            DM "你们决定在1周后举行婚礼。"
         "拒绝":
             $ story.agree_marry = False
             DM "你严厉地拒绝了使者的要求。"
@@ -54,32 +55,15 @@ label M_QDW_stage_1(story,npc):
     DM "你注意到使者的眼神有点不安好心。"
     npc.c "如果你要找我的话，晚上我会在上城区的房子里。"
     $ story_controller.start_stage("M_QDW_stage_2")
+    $ story_controller.schedule_start_stage(story.wedding_date,"M_QDW_stage_3")
     return
 
 label M_QDW_stage_2(story,npc):
     if npc.role == ROLE_ENVOY:
-        if (story.wedding_date-world_controller.date).days>7:
-            npc.c "女王陛下，我已经通知了我的王子。他会在一周内到达这里。"
-            npc.c "公主殿下呢？"
-            DM "你告诉他你正在安排。"
-        elif (story.wedding_date-world_controller.date).days>=0:
-            npc.c "女王陛下，我们的王子已经到达。"
-            npc.c "婚礼什么时候举行，我们的王子不想等候太久。"
-            if player.princess_agree_marry:
-                menu:
-                    "婚礼很快就举行":
-                        DM "你告诉使者婚礼会在三天后举行。"
-                        $ story_controller.start_stage("M_QDW_stage_3")
-                    "再等等":
-                        DM "你告诉他你正在安排。"
-            else:
-                DM "你告诉他你正在安排。"
-        else:
-            DM "王子已经等了太久。"
-            npc.c "陛下，我不在乎你的借口！你有最后期限，但你未能达到。"
-            npc.c "因此，我们取消订婚并撤回对你的支持。你的无能是不可原谅的。"
-            $ story_controller.start_stage("M_QDW_stage_9")
-
+        npc.c "女王陛下，我们的王子已经准备好了。"
+        npc.c "公主殿下呢？"
+        DM "你告诉他你正在安排。"
+        return
     elif npc.role == ROLE_MINISTER:
         npc.c "陛下！有什么可以为您效劳的吗？"
         DM "你告诉了他与使者的谈话。"
@@ -97,6 +81,9 @@ label M_QDW_stage_2(story,npc):
     elif npc.role == ROLE_PRINCESS:
         npc.c "妈妈，你来这里有什么事吗？"
         DM "你告诉了她使者的要求。"
+        if player.princess_agree_marry == True:
+            npc.c "我知道，妈妈。我会尽力配合你的安排。"
+            return
         npc.c "妈妈... 你怎么能这样？我... 我要被嫁给一个陌生人？为了拯救王国？"
         $ player.princess_agree_marry = False
         menu:
@@ -121,7 +108,24 @@ label M_QDW_stage_2(story,npc):
             DM "也许你应该再去找她。"
             $ story_controller.start_stage("M_QFD_stage_1")
     return
+
 label M_QDW_stage_3(story,npc):
+    DM "今天是你的女儿结婚的日子。"
+    if player.princess_agree_marry:
+        DM "你们按时举行了婚礼。"
+        DM "使者和王子都很满意。你可以跟使者继续谈谈援军的事情。"
+        $ story_controller.start_stage("M_QDW_stage_10")
+    else:
+        DM "由于公主的缺席，婚礼不能按时举行。"
+        story.envoy.c "陛下，我不在乎你的借口！你有最后期限，但你未能达到。"
+        story.envoy.c "因此，我们取消订婚并撤回对你的支持。你的无能是不可原谅的。"
+        $ story_controller.start_stage("M_QDW_stage_9")
+    return
+
+label M_QDW_stage_9(story,npc):
+    if npc.role == ROLE_ENVOY:
+        npc.c "女王陛下，我很抱歉。我们的国家不会再支持你们了。"
+    return
 
 label M_QDW_stage_10(story,npc):
     if npc.role == ROLE_ENVOY:
@@ -220,7 +224,8 @@ label M_QFD_stage_3(story,npc):
                 DM "你碰巧有解药"
                 "使用":
                     DM "你给了[npc.name]解药。"
-                    DM "[npc.name]恢复了正常，你和"
+                    DM "[npc.name]恢复了正常，你可以带她回去了。"
+                    $ story_controller.start_stage("M_QFD_stage_6")
                     return
         menu:
             "强行带走公主":
@@ -251,19 +256,21 @@ label M_QFD_stage_3(story,npc):
 
 label M_QFD_stage_5(story,npc):
     if npc.role == ROLE_ALCHEMIST:
-        npc.c "哦，女王陛下，你来了。"
-        npc.c "我听说你的女儿中了哥布林的媚药。"
-        npc.c "我有解药，但是我需要一些东西。"
+        npc.c "哦，女王陛下，您为什么来这里？"
+        DM "你告诉了他你的困境。"
+        npc.c "啊，媚药......我研究过它们对人类和生物的影响。"
+        npc.c "不过，恐怕我没有现成的解药。但是我知道解药的配方。"
+        npc.c "女性高潮的淫液和一点点乳汁。"
         menu:
-            "给他":
+            "也许我能提供...":
+                $ battle_controller.start(npc)
                 DM "你给了[npc.name]他需要的东西。"
                 DM "他很快就调制出了解药。"
                 DM "你带着解药回到了公主身边。"
                 $ player.has_goblin_antidote = True
                 $ story_controller.start_stage("M_QFD_stage_6")
-            "不给":
-                DM "你拒绝了[npc.name]的要求。"
-                DM "你决定再找别的办法。"
+            "这太荒谬了...":
+                DM "你拒绝了[npc.name]，转身走了。"
                 return
     elif npc.role == ROLE_PRINCESS:
         if player.has_goblin_antidote:
@@ -286,5 +293,5 @@ label M_QFD_stage_6(story,npc):
         npc.c "妈妈，我对导致这种局面的行为深感羞愧。但我对您的营救心怀感激。"
         npc.c "我不会再逃避了。我愿意不惜一切拯救我的王国。即使这意味着要嫁给那个王子。"
         DM "你成功了。去问问使者下一步的安排吧。"
-        $ story_controller.start_stage("M_QFD_stage_6")
+        $ story_controller.start_stage("M_QFD_stage_7")
     return

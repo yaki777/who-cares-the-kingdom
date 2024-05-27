@@ -1,3 +1,8 @@
+import random
+
+from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY
+from rpg_battle.battle_actions_ren import BattleAction
+from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC
 from rpg_system.renpy_constant import npc_controller, story_controller, battle_action_controller
 from rpg_world.area_ren import AREA_MAP, Area
@@ -20,6 +25,13 @@ class WorldController:
 
     def start_game(self):
         battle_action_controller.apply_filters(self.allowed_toys, self.allowed_organs)
+
+        # for test
+        actions = random.sample(THEME_LOVE_LIBRARY, 20)
+        for action in actions:
+            battle_action_controller.player_get_action(BattleAction(*action, level=random.randint(2, 14),
+                                                                    suit=random.choice(CARD_SUITS)))
+
         npc_controller.gen_world_npc()
         npc_controller.update_npc_location()
         self.step()

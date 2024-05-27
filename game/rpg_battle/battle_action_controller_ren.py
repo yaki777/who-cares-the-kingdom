@@ -1,5 +1,5 @@
-from rpg_battle.battle_actions_ren import BattleAction, THEME_LOVE, THEME_LOVE_LIBRARY, \
-    THEME_MACHINE_LIBRARY
+from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY, THEME_MACHINE_LIBRARY
+from rpg_battle.battle_actions_ren import BattleAction, THEME_LOVE
 from rpg_cards.cards_ren import CARD_SUITS
 from rpg_world.organs_ren import ORGAN_LIBRARY
 from rpg_world.toys_ren import TOY_LIBRARY
@@ -17,28 +17,23 @@ class BattleActionController:
                 THEME_LOVE: []
             },
         }
-        # for test
-        actions = random.sample(THEME_LOVE_LIBRARY, 20)
-        for action in actions:
-            self.decks['player'][THEME_LOVE].append(BattleAction(*action, level=random.randint(2, 14),
-                                                                 suit=random.choice(CARD_SUITS)))
 
     def _apply_filter(self, action_library, ban_toys, ban_organs):
         ban_actions = set()
         for toy in ban_toys:
             for action in action_library:
-                if len(action) > 7 and toy in action[7]:
+                if len(action) > 7 and action[7] is not None and isinstance(action[7], list) and toy in action[7]:
                     ban_actions.add(action[0])
 
         for organ in ban_organs:
             for action in action_library:
-                if len(action) > 6 and organ == action[6]:
+                if len(action) > 6 and action[6] is not None and isinstance(action[6], list) and organ in action[6]:
                     ban_actions.add(action[0])
         action_library[:] = [action for action in action_library if action[0] not in ban_actions]
 
     def apply_filters(self, allowed_toys, allowed_organs):
-        ban_toys = filter(lambda toy: toy not in allowed_toys, TOY_LIBRARY)
-        ban_organs = filter(lambda organ: organ not in allowed_organs, ORGAN_LIBRARY)
+        ban_toys = list(filter(lambda toy: toy not in allowed_toys, TOY_LIBRARY))
+        ban_organs = list(filter(lambda organ: organ not in allowed_organs, ORGAN_LIBRARY))
         self._apply_filter(THEME_LOVE_LIBRARY, ban_toys, ban_organs)
         self._apply_filter(THEME_MACHINE_LIBRARY, ban_toys, ban_organs)
 

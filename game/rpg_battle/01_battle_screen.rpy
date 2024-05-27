@@ -177,8 +177,8 @@ screen battle_screen:
                     id "window"
                     vbox:
                         text "DM" id "who"
-                        text f"{battle_controller.halftime.current_card.addition.fantasy}"
-                        text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}"
+                        text f"{battle_controller.halftime.current_card.addition.fantasy}" size 24
+                        text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}" size 24
 
 
 

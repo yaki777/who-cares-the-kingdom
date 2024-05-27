@@ -46,7 +46,7 @@ class BattleAction:
         self.organ_require = organ_require
         self.toys_require = toys_require
         self.image = 'images/battle_actions/' + self.name
-        if player.is_femboy and renpy.loadable(self.name + '_femboy', 'images/battle_actions'):
+        if player.is_femboy and renpy.loadable(self.name + '_femboy.png', 'images/battle_actions'):
             self.image += '_femboy'
         self.image += '.png'
 
@@ -75,5 +75,3 @@ class BattleAction:
         return min(int(BATTLE_ACTION_EXP[self.name] / 10) + 1, 5)
 
 
-THEME_LOVE_LIBRARY = LOVE_ACTION_LIBRARY0 + LOVE_ANAL_ACTION_LIBRARY0 + LOVE_ACTION_LIBRARY1
-THEME_MACHINE_LIBRARY = MACHINE_ACTION_LIBRARY

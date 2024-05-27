@@ -1,7 +1,9 @@
 from rpg_battle.battle_actions_ren import TAG_SEX, THEME_LOVE
 from rpg_world.organs_ren import ORGAN_ANAL
 from rpg_world.toys_ren import DildoM
-
+"""renpy
+init -99 python:
+"""
 LO_SUS_2_ANAL = ('lo_sus_2_anal', [TAG_SEX], THEME_LOVE,
                  '火车便当式',
                  '当他抓住你的臀部，以分腿的姿势将你从地上举起时，你的心跳加速。你的屁股在空中摇摆，暴露在他的巨大阴茎下，脆弱不堪，他的阴茎深深地插入你紧窄、跳动的屁眼里。一开始你疼得直哆嗦，但很快就屈服于涌遍全身的强烈快感。当他无情地撞击你的屁眼时，你的眼睛瞪得大大的，拼命不让自己射精。',

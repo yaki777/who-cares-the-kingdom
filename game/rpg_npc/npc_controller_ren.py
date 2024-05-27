@@ -1,7 +1,8 @@
 import random
 
+from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY
 from rpg_battle.battle_action_machine_ren import MACHINE_ACTION_LIBRARY
-from rpg_battle.battle_actions_ren import TAGS, BattleAction, THEME_LOVE_LIBRARY
+from rpg_battle.battle_actions_ren import TAGS, BattleAction
 from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC, NPC_MALE_NAMES, NPC_FEMALE_NAMES
 from rpg_role.roles_ren import *

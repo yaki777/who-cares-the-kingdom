@@ -1,6 +1,7 @@
 import random
 
-from rpg_battle.battle_actions_ren import TAGS, BattleAction, THEME_LOVE_LIBRARY
+from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY
+from rpg_battle.battle_actions_ren import TAGS, BattleAction
 from rpg_cards.cards_ren import Card, CARD_SUITS
 from rpg_dungeon.dungeon_area_ren import DungeonArea, DUNGEON_AREAS
 from rpg_npc.npc_ren import NPC

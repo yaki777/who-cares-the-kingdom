@@ -1,6 +1,9 @@
 from rpg_battle.battle_actions_ren import TAG_SEX, THEME_LOVE
 from rpg_world.toys_ren import DildoM
 
+"""renpy
+init -99 python:
+"""
 LO_BLOWJOB_1 = ('lo_blowjob_1', [TAG_SEX], THEME_LOVE,
                 '口交',
                 '你渴望他勃起的阴茎，带着欲望快速吮吸。你抓住他的睾丸，轻轻抚摸。你握住他的整个阴茎，慢慢地将阴茎送入你的口中。他的阴茎深深地撑开了你的喉咙，让你欣喜若狂。你的手撸动着他的阴茎，嘴里湿漉漉的，品尝着他的味道。同时，你瞥了他一眼，对这次口交体验充满了纯粹的幸福感。',

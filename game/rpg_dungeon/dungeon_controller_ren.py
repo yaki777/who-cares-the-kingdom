@@ -1,11 +1,10 @@
 import random
 
-from rpg_battle.battle_actions_ren import TAGS, ACTION_LIBRARY, BattleAction
+from rpg_battle.battle_actions_ren import TAGS, BattleAction, THEME_LOVE_LIBRARY
 from rpg_cards.cards_ren import Card, CARD_SUITS
 from rpg_dungeon.dungeon_area_ren import DungeonArea, DUNGEON_AREAS
 from rpg_npc.npc_ren import NPC
 from rpg_role.dungeon_roles_ren import *
-from rpg_role.roles_ren import *
 from rpg_system.renpy_constant import renpy, npc_controller, battle_action_controller
 
 """renpy
@@ -45,7 +44,7 @@ class DungeonController:
             npc.location = f'dungeon_{self.current_theme}_{self.current_floor}'
             # todo? different card pool for different role
             deck = []
-            actions = random.sample(ACTION_LIBRARY, 20)
+            actions = random.sample(THEME_LOVE_LIBRARY, 20)
             for action in actions:
                 deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
             battle_action_controller.enemy_register_actions(npc_id, deck)

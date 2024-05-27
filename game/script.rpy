@@ -7,10 +7,11 @@ default world_controller = WorldController()
 default dungeon_controller = DungeonController()
 default story_controller = StoryController()
 label start:
+    call init_player
     # 显示战斗
 #     $ battle_controller.start()
 #     call screen battle_screen
-    $ battle_action_controller.apply_filters([],[ORGAN_PUSSY])
+
     $ world_controller.start_game()
     $ story_controller.start()
 #     $ story_controller.start_stage("S_GS_stage_1")

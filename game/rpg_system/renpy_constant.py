@@ -4,9 +4,7 @@ from rpg_dungeon.dungeon_controller_ren import DungeonController
 from rpg_npc.npc_controller_ren import NPCController
 from rpg_story.story_ren import StoryController
 from rpg_world.world_controller_ren import WorldController
-from rpg_world.world_ren import World
 
-world = World()
 
 world_controller = WorldController()
 npc_controller = NPCController()

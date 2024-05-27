@@ -1,4 +1,4 @@
-from rpg_role.roles_ren import ROLE_QUEEN
+from rpg_role.roles_ren import *
 from rpg_system.renpy_constant import Character
 
 """renpy
@@ -17,5 +17,9 @@ class Player:
         self.princess_is_virgin = True
         self.princess_agree_marry = None
 
+
+PLAYER_ROLE_LIBRARY = [
+    ROLE_QUEEN, ROLE_PRINCESS, ROLE_KNIGHT, ROLE_ADVENTURER, ROLE_NUN, ROLE_PROSTITUTE
+]
 
 player = Player('Evelin', ROLE_QUEEN)

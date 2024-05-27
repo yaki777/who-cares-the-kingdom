@@ -1,5 +1,5 @@
 from rpg_npc.npc_ren import NPC
-from rpg_system.renpy_constant import world, npc_controller, renpy, battle_action_controller, story_controller
+from rpg_system.renpy_constant import npc_controller, story_controller, battle_action_controller
 from rpg_world.area_ren import AREA_MAP, Area
 
 """renpy
@@ -10,13 +10,16 @@ from datetime import datetime, timedelta
 
 class WorldController:
     def __init__(self):
-        self.world = world
+        self.game_mode = 'v'
+        self.allowed_organs = []
+        self.allowed_toys = []
         self.current_area = AREA_MAP['cs1']
         self.player_hands = []
         self.placed_card = None
         self.date = datetime.strptime("1300-01-01 08:00:00", "%Y-%m-%d %H:%M:%S")
 
     def start_game(self):
+        battle_action_controller.apply_filters(self.allowed_toys, self.allowed_organs)
         npc_controller.gen_world_npc()
         npc_controller.update_npc_location()
         self.step()

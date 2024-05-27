@@ -1,6 +1,8 @@
-from rpg_battle.battle_action_machine_ren import MACHINE_ACTION_LIBRARY
-from rpg_battle.battle_actions_ren import ACTION_LIBRARY, BattleAction, THEME_LOVE
+from rpg_battle.battle_actions_ren import BattleAction, THEME_LOVE, THEME_LOVE_LIBRARY, \
+    THEME_MACHINE_LIBRARY
 from rpg_cards.cards_ren import CARD_SUITS
+from rpg_world.organs_ren import ORGAN_LIBRARY
+from rpg_world.toys_ren import TOY_LIBRARY
 
 """renpy
 init -90 python:
@@ -16,7 +18,7 @@ class BattleActionController:
             },
         }
         # for test
-        actions = random.sample(ACTION_LIBRARY, 20)
+        actions = random.sample(THEME_LOVE_LIBRARY, 20)
         for action in actions:
             self.decks['player'][THEME_LOVE].append(BattleAction(*action, level=random.randint(2, 14),
                                                                  suit=random.choice(CARD_SUITS)))
@@ -34,9 +36,11 @@ class BattleActionController:
                     ban_actions.add(action[0])
         action_library[:] = [action for action in action_library if action[0] not in ban_actions]
 
-    def apply_filters(self, ban_toys, ban_organs):
-        self._apply_filter(ACTION_LIBRARY, ban_toys, ban_organs)
-        self._apply_filter(MACHINE_ACTION_LIBRARY, ban_toys, ban_organs)
+    def apply_filters(self, allowed_toys, allowed_organs):
+        ban_toys = filter(lambda toy: toy not in allowed_toys, TOY_LIBRARY)
+        ban_organs = filter(lambda organ: organ not in allowed_organs, ORGAN_LIBRARY)
+        self._apply_filter(THEME_LOVE_LIBRARY, ban_toys, ban_organs)
+        self._apply_filter(THEME_MACHINE_LIBRARY, ban_toys, ban_organs)
 
     def player_get_action(self, action):
         if action.theme not in self.decks['player']:
@@ -46,7 +50,7 @@ class BattleActionController:
     def player_discard_action(self, action):
         self.decks['player'][action.theme].remove(action)
 
-    def player_deck(self,theme=None):
+    def player_deck(self, theme=None):
         if theme is not None:
             return self.decks['player'][theme]
         else:

@@ -1,4 +1,6 @@
 from rpg_battle.battle_actions_ren import *
+from rpg_world.organs_ren import ORGAN_ANAL, ORGAN_PUSSY
+from rpg_world.toys_ren import *
 
 """renpy
 init -99 python:

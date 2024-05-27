@@ -1,41 +1,39 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_cards/cards_screen.rpy", line 2, in script
-    call screen player_deck
+  File "game/script.rpy", line 10, in script call
+    call init_player
+  File "game/rpg_world/init_player_screen.rpy", line 5, in script
+    call screen create_character
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/rpg_cards/cards_screen.rpy", line 4, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 4, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 5, in execute
-    frame:
-  File "game/rpg_cards/cards_screen.rpy", line 9, in execute
-    viewport:
-  File "game/rpg_cards/cards_screen.rpy", line 14, in execute
+  File "game/rpg_world/init_player_screen.rpy", line 10, in execute
+    screen create_character:
+  File "game/rpg_world/init_player_screen.rpy", line 10, in execute
+    screen create_character:
+  File "game/rpg_world/init_player_screen.rpy", line 11, in execute
+    vbox:
+  File "game/rpg_world/init_player_screen.rpy", line 15, in execute
     hbox:
-  File "game/rpg_cards/cards_screen.rpy", line 18, in execute
-    for card in battle_action_controller.player_deck():
-  File "game/rpg_cards/cards_screen.rpy", line 19, in execute
-    textbutton card.addition.display_text():
-  File "game/rpg_cards/cards_screen.rpy", line 19, in <module>
-    textbutton card.addition.display_text():
-AttributeError: 'BattleAction' object has no attribute 'addition'
+  File "game/rpg_world/init_player_screen.rpy", line 17, in execute
+    vbox:
+  File "game/rpg_world/init_player_screen.rpy", line 19, in execute
+    hbox:
+  File "game/rpg_world/init_player_screen.rpy", line 22, in execute
+    textbutton "女性":
+  File "game/rpg_world/init_player_screen.rpy", line 22, in keywords
+    textbutton "女性":
+  File "game/rpg_world/init_player_screen.rpy", line 23, in <module>
+    action [SetVariable("player.isfemboy", False),Function(player.set_female),SetVariable("create_character_description_text",player_gender["female"])]
+AttributeError: 'Player' object has no attribute 'set_female'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 17, in script call
-    call start_world
-  File "game/rpg_world/world_screen.rpy", line 5, in script call
-    call screen world_walk
-  File "game/rpg_cards/cards_screen.rpy", line 2, in script
-    call screen player_deck
+  File "game/script.rpy", line 10, in script call
+    call init_player
+  File "game/rpg_world/init_player_screen.rpy", line 5, in script
+    call screen create_character
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1968, in execute
     self.call("execute")
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1950, in call
@@ -66,25 +64,27 @@ Full traceback:
     self.update()
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/rpg_cards/cards_screen.rpy", line 4, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 4, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 5, in execute
-    frame:
-  File "game/rpg_cards/cards_screen.rpy", line 9, in execute
-    viewport:
-  File "game/rpg_cards/cards_screen.rpy", line 14, in execute
+  File "game/rpg_world/init_player_screen.rpy", line 10, in execute
+    screen create_character:
+  File "game/rpg_world/init_player_screen.rpy", line 10, in execute
+    screen create_character:
+  File "game/rpg_world/init_player_screen.rpy", line 11, in execute
+    vbox:
+  File "game/rpg_world/init_player_screen.rpy", line 15, in execute
     hbox:
-  File "game/rpg_cards/cards_screen.rpy", line 18, in execute
-    for card in battle_action_controller.player_deck():
-  File "game/rpg_cards/cards_screen.rpy", line 19, in execute
-    textbutton card.addition.display_text():
-  File "game/rpg_cards/cards_screen.rpy", line 19, in <module>
-    textbutton card.addition.display_text():
-AttributeError: 'BattleAction' object has no attribute 'addition'
+  File "game/rpg_world/init_player_screen.rpy", line 17, in execute
+    vbox:
+  File "game/rpg_world/init_player_screen.rpy", line 19, in execute
+    hbox:
+  File "game/rpg_world/init_player_screen.rpy", line 22, in execute
+    textbutton "女性":
+  File "game/rpg_world/init_player_screen.rpy", line 22, in keywords
+    textbutton "女性":
+  File "game/rpg_world/init_player_screen.rpy", line 23, in <module>
+    action [SetVariable("player.isfemboy", False),Function(player.set_female),SetVariable("create_character_description_text",player_gender["female"])]
+AttributeError: 'Player' object has no attribute 'set_female'
 
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.1.24030407
 Android GUI 1.31
-Sun May 26 23:11:48 2024
+Mon May 27 10:43:59 2024

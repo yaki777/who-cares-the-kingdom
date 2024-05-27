@@ -1,3 +1,7 @@
+from rpg_battle.battle_action_machine_ren import MACHINE_ACTION_LIBRARY
+from rpg_battle.battle_actions_love0_anal_ren import LOVE_ANAL_ACTION_LIBRARY0
+from rpg_battle.battle_actions_love0_ren import LOVE_ACTION_LIBRARY0
+from rpg_battle.battle_actions_love1_ren import LOVE_ACTION_LIBRARY1
 from rpg_cards.cards_ren import Card
 from rpg_system.renpy_constant import renpy
 from rpg_world.player_ren import player
@@ -22,29 +26,6 @@ THEME_GOBLIN = '哥布林'
 THEME_SLIME = '史莱姆'
 THEME_GIRL_LOVE = '百合'
 THEME_HUGE_LOVE = '巨物纯爱'
-
-ORGAN_ANAL = "肛门"
-ORGAN_PUSSY = "阴道"
-
-ButtPlugL = 'ButtPlugL'
-ButtPlugM = 'ButtPlugM'
-ButtPlugS = 'ButtPlugS'
-LockButtPlug = 'LockButtPlug'
-AnalBeadsL = 'AnalBeadsL'
-AnalBeadsM = 'AnalBeadsM'
-AnalBeadsS = 'AnalBeadsS'
-EnemaKit = 'EnemaKit'
-DildoL = 'DildoL'
-DildoM = 'DildoM'
-DildoS = 'DildoS'
-Vibrator = 'Vibrator'
-Clamp = 'Clamp'
-Gag = 'Gag'
-Rope = 'Rope'
-Handcuffs = 'Handcuffs'
-Pump = 'Pump'
-Speculum = 'Speculum'
-Special = 'Special'
 
 BATTLE_ACTION_EXP = {
 
@@ -94,28 +75,5 @@ class BattleAction:
         return min(int(BATTLE_ACTION_EXP[self.name] / 10) + 1, 5)
 
 
-ACTION_LIBRARY = [
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰"),
-    ("lo_masturbate", [TAG_SEX], THEME_LOVE, "自慰", "自慰", "自慰")
-]
+THEME_LOVE_LIBRARY = LOVE_ACTION_LIBRARY0 + LOVE_ANAL_ACTION_LIBRARY0 + LOVE_ACTION_LIBRARY1
+THEME_MACHINE_LIBRARY = MACHINE_ACTION_LIBRARY

@@ -46,8 +46,11 @@ class BattleActionController:
     def player_discard_action(self, action):
         self.decks['player'][action.theme].remove(action)
 
-    def player_deck(self):
-        return self.decks['player']
+    def player_deck(self,theme=None):
+        if theme is not None:
+            return self.decks['player'][theme]
+        else:
+            return [item for sublist in self.decks['player'].values() for item in sublist]
 
     def player_shuffle_deck(self):
         for k, v in self.decks['player'].items():

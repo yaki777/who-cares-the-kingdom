@@ -197,18 +197,24 @@ screen battle_reward:
         background None
         xfill True
         yalign 0.4
-        hbox:
-            spacing 40
+        vbox:
             xalign 0.5
-            for card in battle_reward_cards:
-                textbutton card.title:
-                    style style.common_card
-                    text_size 24
-                    xsize 200
-                    ysize 284
-                    background Composite((200,284),
-                        (0,0),Frame(card.background,
-                                        yminimum=57, xminimum=57, yfill=True),
-                        (0,0),Frame(card.inner,
-                                        yminimum=57, xminimum=57, yfill=True))
-                    action [Function(battle_action_controller.player_get_action,card.addition),SetVariable("battle_reward_cards",None),Return()]
+            spacing 40
+            hbox:
+                spacing 40
+                xalign 0.5
+                for card in battle_reward_cards:
+                    textbutton card.title:
+                        style style.common_card
+                        text_size 24
+                        xsize 200
+                        ysize 284
+                        background Composite((200,284),
+                            (0,0),Frame(card.background,
+                                            yminimum=57, xminimum=57, yfill=True),
+                            (0,0),Frame(card.inner,
+                                            yminimum=57, xminimum=57, yfill=True))
+                        action [Function(battle_action_controller.player_get_action,card.addition),SetVariable("battle_reward_cards",None),Return()]
+            textbutton "跳过":
+                xalign 0.5
+                action [SetVariable("battle_reward_cards",None),Return()]

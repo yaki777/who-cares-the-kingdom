@@ -7,6 +7,7 @@ label start_world():
     return
 screen world_walk:
     use card_table(world_controller.current_area.background,world_controller.placed_card,world_controller.player_hands,world_controller.player_place_card)
+
     frame:
         background None
         yalign 0.05

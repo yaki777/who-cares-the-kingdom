@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_story/main_queen_labels.rpy", line 192: if statement expects a non-empty block.
-    if npc.role == ROLE_PRINCESS:
-                                 ^
+File "game/rpg_cards/cards_screen.rpy", line 20: 'box_wrap' is not a keyword argument or valid child of the grid statement.
+    box_wrap True
+            ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon May 20 21:28:09 2024
+Sun May 26 23:17:24 2024

@@ -17,6 +17,20 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
     frame:
         add table_bg
         xfill True
+    frame:
+        background None
+        yalign 0.05
+        hbox:
+            spacing 30
+            imagebutton idle Frame("gui/plate_box.png"):
+                xsize 100
+                ysize 100
+                action [Call('open_player_deck')]
+
+            imagebutton idle Frame("gui/journal.png"):
+                xsize 100
+                ysize 100
+                action [NullAction()]
 
     frame:
         background None

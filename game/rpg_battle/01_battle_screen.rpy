@@ -97,7 +97,7 @@ screen battle_screen:
                             action [Function(battle_controller.player_return_card, card)]
             if battle_controller.is_end():
                 textbutton "离开" action [Return()] text_size 40 xalign 0.5
-            elif battle_controller.player_table_len()>0:
+            else:
                 textbutton "结束回合" action [Function(battle_controller.end_turn)] text_size 40 xalign 0.5
     frame:
         background None

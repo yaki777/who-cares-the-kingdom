@@ -1,29 +1,79 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 15, in script
-    $ world_controller.start_game()
-  File "game/script.rpy", line 15, in <module>
-    $ world_controller.start_game()
+  File "game/script.rpy", line 18, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 214, in script call
+    $ dungeon_controller.start(5)
+  File "game/rpg_dungeon/dungeon_screen.rpy", line 6, in script
+    call screen dungeon_walk
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "renpy/common/00action_other.rpy", line 586, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
 ValueError: Sample larger than population or is negative
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 15, in script
-    $ world_controller.start_game()
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 823, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1178, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 15, in <module>
-    $ world_controller.start_game()
-  File "game/rpg_world/world_controller_ren.py", line 30, in start_game
-    actions = random.sample(THEME_LOVE_LIBRARY, 20)
+  File "game/script.rpy", line 18, in script call
+    call start_world
+  File "game/rpg_world/world_screen.rpy", line 5, in script call
+    call screen world_walk
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 214, in script call
+    $ dungeon_controller.start(5)
+  File "game/rpg_dungeon/dungeon_screen.rpy", line 6, in script
+    call screen dungeon_walk
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1968, in execute
+    self.call("execute")
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1950, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/statements.py", line 349, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/exports.py", line 3413, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 3201, in interact_core
+    rv = root_widget.event(ev, x, y, 0)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 793, in event
+    rv = self.child.event(ev, x, y, st)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/layout.py", line 1202, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 1174, in event
+    return handle_click(self.clicked)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 1095, in handle_click
+    rv = run(action)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 388, in run
+    new_rv = run(i, *args, **kwargs)
+  File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/behavior.py", line 395, in run
+    return action(*args, **kwargs)
+  File "renpy/common/00action_other.rpy", line 586, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
+  File "game/rpg_dungeon/dungeon_controller_ren.py", line 120, in step
+    enemy_list = self.gen_enemy_list(enemy_count)
+  File "game/rpg_dungeon/dungeon_controller_ren.py", line 50, in gen_enemy_list
+    actions = random.sample(action_library, 20)
   File "lib/python3.9/random.py", line 449, in sample
 ValueError: Sample larger than population or is negative
 
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.1.24030407
 Android GUI 1.31
-Mon May 27 16:35:27 2024
+Mon May 27 23:31:08 2024

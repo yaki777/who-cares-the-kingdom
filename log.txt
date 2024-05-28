@@ -1,10 +1,10 @@
-2024-05-27 08:43:31 UTC
+2024-05-28 00:55:05 UTC
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
-Loading error handling took 0.02s
-Loading script took 0.10s
+Loading error handling took 0.03s
+Loading script took 0.09s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
 Running init code took 0.04s
@@ -25,19 +25,6 @@ Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
 Save screen analysis took 0.02s
-Prepare screens took 0.07s
+Prepare screens took 0.06s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.03s
-Running _start took 0.00s
-Interface start took 0.07s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'Mesa'"
-Renderer: b'llvmpipe (LLVM 15.0.7, 256 bits)'
-Version: b'4.5 (Compatibility Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2'
-Display Info: None
-Screen sizes: virtual=(1080, 1920) physical=(549, 976) drawable=(549, 976)
-Maximum texture size: 4096x4096

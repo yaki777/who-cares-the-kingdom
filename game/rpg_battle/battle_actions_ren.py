@@ -18,6 +18,7 @@ TAG_PLAY = '玩弄'
 
 TAGS = [TAG_SEX, TAG_HENTAI, TAG_SERVANT, TAG_SADISM, TAG_PLAY]
 
+THEME_SELF = '自慰'
 THEME_MACHINE = '机械'
 THEME_TENTACLE = '触手'
 THEME_PUBLIC = '公共'
@@ -30,7 +31,6 @@ THEME_HUGE_LOVE = '巨物纯爱'
 BATTLE_ACTION_EXP = {
 
 }
-
 
 class BattleAction:
     def __init__(self, name, tags, theme, title, fantasy, reality, organ_require=None, toys_require=None, level=2,
@@ -73,5 +73,3 @@ class BattleAction:
         if add != 0:
             BATTLE_ACTION_EXP[self.name] += add
         return min(int(BATTLE_ACTION_EXP[self.name] / 10) + 1, 5)
-
-

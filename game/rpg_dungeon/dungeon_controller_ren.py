@@ -1,6 +1,6 @@
 import random
 
-from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY
+from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY, THEME_GOBLIN_LIBRARY
 from rpg_battle.battle_actions_ren import TAGS, BattleAction
 from rpg_cards.cards_ren import Card, CARD_SUITS
 from rpg_dungeon.dungeon_area_ren import DungeonArea, DUNGEON_AREAS
@@ -43,9 +43,11 @@ class DungeonController:
             npc_id = f'{role.code}_{i}'
             npc = NPC(npc_id, '无名', role, self.current_floor, weakness, True)
             npc.location = f'dungeon_{self.current_theme}_{self.current_floor}'
-            # todo? different card pool for different role
             deck = []
-            actions = random.sample(THEME_LOVE_LIBRARY, 20)
+            action_library = THEME_LOVE_LIBRARY
+            if role == DUNGEON_ROLE_GOBLIN or role == DUNGEON_ROLE_GOBLIN_DOC:
+                action_library = THEME_GOBLIN_LIBRARY
+            actions = random.sample(action_library, min(20, len(action_library)))
             for action in actions:
                 deck.append(BattleAction(*action, level=random.randint(2, 14), suit=random.choice(CARD_SUITS)))
             battle_action_controller.enemy_register_actions(npc_id, deck)

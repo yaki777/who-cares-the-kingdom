@@ -1,6 +1,7 @@
-from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GIRL_LOVE
+from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GIRL_LOVE, THEME_GOBLIN
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
+from rpg_role.dungeon_roles_ren import DUNGEON_ROLE_GOBLIN
 from rpg_system.renpy_constant import battle_action_controller, renpy, world_controller
 
 """renpy
@@ -78,16 +79,18 @@ class BattleController:
         enemy_table_rank, enemy_table_score = self.battle_calculator.get_max_table(self.enemy_table)
         self.enemy_table_desc = f'{enemy_table_rank[1]}: {enemy_table_score}'
 
-    def add_theme(self):
+    def set_theme(self):
         if self.enemy.is_female:
             self.themes.append(THEME_GIRL_LOVE)
+        if self.enemy.role == DUNGEON_ROLE_GOBLIN or self.enemy.role == DUNGEON_ROLE_GOBLIN:
+            self.themes = [THEME_GOBLIN]
         if world_controller.current_area.code == 'al1':
             self.themes.append(THEME_MACHINE)
 
     def start(self, enemy):
         self.clear_battle()
         self.enemy = enemy
-        self.add_theme()
+        self.set_theme()
         battle_action_controller.player_shuffle_deck()
         battle_action_controller.enemy_shuffle_deck(self.enemy.id)
         self.player_hand = battle_action_controller.player_draw_cards(5, self.themes)

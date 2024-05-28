@@ -56,6 +56,8 @@ class BattleCalculator:
 
     def get_max_table(self, cards):
         cards = [card for card in cards if card.addition is not None]
+        if len(cards) == 0:
+            return HIGH_CARD, 0
         if self.is_straight(cards) and self.is_flush(cards):
             table_rank = STRAIGHT_FLUSH
             table_score = sum(card.number for card in cards)

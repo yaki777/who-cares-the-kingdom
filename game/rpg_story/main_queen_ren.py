@@ -44,6 +44,7 @@ class StoryQueenDaughterWedding(Story):
         # 使节
         self.minister = npc_controller.get_npc_by_role(ROLE_MINISTER)[0]
         self.envoy = npc_controller.get_npc_by_role(ROLE_ENVOY)[0]
+        self.princess = npc_controller.get_npc_by_role(ROLE_PRINCESS)[0]
         npc_controller.add_npc_to_stage(self.envoy.id, "M_QDW_stage_1", "关于支援我们的国家...")
         npc_controller.place_npc(self.envoy.id, "pbh1", 12)
 

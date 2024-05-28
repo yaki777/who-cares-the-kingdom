@@ -1,13 +1,23 @@
 style common_card is button:
     xpadding 15 # plus other stuff if you want (for more control remove the ' is button' bit)
+style small_card is button:
+    xpadding 15 # plus other stuff if you want (for more control remove the ' is button' bit)
+
+style small_card_text: # optionally ... is button_text:
+    yalign 0.93
+    xalign 0.1
+    color "#FFF"
+    outlines [ (0.5, "#333", 0, 0) ]
+    yfill True
 
 style common_card_text: # optionally ... is button_text:
     yalign 0.94
     xalign 0.5
     text_align 0.5
     color "#FFF"
-    outlines [ (0.5, "#333", 0, 0) ] # <--- oooh
+    outlines [ (0.5, "#333", 0, 0) ]
     yfill True
+
 transform card_rotation(index):
     rotate int(10*index)
 default card_table_chosen_card = None
@@ -76,7 +86,7 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
                 $ pos_i = i-hands_len/2
                 $ ypos_value = int(abs(pow(pos_i,2)*8))-100 - (20 if card_table_hovered_card == card else 0)
                 textbutton card.title:
-                    style style.common_card
+                    style style.small_card
                     text_size 24
                     xsize 200
                     ysize 284

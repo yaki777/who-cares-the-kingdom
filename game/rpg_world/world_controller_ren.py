@@ -6,6 +6,7 @@ from rpg_cards.cards_ren import CARD_SUITS
 from rpg_npc.npc_ren import NPC
 from rpg_system.renpy_constant import npc_controller, story_controller, battle_action_controller
 from rpg_world.area_ren import AREA_MAP, Area
+from rpg_world.player_ren import player
 
 """renpy
 init -100 python:
@@ -25,14 +26,12 @@ class WorldController:
 
     def start_game(self):
         battle_action_controller.apply_filters(self.allowed_toys, self.allowed_organs)
-
-        # for test
-        actions = random.sample(THEME_LOVE_LIBRARY, 20)
-        actions += THEME_SELF_LIBRARY
+        actions = []
+        for perk in player.init_perks:
+            actions += perk.init_actions()
         for action in actions:
-            battle_action_controller.player_get_action(BattleAction(*action, level=random.randint(2, 14),
+            battle_action_controller.player_get_action(BattleAction(*action, level=random.randint(2, 11),
                                                                     suit=random.choice(CARD_SUITS)))
-
         npc_controller.gen_world_npc()
         npc_controller.update_npc_location()
         self.step()

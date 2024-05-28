@@ -51,7 +51,7 @@ class NPCController:
         npc = NPC(npc_id, name, role,
                   random.randint(role.level_range[0], role.level_range[1]), weakness, False, is_female)
         deck = []
-        actions = random.sample(THEME_LOVE_LIBRARY, 20)
+        actions = random.sample(THEME_LOVE_LIBRARY, min(20, len(THEME_LOVE_LIBRARY)))
         if role == ROLE_ALCHEMIST:
             actions += MACHINE_ACTION_LIBRARY
         if npc.level > 7:

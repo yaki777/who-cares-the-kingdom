@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_cards/cards_screen.rpy", line 20: 'box_wrap' is not a keyword argument or valid child of the grid statement.
-    box_wrap True
-            ^
+File "game/rpg_cards/cards_screen.rpy", line 63: 'top_padding' is not a keyword argument or valid child of the hbox statement.
+    top_padding 100
+               ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun May 26 23:17:24 2024
+Tue May 28 16:40:05 2024

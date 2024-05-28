@@ -61,7 +61,7 @@ class BattleActionController:
         available_themes = [theme for theme in themes if theme in self.decks['player']]
         available_themes.append(THEME_SELF)
         for i in range(number):
-            available_themes = [theme for theme in themes
+            available_themes = [theme for theme in available_themes
                                 if theme in self.decks['player'] and len(self.decks['player'][theme]) > 0]
             if len(available_themes) == 0:
                 break

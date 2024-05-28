@@ -1,7 +1,7 @@
 from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GIRL_LOVE, THEME_GOBLIN
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
-from rpg_role.dungeon_roles_ren import DUNGEON_ROLE_GOBLIN
+from rpg_role.dungeon_roles_ren import DUNGEON_ROLE_GOBLIN, DUNGEON_ROLE_GOBLIN_DOC
 from rpg_system.renpy_constant import battle_action_controller, renpy, world_controller
 
 """renpy
@@ -82,7 +82,7 @@ class BattleController:
     def set_theme(self):
         if self.enemy.is_female:
             self.themes.append(THEME_GIRL_LOVE)
-        if self.enemy.role == DUNGEON_ROLE_GOBLIN or self.enemy.role == DUNGEON_ROLE_GOBLIN:
+        if self.enemy.role == DUNGEON_ROLE_GOBLIN or self.enemy.role == DUNGEON_ROLE_GOBLIN_DOC:
             self.themes = [THEME_GOBLIN]
         if world_controller.current_area.code == 'al1':
             self.themes.append(THEME_MACHINE)
@@ -141,8 +141,16 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
-        for card in battle_action_controller.player_draw_cards(5 - len(self.player_hand), self.themes):
-            self.player_hand.append(card)
+        for card in battle_action_controller.player_draw_cards(5, self.themes):
+            in_hand = False
+            for hand_card in self.player_hand:
+                if hand_card.addition == card.addition:
+                    in_hand = True
+                    break
+            if not in_hand:
+                self.player_hand.append(card)
+            if len(self.player_hand) >= 5:
+                break
         if self.player_chips == 0:
             self.battle_info = '战斗结束!'
 

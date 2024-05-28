@@ -34,3 +34,10 @@ CARD_SUITS =[
     "Pikes",
     "Tiles"
 ]
+
+CARD_SUIT_DICT = {
+    "Clovers": "梅花",
+    "Hearts": "红桃",
+    "Pikes": "黑桃",
+    "Tiles": "方片"
+}

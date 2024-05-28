@@ -1,8 +1,4 @@
-from rpg_battle.battle_action_machine_ren import MACHINE_ACTION_LIBRARY
-from rpg_battle.battle_actions_love0_anal_ren import LOVE_ANAL_ACTION_LIBRARY0
-from rpg_battle.battle_actions_love0_ren import LOVE_ACTION_LIBRARY0
-from rpg_battle.battle_actions_love1_ren import LOVE_ACTION_LIBRARY1
-from rpg_cards.cards_ren import Card
+from rpg_cards.cards_ren import Card, CARD_SUIT_DICT
 from rpg_system.renpy_constant import renpy
 from rpg_world.player_ren import player
 
@@ -28,9 +24,18 @@ THEME_SLIME = '史莱姆'
 THEME_GIRL_LOVE = '百合'
 THEME_HUGE_LOVE = '巨物纯爱'
 
+exp_display = [
+    '',
+    '青涩',
+    '初学',
+    '熟练',
+    '专家',
+    '大师',
+]
 BATTLE_ACTION_EXP = {
 
 }
+
 
 class BattleAction:
     def __init__(self, name, tags, theme, title, fantasy, reality, organ_require=None, toys_require=None, level=2,
@@ -51,15 +56,15 @@ class BattleAction:
         self.image += '.png'
 
     def display_text(self):
-        exp_display = [
-            '',
-            '青涩',
-            '初学',
-            '熟练',
-            '专家',
-            '大师',
-        ]
+
         return f"{{color=#FFC300}}Exp {exp_display[self.exp()]}{{/color}}\n{self.title}"
+
+    def detail_text(self):
+        text = f"{{size=*1.5}}{self.title}{{/size}}\n"
+        text += f"点数：{CARD_SUIT_DICT[self.suit]}{self.level}\n"
+        text += f"类别:{','.join(self.tags)}\n"
+        text += f"主题：{self.theme}\n"
+        return text
 
     def card(self):
         card_name = 'battle_' + self.name

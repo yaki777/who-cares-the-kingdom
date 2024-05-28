@@ -1,9 +1,11 @@
 default create_character_description_text = ""
+default init_story_description = ""
 label init_player:
     DM "欢迎来到《Who cares the kingdom》"
     DM "首先请完成以下游戏设置。"
     call screen init_toys
     call screen init_profession
+    call screen init_perks
     call screen create_world
     DM "很好，你已经完成了基本的设置。接下去我还要问你几个问题"
     menu:
@@ -51,7 +53,7 @@ screen create_world:
             xsize 800
             text create_character_description_text
 
-default init_story_description = ""
+
 screen init_toys:
     vbox:
         xalign 0.5
@@ -102,6 +104,36 @@ screen init_profession:
 
         hbox:
             text player.role.name size 38
+
+        textbutton "完成" action [SetVariable('init_story_description',''),Return()]
+
+        vbox:
+            box_wrap True
+            xsize 800
+            text init_story_description size 34
+
+screen init_perks:
+    vbox:
+        xalign 0.5
+        yalign 0.5
+        spacing 20
+
+        label "选择你的角色的天赋"
+
+        hbox:
+            spacing 10
+            box_wrap True
+            xmaximum 1080
+            for perk in PERK_LIBRARY:
+                textbutton perk.name() action [AddToSet(player.init_perks, perk),SetVariable('init_story_description',perk.description())] text_size 38 xysize (210, 100)
+        label "已选择的天赋:"
+
+        hbox:
+            spacing 10
+            box_wrap True
+            xmaximum 1080
+            for perk in player.init_perks:
+                textbutton perk.name() action [RemoveFromSet(player.init_perks, perk)] text_size 38 xysize (210, 100)
 
         textbutton "完成" action [SetVariable('init_story_description',''),Return()]
 

@@ -20,6 +20,10 @@ label after_battle_screen:
     return
 screen battle_screen:
 #     add "images/table_bg.png"
+    frame:
+        xfill True
+        yfill True
+        background Solid("#FFB3CBCC",xfill=True,yfill=True)
     use quick_menu
     frame:
         background None
@@ -161,24 +165,16 @@ screen battle_screen:
                     spacing 30
                     xfill True
                     imagebutton idle battle_controller.halftime.current_card.addition.image action [NullAction()] xalign 0.5
-                    vbox:
+
+                    text f"{battle_controller.halftime.current_card.addition.fantasy}" size 28
+                    text "{color=#ff8b94}任务:{/color}"
+                    text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}" size 28
+                    hbox:
                         xalign 0.5
                         spacing 50
-                        textbutton "完成" action [Function(battle_controller.halftime.step,True)] text_size 50
-                        textbutton "失败" action [Function(battle_controller.halftime.step,False)] text_size 50
+                        textbutton "{color=#88d8b0}完成{/color}" action [Function(battle_controller.halftime.step,True)] text_size 40
+                        textbutton "{color=#ff6f69}失败{/color}" action [Function(battle_controller.halftime.step,False)] text_size 40
 
-
-            frame:
-                style_prefix "say"
-                xfill True
-                yfill True
-                background None
-                window:
-                    id "window"
-                    vbox:
-                        text "DM" id "who"
-                        text f"{battle_controller.halftime.current_card.addition.fantasy}" size 24
-                        text f"{{color=#FFC300}}{battle_controller.halftime.current_card.addition.reality}{{/color}}" size 24
 
 
 

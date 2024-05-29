@@ -9,20 +9,6 @@ label init_player:
     call screen create_world
     DM "很好，你已经完成了基本的设置。接下去我还要问你几个问题"
     menu:
-        DM "你希望在游戏中出现涉及阴道的内容吗？"
-        "希望":
-            DM "好的"
-            $ world_controller.allowed_organs.append(ORGAN_PUSSY)
-        "不希望":
-            DM "好的，与阴道有关的内容将不会出现"
-    menu:
-        DM "你希望在游戏中出现涉及肛门的内容吗？"
-        "希望":
-            DM "好的"
-            $ world_controller.allowed_organs.append(ORGAN_ANAL)
-        "不希望":
-            DM "好的，与肛门有关的内容将不会出现"
-    menu:
         DM "你希望游戏中你的角色是？"
         "男性(男娘)":
             DM "好的"
@@ -30,6 +16,23 @@ label init_player:
         "女性":
             DM "好的"
             $ player.is_femboy = False
+    if not player.is_femboy:
+        menu:
+            DM "你希望在游戏中出现涉及阴道的内容吗？"
+            "希望":
+                DM "好的"
+                $ world_controller.allowed_organs.append(ORGAN_PUSSY)
+            "不希望":
+                DM "好的，与阴道有关的内容将不会出现"
+    menu:
+        DM "你希望在游戏中出现涉及肛门的内容吗？"
+        "希望":
+            DM "好的"
+            $ world_controller.allowed_organs.append(ORGAN_ANAL)
+        "不希望":
+            DM "好的，与肛门有关的内容将不会出现"
+
+    $ player.name = renpy.input("输入你的名字：").strip()
 
 
 screen create_world:
@@ -132,7 +135,7 @@ screen init_perks:
             spacing 10
             box_wrap True
             xmaximum 1080
-            for perk in player.init_perks:
+            for perk in player.init_perks[1:]:
                 textbutton perk.name() action [RemoveFromSet(player.init_perks, perk)] text_size 38 xysize (210, 100)
 
         textbutton "完成" action [SetVariable('init_story_description',''),Return()]

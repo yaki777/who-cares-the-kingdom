@@ -1,11 +1,13 @@
 import random
 
 from rpg_battle.battle_action_library_ren import THEME_LOVE_LIBRARY, THEME_GOBLIN_LIBRARY, THEME_MACHINE_LIBRARY, \
-    THEME_SELF_LIBRARY
+    THEME_SELF_LIBRARY, THEME_YURI_LIBRARY
 from rpg_battle.battle_actions_ren import TAG_SEX, TAG_SERVANT
+
 """renpy
 init -90 python:
 """
+
 
 class Perk:
     def name(self):
@@ -37,7 +39,7 @@ class PerkSexLover(Perk):
         return "性爱爱好者"
 
     def description(self):
-        return "为你的初始卡组添加最多5张性爱主题卡。如果禁用了阴道内容，将不会生效"
+        return "你有一般性爱的经验。\n为你的初始卡组添加最多5张性爱主题卡。如果禁用了阴道内容，将不会生效"
 
     def init_actions(self):
         action_library = list(filter(lambda x: '_anal' not in x[0] and TAG_SEX in x[1], THEME_LOVE_LIBRARY))
@@ -51,7 +53,7 @@ class PerkAnalLover(Perk):
         return "肛交爱好者"
 
     def description(self):
-        return "为你的初始卡组添加最多5张肛交主题卡。如果禁用了肛门内容，将不会生效"
+        return "你有肛交的经验。\n为你的初始卡组添加最多5张肛交主题卡。如果禁用了肛门内容，将不会生效"
 
     def init_actions(self):
         action_library = list(filter(lambda x: '_anal' in x[0] and TAG_SEX in x[1], THEME_LOVE_LIBRARY))
@@ -65,7 +67,7 @@ class PerkServantLover(Perk):
         return "侍奉爱好者"
 
     def description(self):
-        return "为你的初始卡组增加最多5张侍奉主题卡。包括：口交、手交、足交、乳交等"
+        return "你有服务别人的经验。\n为你的初始卡组增加最多5张侍奉主题卡。包括：口交、手交、足交、乳交等"
 
     def init_actions(self):
         action_library = list(filter(lambda x: TAG_SERVANT in x[1], THEME_LOVE_LIBRARY))
@@ -79,7 +81,7 @@ class PerkGoblinLover(Perk):
         return "哥布林爱好者"
 
     def description(self):
-        return "为你的初始卡组增加最多5张哥布林主题卡。"
+        return "你有被哥布林插入的经验。\n为你的初始卡组增加最多5张哥布林主题卡。"
 
     def init_actions(self):
         action_library = THEME_GOBLIN_LIBRARY
@@ -93,10 +95,24 @@ class PerkMachineLover(Perk):
         return "机械奸爱好者"
 
     def description(self):
-        return "为你的初始卡组增加最多5张机械奸主题卡。"
+        return "你有被机械插入的经验。\n为你的初始卡组增加最多5张机械奸主题卡。"
 
     def init_actions(self):
         action_library = THEME_MACHINE_LIBRARY
+        if len(action_library) == 0:
+            return []
+        return random.sample(action_library, min(5, len(action_library)))
+
+
+class PerkYuriLover(Perk):
+    def name(self):
+        return "百合爱好者"
+
+    def description(self):
+        return "你有百合的经验。\n为你的初始卡组增加最多5张百合主题卡。"
+
+    def init_actions(self):
+        action_library = THEME_YURI_LIBRARY
         if len(action_library) == 0:
             return []
         return random.sample(action_library, min(5, len(action_library)))
@@ -108,4 +124,5 @@ PERK_LIBRARY = [
     PerkServantLover(),
     PerkGoblinLover(),
     PerkMachineLover(),
+    PerkYuriLover()
 ]

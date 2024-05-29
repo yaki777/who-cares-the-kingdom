@@ -1,4 +1,4 @@
-from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GIRL_LOVE, THEME_GOBLIN
+from rpg_battle.battle_actions_ren import THEME_LOVE, THEME_MACHINE, THEME_GOBLIN, THEME_YURI
 from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
 from rpg_role.dungeon_roles_ren import DUNGEON_ROLE_GOBLIN, DUNGEON_ROLE_GOBLIN_DOC
@@ -81,7 +81,7 @@ class BattleController:
 
     def set_theme(self):
         if self.enemy.is_female:
-            self.themes.append(THEME_GIRL_LOVE)
+            self.themes = [THEME_YURI]
         if self.enemy.role == DUNGEON_ROLE_GOBLIN or self.enemy.role == DUNGEON_ROLE_GOBLIN_DOC:
             self.themes = [THEME_GOBLIN]
         if world_controller.current_area.code == 'al1':

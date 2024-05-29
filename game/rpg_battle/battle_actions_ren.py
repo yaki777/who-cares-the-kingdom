@@ -21,7 +21,7 @@ THEME_PUBLIC = '公共'
 THEME_LOVE = '纯爱'
 THEME_GOBLIN = '哥布林'
 THEME_SLIME = '史莱姆'
-THEME_GIRL_LOVE = '百合'
+THEME_YURI = '百合'
 THEME_HUGE_LOVE = '巨物纯爱'
 
 exp_display = [

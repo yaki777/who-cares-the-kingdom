@@ -1,3 +1,8 @@
 /game/cache/
 /game/saves/
 /game/tl/
+/.idea/
+/.vscode/
+/game/.idea/
+/game/.vscode/
+

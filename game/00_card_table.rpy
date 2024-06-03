@@ -46,15 +46,15 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
         background None
         ysize 300
         xalign 0.5
-        yalign 0.7
+        yalign 0.6
         if placed_card is not None:
             textbutton placed_card.title:
                 style style.common_card
                 text_size 24
-                xsize 200
-                ysize 284
+                xsize 260
+                ysize 370
 
-                background Composite((200,284),
+                background Composite((260,370),
                     (0,0),Frame(placed_card.background,
                                     yminimum=57, xminimum=57, yfill=True),
                     (0,0),Frame(placed_card.inner,
@@ -64,8 +64,8 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
             textbutton "卡槽":
                 style style.common_card
                 text_size 24
-                xsize 200
-                ysize 284
+                xsize 260
+                ysize 370
 
                 background Frame( "images/cards/card_slot.png",
                                     yminimum=57, xminimum=57, yfill=True)
@@ -79,7 +79,7 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
         hbox:
             yalign 0.5
             xalign 0.5
-            spacing -260
+            spacing -360
             $ hands_len = len(player_hands)-1
             for i,card in enumerate(player_hands):
 
@@ -88,22 +88,21 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
                 textbutton card.title:
                     style style.small_card
                     text_size 24
-                    xsize 200
-                    ysize 284
+                    xsize 260
+                    ysize 370
                     ypos ypos_value
                     size_group "inv_buttons" # name not important, just makes all with same name same width
-                    background Composite((200,284),
+                    background Composite((260,370),
                         (0,0),Frame(card.background,
                                         yminimum=57, xminimum=57, yfill=True),
                         (0,0),Frame(card.inner,
                                         yminimum=57, xminimum=57, yfill=True))
                     action [SetVariable("card_table_chosen_card", card)]
                     hovered [SetVariable("card_table_hovered_card",card)]
-                    unhovered [SetVariable("card_table_hovered_card",None)]
                     at card_rotation(pos_i)
     frame:
         background None
-        yalign 0.68
+        yalign 0.6
         xalign 0.5
         if card_table_chosen_card is not None:
             vbox:
@@ -111,7 +110,7 @@ screen card_table(table_bg,placed_card,player_hands,place_card_callback):
                 yalign 0.5
                 textbutton card_table_chosen_card.title:
                     style style.common_card
-                    text_size 24
+                    text_size 32
                     xsize 400
                     ysize 568
                     background Composite((400,568),

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_cards/cards_screen.rpy", line 63: 'top_padding' is not a keyword argument or valid child of the hbox statement.
-    top_padding 100
-               ^
+File "game/rpg_battle/01_battle_screen.rpy", line 153: Line is indented, but the preceding xalign statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    vbox:
+    ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Tue May 28 16:40:05 2024
+Thu May 30 23:12:50 2024

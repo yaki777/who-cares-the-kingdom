@@ -5,23 +5,31 @@ While running game code:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_cards/cards_screen.rpy", line 4, in script
-    call screen player_deck
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 39, in script call
+    $ battle_controller.start(npc)
+  File "game/rpg_battle/01_battle_screen.rpy", line 9, in script call
+    call start_battle_screen
+  File "game/rpg_battle/01_battle_screen.rpy", line 13, in script
+    call screen battle_screen
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/rpg_cards/cards_screen.rpy", line 7, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 7, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 40, in execute
-    if player_deck_chosen_card is not None:
-  File "game/rpg_cards/cards_screen.rpy", line 49, in execute
+  File "game/rpg_battle/01_battle_screen.rpy", line 21, in execute
+    screen battle_screen:
+  File "game/rpg_battle/01_battle_screen.rpy", line 21, in execute
+    screen battle_screen:
+  File "game/rpg_battle/01_battle_screen.rpy", line 107, in execute
     frame:
-  File "game/rpg_cards/cards_screen.rpy", line 53, in execute
-    vbox:
-  File "game/rpg_cards/cards_screen.rpy", line 60, in execute
-    text f"[主题:{player_deck_chosen_card.addition.theme},类别:{','.join(player_deck_chosen_card.addition.tags)}]" xalign 0.5 size 28
-NameError: Name '主题' is not defined.
+  File "game/rpg_battle/01_battle_screen.rpy", line 112, in execute
+    hbox:
+  File "game/rpg_battle/01_battle_screen.rpy", line 118, in execute
+    for i,card in enumerate(battle_controller.player_hand):
+  File "game/rpg_battle/01_battle_screen.rpy", line 119, in execute
+    $ pos_i = i-hands_len/2
+  File "game/rpg_battle/01_battle_screen.rpy", line 119, in <module>
+    $ pos_i = i-hands_len/2
+NameError: name 'hands_len' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
@@ -30,8 +38,14 @@ Full traceback:
     call start_world
   File "game/rpg_world/world_screen.rpy", line 5, in script call
     call screen world_walk
-  File "game/rpg_cards/cards_screen.rpy", line 4, in script
-    call screen player_deck
+  File "game/rpg_npc/npc_talk.rpy", line 11, in script call
+    call expression story_label pass (story_controller.get_story(story_label),npc)
+  File "game/rpg_story/main_queen_labels.rpy", line 39, in script call
+    $ battle_controller.start(npc)
+  File "game/rpg_battle/01_battle_screen.rpy", line 9, in script call
+    call start_battle_screen
+  File "game/rpg_battle/01_battle_screen.rpy", line 13, in script
+    call screen battle_screen
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1968, in execute
     self.call("execute")
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/ast.py", line 1950, in call
@@ -54,6 +68,7 @@ Full traceback:
     d.visit_all(callback, seen)
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/displayable.py", line 431, in visit_all
     d.visit_all(callback, seen)
+  [Previous line repeated 2 more times]
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 480, in visit_all
     callback(self)
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/core.py", line 2687, in <lambda>
@@ -62,38 +77,23 @@ Full traceback:
     self.update()
   File "/home/wooyme/renpy-8.2.1-sdk/renpy/display/screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/rpg_cards/cards_screen.rpy", line 7, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 7, in execute
-    screen player_deck:
-  File "game/rpg_cards/cards_screen.rpy", line 40, in execute
-    if player_deck_chosen_card is not None:
-  File "game/rpg_cards/cards_screen.rpy", line 49, in execute
+  File "game/rpg_battle/01_battle_screen.rpy", line 21, in execute
+    screen battle_screen:
+  File "game/rpg_battle/01_battle_screen.rpy", line 21, in execute
+    screen battle_screen:
+  File "game/rpg_battle/01_battle_screen.rpy", line 107, in execute
     frame:
-  File "game/rpg_cards/cards_screen.rpy", line 53, in execute
-    vbox:
-  File "game/rpg_cards/cards_screen.rpy", line 60, in execute
-    text f"[主题:{player_deck_chosen_card.addition.theme},类别:{','.join(player_deck_chosen_card.addition.tags)}]" xalign 0.5 size 28
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/text/text.py", line 1738, in __init__
-    self.set_text(text, scope, substitute) # type: ignore
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/text/text.py", line 1868, in set_text
-    i, did_sub = renpy.substitutions.substitute(i, scope, substitute) # type: ignore
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/substitutions.py", line 368, in substitute
-    s = interpolate(s, kwargs) # type: ignore
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/substitutions.py", line 86, in interpolate
-    raise e
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/substitutions.py", line 78, in interpolate
-    value = renpy.python.py_eval(code, {}, scope)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "<none>", line 1, in <module>
-  File "/home/wooyme/renpy-8.2.1-sdk/renpy/substitutions.py", line 310, in __getitem__
-    raise NameError("Name '{}' is not defined.".format(key))
-NameError: Name '主题' is not defined.
+  File "game/rpg_battle/01_battle_screen.rpy", line 112, in execute
+    hbox:
+  File "game/rpg_battle/01_battle_screen.rpy", line 118, in execute
+    for i,card in enumerate(battle_controller.player_hand):
+  File "game/rpg_battle/01_battle_screen.rpy", line 119, in execute
+    $ pos_i = i-hands_len/2
+  File "game/rpg_battle/01_battle_screen.rpy", line 119, in <module>
+    $ pos_i = i-hands_len/2
+NameError: name 'hands_len' is not defined
 
 Linux-6.5.0-35-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.1.24030407
 Android GUI 1.31
-Tue May 28 16:37:38 2024
+Thu May 30 10:29:11 2024

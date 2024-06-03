@@ -1,3 +1,4 @@
+default first_battle = True
 default card_description = ""
 default battle_show_card = None
 default battle_chosen_card = None
@@ -12,6 +13,16 @@ label start_battle():
     call after_battle_screen
     return
 label start_battle_screen:
+    if first_battle:
+        show screen battle_screen
+        DM "这是你的第一次战斗，接下来让我为你讲解一下战斗的规则。"
+        DM "每个回合你和敌人都会出最多5张卡牌，然后按照德州扑克的规则进行比较。"
+        DM "如果你的卡牌点数比敌人小，则你会失去1点MP。当你的MP减少到0时，你失败。"
+        DM "无论你或者敌人胜出，你都要完成胜出方使用的卡牌卡面上的任务。"
+        DM "每个完成的任务都会减少敌人的HP。当敌人的HP减少到0时，你胜利。"
+        DM "规则讲解完了，接下来看你啦！"
+        hide screen battle_screen
+        $ first_battle = False
     call screen battle_screen
     return
 
@@ -21,94 +32,70 @@ label after_battle_screen:
         call screen battle_reward
     return
 screen battle_screen:
-    add "images/table_bg.png"
+    sensitive not first_battle
     frame:
         xfill True
         yfill True
-        background None
-#         image "images/table.png":
-#             xalign 0.5
-#             yalign 0.5
+        background Solid("#000a",xfill=True,yfill=True)
         if battle_controller.is_end():
             textbutton "离开" action [Return()] text_size 40 xalign 0.5 yalign 0.6
         else:
             textbutton "结束回合" action [Function(battle_controller.end_turn)] text_size 40 xalign 0.5 yalign 0.7
-#     frame:
-#         background None
-#         yalign 0.5
-#         xfill True
-#         label battle_controller.battle_info xalign 0.5
 
     use quick_menu
     frame:
-        background None
+        background Composite((940,450),
+            (100,0),Frame("images/chat.png",xsize=940,ysize=150),
+            (100,130),Frame("images/chat.png",xsize=940,ysize=300),
+            (0,300),Frame(Crop((0,0,720,720),battle_controller.enemy.side_image),xsize=160,ysize=160))
+        ysize 450
         xfill True
-        vbox:
-            xalign 0.5
-            spacing 20
-            label "得分:"
-            hbox:
-                bar value battle_controller.player_rank range battle_controller.enemy.hp xysize (1000,20)
-    frame:
-        background None
-        ysize 500
-        xfill True
-        yalign 0.48
-        vbox:
-            xalign 0.5
-            spacing 20
-#             label f"敌人:{battle_controller.enemy_table_desc}" xalign 0.5
-            hbox:
-                xalign 0.5
-                spacing 10
-                box_wrap True
-                xmaximum 1080
-                for card in battle_controller.enemy_table:
-                    if isinstance(card, Card):
-                        textbutton card.title:
-                            style style.common_card
-                            text_size 24
-                            xsize 160
-                            ysize 227
-                            background Composite((160,227),
-                                            (0,0),Frame(card.background,
-                                                            yminimum=57, xminimum=57, yfill=True),
-                                            (0,0),Frame(card.inner,
-                                                            yminimum=57, xminimum=57))
-                            action [SetVariable('battle_show_card',card)]
+        yalign 0.2
+        text f"...\n{{color=#ff084a}}HP:{battle_controller.enemy.hp-battle_controller.player_rank}/{battle_controller.enemy.hp}{{/color}}" xalign 0.2 yalign 0.1 size 24 color "#000"
+        hbox:
+            yalign 0.7
+            xalign 0.55
+            for card in battle_controller.enemy_table:
+                if isinstance(card, Card):
+                    textbutton card.title:
+                        style style.common_card
+                        text_size 24
+                        xsize 160
+                        ysize 227
+                        background Composite((160,227),
+                                        (0,0),Frame(card.background,
+                                                        yminimum=57, xminimum=57, yfill=True),
+                                        (0,0),Frame(card.inner,
+                                                        yminimum=57, xminimum=57))
+                        action [SetVariable('battle_show_card',card)]
 
 
     frame:
-        background None
+        background Composite((940,450),
+            (20,0),Frame("images/chat_me.png",xsize=940,ysize=150),
+            (20,130),Frame("images/chat_me.png",xsize=940,ysize=300),
+            (920,300),Frame(Crop((0,0,720,720),'images/npc/npc_Aurelia.png'),xsize=160,ysize=160))
         xfill True
-        ysize 500
-        yalign 0.69
-        vbox:
-            xalign 0.5
-#             hbox:
-#                 xalign 0.5
-#                 spacing 20
-#                 for i in range(battle_controller.player_chips):
-#                     imagebutton idle "chip.png" action [NullAction()]
-#             label f"你: {battle_controller.player_table_desc}" xalign 0.5
-            hbox:
-                spacing 10
-                xalign 0.5
-                box_wrap True
-                xmaximum 1080
-                for card in battle_controller.player_table:
-                    if isinstance(card,Card):
-                        textbutton card.title:
-                            style style.common_card
-                            text_size 24
-                            xsize 160
-                            ysize 227
-                            background Composite((160,227),
-                                            (0,0),Frame(card.background,
-                                                            yminimum=57, xminimum=57, yfill=True),
-                                            (0,0),Frame(card.inner,
-                                                            yminimum=57, xminimum=57))
-                            action [Function(battle_controller.player_return_card, card)]
+        ysize 450
+        yalign 0.6
+        text f"我想...\n{{color=#005b96}}MP:{battle_controller.player_mp}/{player.mp}{{/color}}" xalign 0.1 yalign 0.1 size 24 color "#000"
+        hbox:
+            xalign 0.43
+            yalign 0.7
+            for card in battle_controller.player_table:
+                if isinstance(card,Card):
+                    textbutton card.title:
+                        style style.common_card
+                        text_size 24
+                        xsize 160
+                        ysize 227
+                        background Composite((160,227),
+                                        (0,0),Frame(card.background,
+                                                        yminimum=57, xminimum=57, yfill=True),
+                                        (0,0),Frame(card.inner,
+                                                        yminimum=57, xminimum=57))
+                        action [Function(battle_controller.player_return_card, card)]
+
 
     # 手牌
     frame:
@@ -246,10 +233,6 @@ screen battle_screen:
                         spacing 50
                         textbutton "{color=#88d8b0}完成{/color}" action [Function(battle_controller.halftime.step,True)] text_size 40
                         textbutton "{color=#ff6f69}失败{/color}" action [Function(battle_controller.halftime.step,False)] text_size 40
-
-
-
-
 
 screen battle_reward:
     frame:

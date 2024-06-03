@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/rpg_battle/01_battle_screen.rpy", line 153: Line is indented, but the preceding xalign statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    vbox:
+File "game/rpg_battle/01_battle_screen.rpy", line 100: Line is indented, but the preceding yalign statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    text f"...\nHP:{battle_controller.enemy.hp-battle_controller.player_rank}/{battle_controller.enemy.hp}" xalign 0.2 yalign 0.1 size 24 color "#000"
     ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Thu May 30 23:12:50 2024
+Mon Jun  3 16:56:17 2024

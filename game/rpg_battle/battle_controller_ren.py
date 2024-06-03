@@ -3,6 +3,7 @@ from rpg_battle.battle_calculator_ren import BattleCalculator
 from rpg_cards.cards_ren import CARD_SLOT
 from rpg_role.dungeon_roles_ren import DUNGEON_ROLE_GOBLIN, DUNGEON_ROLE_GOBLIN_DOC
 from rpg_system.renpy_constant import battle_action_controller, renpy, world_controller
+from rpg_world.player_ren import player
 
 """renpy
 init -80 python:
@@ -18,7 +19,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.player_rank = 0
-        self.player_chips = 3
+        self.player_mp = player.mp
         self.round = 1
         self.player_table_desc = ''
         self.enemy_table_desc = ''
@@ -33,7 +34,7 @@ class BattleController:
         self.player_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.player_rank = 0
-        self.player_chips = 3
+        self.player_mp = player.mp
         self.round = 1
         self.player_table_desc = ''
         self.enemy_table_desc = ''
@@ -101,7 +102,7 @@ class BattleController:
 
     def result_display(self):
         text = []
-        if self.player_chips == 0:
+        if self.player_mp == 0:
             text.append("战斗结束，你的筹码用完了。")
         elif self.player_rank >= self.enemy.hp:
             text.append("战斗胜利！")
@@ -119,7 +120,7 @@ class BattleController:
         return None
 
     def is_end(self):
-        return self.player_chips == 0 or self.player_rank >= self.enemy.hp
+        return self.player_mp == 0 or self.player_rank >= self.enemy.hp
 
     def end_turn(self):
         player_table_rank, player_table_score = self.battle_calculator.get_max_table(self.player_table)
@@ -133,7 +134,7 @@ class BattleController:
         table = self.player_table
         if not player_win:
             table = self.enemy_table
-            self.player_chips -= 1
+            self.player_mp -= 1
         cards = [card for card in table if card.addition is not None]
         self.halftime = BattleHalftime(self, player_win, cards)
         self.round += 1
@@ -151,7 +152,7 @@ class BattleController:
                 self.player_hand.append(card)
             if len(self.player_hand) >= 5:
                 break
-        if self.player_chips == 0:
+        if self.player_mp == 0:
             self.battle_info = '战斗结束!'
 
 

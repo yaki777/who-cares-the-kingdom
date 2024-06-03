@@ -18,6 +18,7 @@ class Player:
         self.has_goblin_antidote = False
         self.princess_is_virgin = True
         self.princess_agree_marry = None
+        self.mp = 5
 
 
 PLAYER_ROLE_LIBRARY = [

@@ -25,13 +25,13 @@ class PerkMasturbationLover(Perk):
         return "自慰爱好者"
 
     def description(self):
-        return "为你的初始卡组添加最多5张自慰主题卡。"
+        return "为你的初始卡组添加1张自慰主题卡。"
 
     def init_actions(self):
         action_library = THEME_SELF_LIBRARY
         if len(action_library) == 0:
             return []
-        return random.sample(action_library, min(5, len(action_library)))
+        return random.sample(action_library, min(1, len(action_library)))
 
 
 class PerkSexLover(Perk):

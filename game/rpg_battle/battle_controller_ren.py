@@ -143,6 +143,8 @@ class BattleController:
         self.enemy_table = [CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT, CARD_SLOT]
         self.enemy_play_card()
         for card in battle_action_controller.player_draw_cards(5, self.themes):
+            if len(self.player_hand) >= 5:
+                break
             in_hand = False
             for hand_card in self.player_hand:
                 if hand_card.addition == card.addition:
@@ -150,8 +152,7 @@ class BattleController:
                     break
             if not in_hand:
                 self.player_hand.append(card)
-            if len(self.player_hand) >= 5:
-                break
+
         if self.player_mp == 0:
             self.battle_info = '战斗结束!'
 

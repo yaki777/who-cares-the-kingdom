@@ -5,4 +5,8 @@
 /.vscode/
 /game/.idea/
 /game/.vscode/
+errors.txt
+log.txt
+traceback.txt
+progressive_download.txt
 
